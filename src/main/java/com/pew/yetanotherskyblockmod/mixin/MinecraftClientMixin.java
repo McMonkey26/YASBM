@@ -23,9 +23,4 @@ public class MinecraftClientMixin {
     public void tick(CallbackInfo ci) {
         YASBM.getInstance().onTick();
     }
-
-    @Inject(method = "handleInputEvents", at = @At("HEAD"))
-    public void handleInputEvents(CallbackInfo ci) {
-        YASBM.getInstance().onInput(player);
-    }
 }

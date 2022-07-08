@@ -1,18 +1,20 @@
 package com.pew.yetanotherskyblockmod;
 
-import net.fabricmc.api.ModInitializer;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.text.Text;
-
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.pew.yetanotherskyblockmod.config.ModConfig;
+import com.pew.yetanotherskyblockmod.general.SlotLock;
 
-public class YASBM implements ModInitializer {
+import net.fabricmc.api.ClientModInitializer;
+import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.screen.slot.Slot;
+import net.minecraft.text.Text;
+
+public class YASBM implements ClientModInitializer {
 	public static final String MODID = "yetanotherskyblockmod";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
@@ -23,19 +25,12 @@ public class YASBM implements ModInitializer {
 	}
 
 	@Override
-	public void onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
-
+	public void onInitializeClient() {
 		ModConfig.init();
+		SlotLock.init();
 	}
 
 	public void onTick() {
-
-	}
-
-	public void onInput(@Nullable ClientPlayerEntity player) {
 
 	}
 
@@ -44,11 +39,15 @@ public class YASBM implements ModInitializer {
 	}
 
 	public boolean onItemDrop(int selectedSlot, CallbackInfoReturnable<Boolean> cir) {
-		cir.setReturnValue(false);
-		return false;
+		SlotLock.handleItemDropEvent(selectedSlot, cir);
+		return true;
 	}
 
 	public void onItemDrop(int selectedSlot, CallbackInfo ci) {
-		ci.cancel();
+		SlotLock.handleItemDropEvent(selectedSlot, ci);
+	}
+
+	public void onDrawSlot(MatrixStack matrices, Slot slot, DrawableHelper g) {
+		SlotLock.handleRenderEvent(matrices, slot, g);
 	}
 }
