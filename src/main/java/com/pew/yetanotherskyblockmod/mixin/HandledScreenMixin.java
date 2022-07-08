@@ -16,7 +16,7 @@ import net.minecraft.screen.slot.Slot;
 
 @Environment(EnvType.CLIENT)
 @Mixin(HandledScreen.class)
-public abstract class HandledScreenMixin {
+public class HandledScreenMixin {
 	
 	@Inject(method = "drawSlot", at = @At("RETURN"))
 	public void drawSlotRet(MatrixStack matrices, Slot slot, CallbackInfo ci) {

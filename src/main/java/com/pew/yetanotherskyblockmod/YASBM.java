@@ -38,16 +38,19 @@ public class YASBM implements ClientModInitializer {
 		
 	}
 
-	public boolean onItemDrop(int selectedSlot, CallbackInfoReturnable<Boolean> cir) {
-		SlotLock.handleItemDropEvent(selectedSlot, cir);
-		return true;
+	public boolean onWorldItemDrop(int selectedSlot, CallbackInfoReturnable<Boolean> cir) {
+		return SlotLock.handleItemDropEvent(selectedSlot+36, cir);
 	}
 
-	public void onItemDrop(int selectedSlot, CallbackInfo ci) {
+	public void onInventoryItemDrop(int selectedSlot, CallbackInfo ci) {
 		SlotLock.handleItemDropEvent(selectedSlot, ci);
 	}
 
 	public void onDrawSlot(MatrixStack matrices, Slot slot, DrawableHelper g) {
 		SlotLock.handleRenderEvent(matrices, slot, g);
 	}
+
+    public void onGuiKeyPress(int keyCode, int scanCode, int modifiers) {
+		SlotLock.handleKeyPress(keyCode, scanCode);
+    }
 }

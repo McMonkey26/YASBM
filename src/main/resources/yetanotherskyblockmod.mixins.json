@@ -8,10 +8,12 @@
   "client": [
     "ChatHudMixin",
     "ClientPlayerEntityMixin",
+    "HandledScreenAccessor",
     "HandledScreenMixin",
     "MinecraftClientMixin",
     "PlayerInventoryMixin",
-    "ScreenHandlerMixin"
+    "ScreenHandlerMixin",
+    "ScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

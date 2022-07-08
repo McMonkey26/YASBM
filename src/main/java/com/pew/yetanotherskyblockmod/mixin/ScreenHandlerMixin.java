@@ -15,10 +15,10 @@ import net.minecraft.screen.slot.SlotActionType;
 
 @Environment(EnvType.CLIENT)
 @Mixin(ScreenHandler.class)
-class ScreenHandlerMixin {
+public class ScreenHandlerMixin {
     @Inject(method = "onSlotClick", at = @At("HEAD"), cancellable = true)
     public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player, CallbackInfo ci) {
         if (actionType.equals(SlotActionType.CLONE)) return;
-        YASBM.getInstance().onItemDrop(slotIndex, ci);
+        YASBM.getInstance().onInventoryItemDrop(slotIndex, ci);
     }
 }
