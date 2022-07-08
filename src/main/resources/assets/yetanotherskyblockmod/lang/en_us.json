@@ -1,0 +1,8 @@
+{
+    "key.hotbarSlotLock": "Slot Lock (Hotbar)",
+
+    "text.autoconfig.yetanotherskyblockmod.title": "Yet Another Skyblock Mod Settings",
+  
+    "text.autoconfig.yetanotherskyblockmod.category.general": "General",
+    "text.autoconfig.yetanotherskyblockmod.option.general.lockSlotsEnabled": "General"
+}
