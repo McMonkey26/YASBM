@@ -22,6 +22,6 @@ public class ChatHudMixin {
 
     @Inject(method = "addMessage(Lnet/minecraft/text/Text;I)V", at = @At("HEAD"), cancellable = true)
     private void addMessage(Text text, int id, CallbackInfo ci) {
-        YASBM.getInstance().onChat(text, id, ci);
+        YASBM.getInstance().onMessageReccieved(text, id, ci);
     }
 }

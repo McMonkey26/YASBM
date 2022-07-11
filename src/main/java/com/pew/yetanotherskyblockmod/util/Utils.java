@@ -1,89 +1,84 @@
 package com.pew.yetanotherskyblockmod.util;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.Iterator;
 
+import javax.annotation.Nullable;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.pew.yetanotherskyblockmod.YASBM;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.scoreboard.Scoreboard;
+import net.minecraft.client.ClientBrandRetriever;
 import net.minecraft.scoreboard.ScoreboardObjective;
-import net.minecraft.scoreboard.ScoreboardPlayerScore;
-import net.minecraft.scoreboard.Team;
-import net.minecraft.util.Formatting;
 
 public class Utils {
     private static String location = "None";
-
-    // public static void sbChecker() {
-    //     MinecraftClient client = MinecraftClient.getInstance();
-    //     List<String> sidebar;
-    //     if (client.world == null || client.isInSingleplayer() || (sidebar = getSidebar()) == null) {
-    //         isOnSkyblock = false;
-    //         isInDungeons = false;
-    //         return;
-    //     }
-    //     client.close();
-    //     String string = sidebar.toString();
-
-    //     if (sidebar.isEmpty()) return;
-    //     if (sidebar.get(0).contains("SKYBLOCK") && !isOnSkyblock) {
-    //         if (!isInjected) {
-    //             isInjected = true;
-    //             ItemTooltipCallback.EVENT.register(PriceInfoTooltip::onInjectTooltip);
-    //         }
-    //         SkyblockEvents.JOIN.invoker().onSkyblockJoin();
-    //         isOnSkyblock = true;
-    //     }
-    //     if (!sidebar.get(0).contains("SKYBLOCK") && isOnSkyblock) {
-    //         SkyblockEvents.LEAVE.invoker().onSkyblockLeave();
-    //         Utils.isOnSkyblock = false;
-    //         Utils.isInDungeons = false;
-    //     }
-    //     isInDungeons = isOnSkyblock && string.contains("The Catacombs");
-    // }
-
-    public static String getLocation() {
-        if (location == "None") {
-            for (String sidebarLine : getSidebar()) {
-                if (!sidebarLine.contains("⏣")) continue;
-                location = sidebarLine;
+    
+    private static boolean _isOnSkyblock() {
+        if (YASBM.client.isInSingleplayer() || ClientBrandRetriever.getClientModName() == null || 
+            !ClientBrandRetriever.getClientModName().toLowerCase().contains("hypixel")) return false;
+        ScoreboardObjective titleObj = YASBM.client.player.world.getScoreboard().getObjectiveForSlot(1);
+        String title = titleObj.getDisplayName().asString().replaceAll("(?i)\\u00A7.", "");
+        for (String skyblock : new String[]{"SKYBLOCK", "\u7A7A\u5C9B\u751F\u5B58", "\u7A7A\u5CF6\u751F\u5B58"}) {
+            if (title.startsWith(skyblock)) {
+                return true;
             }
-            if (location == null) {location = "None";}
-            else {location = location.replace('⏣',' ').strip();}
         }
+        return false;
+    }
+    public static boolean isOnSkyblock() {
+        // return location != "Other";
+        return true; // So I can test
+    }
+
+    public static void _getLocation() {
+        if (!_isOnSkyblock()) {location = "Other"; return;}
+        for (ScoreboardObjective objective : YASBM.client.player.world.getScoreboard().getObjectives()) {
+            String text = objective.getDisplayName().asString();
+            if (!text.contains("⏣")) continue;
+            location = text.replaceAll("(?:[&§][a-f\\dk-or])|[^a-z\s']", "");
+            return;
+        }
+        location = "Unknown";
+    }
+    public static String getLocation() {
         return location;
     }
 
-    private static List<String> getSidebar() {
+    public static @Nullable String getUUID(String username) {
         try {
-            MinecraftClient client = MinecraftClient.getInstance();
-            ClientPlayerEntity player = client.player;
-            client.close();
-            if (player == null) return Collections.emptyList();
-            Scoreboard scoreboard = player.getScoreboard();
-            ScoreboardObjective objective = scoreboard.getObjectiveForSlot(1);
-            List<String> lines = new ArrayList<>();
-            for (ScoreboardPlayerScore score : scoreboard.getAllPlayerScores(objective)) {
-                Team team = scoreboard.getPlayerTeam(score.getPlayerName());
-                if (team == null) continue;
-                String line = team.getPrefix().getString() + team.getSuffix().getString();
-                if (line.trim().length() > 0) {
-                    String formatted = Formatting.strip(line);
-                    lines.add(formatted);
-                }
+            Iterator<String> iterator = new BufferedReader(new InputStreamReader(
+                new URL("https://api.mojang.com/users/profiles/minecraft/"+username).openStream()
+            )).lines().iterator();
+            String output = "";
+            while (iterator.hasNext()) {
+                output += iterator.next()+"\n";
             }
-
-            if (objective != null) {
-                lines.add(objective.getDisplayName().getString());
-                Collections.reverse(lines);
-            }
-            return lines;
-        } catch (NullPointerException e) {
+            JsonObject jo = JsonParser.parseString(output).getAsJsonObject();
+            return jo.get("id").getAsString();
+        } catch (Exception e) {
             YASBM.LOGGER.warn(e.getMessage());
-            return Collections.emptyList();
+            return null;
+        }
+    }
+    public static @Nullable String getUsername(String uuid) {
+        try {
+            Iterator<String> iterator = new BufferedReader(new InputStreamReader(
+                new URL("https://api.mojang.com/user/profiles/"+uuid+"/names").openStream()
+            )).lines().iterator();
+            String output = "";
+            while (iterator.hasNext()) {
+                output += iterator.next()+"\n";
+            }
+            JsonArray ja = JsonParser.parseString(output).getAsJsonArray();
+            return ja.get(ja.size()-1).getAsJsonObject().get("name").getAsString();
+        } catch (Exception e) {
+            YASBM.LOGGER.warn(e.getMessage());
+            return null;
         }
     }
 }

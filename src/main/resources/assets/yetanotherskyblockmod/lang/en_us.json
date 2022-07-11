@@ -5,5 +5,20 @@
     "text.autoconfig.yetanotherskyblockmod.title": "Yet Another Skyblock Mod Settings",
   
     "text.autoconfig.yetanotherskyblockmod.category.general": "General",
-    "text.autoconfig.yetanotherskyblockmod.option.general.lockSlotsEnabled": "Enable Slot Locking"
+    "text.autoconfig.yetanotherskyblockmod.option.general.lockSlotsEnabled": "Enable Slot Locking",
+    "text.autoconfig.yetanotherskyblockmod.option.general.lockSlotsEnabled.@Tooltip": "Prevents you from dropping or deleting items in selected slots.",
+
+    "text.autoconfig.yetanotherskyblockmod.category.tools": "Tools",
+    "text.autoconfig.yetanotherskyblockmod.option.tools.afk": "AFK",
+    "text.autoconfig.yetanotherskyblockmod.option.tools.afk.reasons": "Reasons",
+    "text.autoconfig.yetanotherskyblockmod.option.tools.afk.reasons.@Tooltip": "What to automatically reply with when you're afk",
+    "text.autoconfig.yetanotherskyblockmod.option.tools.afk.joinLeave": "Join/Leave Messages",
+    "text.autoconfig.yetanotherskyblockmod.option.tools.afk.joinLeave.@Tooltip": "Whether to show join/leave messages when you're afk",
+    "text.autoconfig.yetanotherskyblockmod.option.tools.afk.guildReply": "Guild Reply",
+    "text.autoconfig.yetanotherskyblockmod.option.tools.afk.guildReply.@Tooltip": "Whether to reply to guild members when you're afk",
+    "text.autoconfig.yetanotherskyblockmod.option.tools.afk.webhook": "Discord Webhook",
+    "text.autoconfig.yetanotherskyblockmod.option.tools.afk.webhook.@Tooltip": "URL to send notifications to when you're kicked",
+
+    "text.autoconfig.yetanotherskyblockmod.category.hud": "HUD",
+    "text.autoconfig.yetanotherskyblockmod.option.hud.hideWitherbornEnabled": "Hide Witherborn Bossbars"
 }
