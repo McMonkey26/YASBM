@@ -5,8 +5,12 @@
     "text.autoconfig.yetanotherskyblockmod.title": "Yet Another Skyblock Mod Settings",
   
     "text.autoconfig.yetanotherskyblockmod.category.general": "General",
-    "text.autoconfig.yetanotherskyblockmod.option.general.lockSlotsEnabled": "Enable Slot Locking",
-    "text.autoconfig.yetanotherskyblockmod.option.general.lockSlotsEnabled.@Tooltip": "Prevents you from dropping or deleting items in selected slots.",
+    "text.autoconfig.yetanotherskyblockmod.option.general.betterMusicEnabled": "Better Music",
+    "text.autoconfig.yetanotherskyblockmod.option.general.betterMusicEnabled.@Tooltip": "Replaces noteblock tracks with the full audio file",
+    "text.autoconfig.yetanotherskyblockmod.option.general.reforgeStopEnabled": "Stop Reforges",
+    "text.autoconfig.yetanotherskyblockmod.option.general.reforgeStopEnabled.@Tooltip": "Allows you to set a desired reforge (so you don't skip it)",
+    "text.autoconfig.yetanotherskyblockmod.option.general.wailaEnabled": "WhatAmILookingAt",
+    "text.autoconfig.yetanotherskyblockmod.option.general.wailaEnabled.@Tooltip": "Adds a keybind to get the data of the block you're looking at.",
 
     "text.autoconfig.yetanotherskyblockmod.category.tools": "Tools",
     "text.autoconfig.yetanotherskyblockmod.option.tools.afk": "AFK",
@@ -20,5 +24,21 @@
     "text.autoconfig.yetanotherskyblockmod.option.tools.afk.webhook.@Tooltip": "URL to send notifications to when you're kicked",
 
     "text.autoconfig.yetanotherskyblockmod.category.hud": "HUD",
-    "text.autoconfig.yetanotherskyblockmod.option.hud.hideWitherbornEnabled": "Hide Witherborn Bossbars"
+    "text.autoconfig.yetanotherskyblockmod.option.hud.hideWitherbornEnabled": "Hide Witherborn Bossbars",
+    "text.autoconfig.yetanotherskyblockmod.option.hud.betterTablistEnabled": "Better Tablist",
+    "text.autoconfig.yetanotherskyblockmod.option.hud.betterMenus": "Better Menus",
+    "text.autoconfig.yetanotherskyblockmod.option.hud.betterMenus.generalEnabled": "General Menus",
+    "text.autoconfig.yetanotherskyblockmod.option.hud.betterMenus.tradeMenuEnabled": "Trade Menu",
+    "text.autoconfig.yetanotherskyblockmod.option.hud.betterMenus.auctionMenuEnabled": "Auction House Menus",
+    "text.autoconfig.yetanotherskyblockmod.option.hud.betterMenus.bazaarMenuEnabled": "Bazaar Menus",
+    "text.autoconfig.yetanotherskyblockmod.option.hud.betterMenus.storageMenuEnabled": "Storage Menus",
+
+    "text.autoconfig.yetanotherskyblockmod.category.item": "Items",
+    "text.autoconfig.yetanotherskyblockmod.option.item.itemLockEnabled": "Item Locking",
+    "text.autoconfig.yetanotherskyblockmod.option.item.itemLockEnabled.@Tooltip": "Prevents you from dropping items with specific UUIDs.",
+    "text.autoconfig.yetanotherskyblockmod.option.item.customizationEnabled": "Item Customization",
+    "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltipEnabled": "Better Tooltips",
+    "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltipEnabled.@Tooltip": "Adds better skyblock-based tooltips.",
+
+    "text.autoconfig.yetanotherskyblockmod.category.dungeons": "Dungeons"
 }

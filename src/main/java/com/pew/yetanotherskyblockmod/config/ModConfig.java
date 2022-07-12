@@ -20,19 +20,18 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Category("general")
     @ConfigEntry.Gui.TransitiveObject
     public General general = new General();
-
     public static class General {
         @ConfigEntry.Gui.Tooltip
-        public boolean lockSlotsEnabled = true;
-
-        @ConfigEntry.Gui.Excluded
-        public List<Integer> lockedSlots = new ArrayList<>();
+        public boolean betterMusicEnabled = true;
+        @ConfigEntry.Gui.Tooltip
+        public boolean reforgeStopEnabled = true;
+        @ConfigEntry.Gui.Tooltip
+        public boolean wailaEnabled = true;
     }
 
     @ConfigEntry.Category("tools")
     @ConfigEntry.Gui.TransitiveObject
     public Tools tools = new Tools();
-
     public static class Tools {
         @ConfigEntry.Gui.Tooltip
         public Map<String,Integer> filter = new HashMap<>();
@@ -93,13 +92,45 @@ public class ModConfig implements ConfigData {
             public String webhook = "";
         }
     }
-
+    
     @ConfigEntry.Category("hud")
     @ConfigEntry.Gui.TransitiveObject
     public HUD hud = new HUD();
-
     public static class HUD {
         public boolean hideWitherbornEnabled = true;
+        public boolean betterTablistEnabled = true;
+
+        @ConfigEntry.Gui.CollapsibleObject
+        public BetterMenus betterMenus = new BetterMenus();
+        public static class BetterMenus {
+            public boolean generalEnabled    = true;
+            public boolean tradeMenuEnabled  = true;
+            public boolean auctionMenuEnabled= true;
+            public boolean bazaarMenuEnabled = true;
+            public boolean storageMenuEnabled= true;
+        }
+
+        // custom bars, farming overlay, xp tracker
+    }
+
+    @ConfigEntry.Category("item")
+    @ConfigEntry.Gui.TransitiveObject
+    public Item item = new Item();
+    public static class Item {
+        @ConfigEntry.Gui.Tooltip
+        public boolean itemLockEnabled = true;
+        public boolean customizationEnabled = false;
+        public boolean sbTooltipEnabled = true;
+
+        @ConfigEntry.Gui.Excluded
+        public List<String> lockedUUIDs = new ArrayList<>();
+    }
+
+    @ConfigEntry.Category("dungeons")
+    @ConfigEntry.Gui.TransitiveObject
+    public Dungeons dungeons = new Dungeons();
+    public static class Dungeons {
+        // todo
     }
 
     public static void init() {

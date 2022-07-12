@@ -5,8 +5,6 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import com.pew.yetanotherskyblockmod.YASBM;
 import com.pew.yetanotherskyblockmod.config.ModConfig;
 import com.pew.yetanotherskyblockmod.util.Utils;
@@ -18,6 +16,7 @@ public class Ignore extends YASBM.Feature {
 
     private static Set<String> ignored;
 
+    @Override
     public void init() {
         updateCache();
     }
@@ -31,8 +30,9 @@ public class Ignore extends YASBM.Feature {
     }
     
     @Override
-    public void onChat(Text text, int id, CallbackInfo ci) {
+    public Text onMessageReccieved(Text text) {
         // if (ignored.contains(name)) {ci.cancel();}
+        return text;
     }
 
     public static void add(String username) {

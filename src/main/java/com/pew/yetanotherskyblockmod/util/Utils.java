@@ -13,6 +13,7 @@ import com.google.gson.JsonParser;
 import com.pew.yetanotherskyblockmod.YASBM;
 
 import net.minecraft.client.ClientBrandRetriever;
+import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.ScoreboardObjective;
 
 public class Utils {
@@ -80,5 +81,12 @@ public class Utils {
             YASBM.LOGGER.warn(e.getMessage());
             return null;
         }
+    }
+
+    public static @Nullable String getItemUUID(ItemStack item) {
+        if (item != null && item.hasNbt() && item.getNbt().contains("ExtraAttributes") && item.getSubNbt("ExtraAttributes").contains("uuid")) {
+            return item.getSubNbt("ExtraAttributes").getString("uuid");
+        }
+        return null;
     }
 }

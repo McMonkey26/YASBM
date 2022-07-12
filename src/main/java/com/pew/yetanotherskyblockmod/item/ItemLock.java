@@ -1,4 +1,4 @@
-package com.pew.yetanotherskyblockmod.general;
+package com.pew.yetanotherskyblockmod.item;
 
 import java.util.List;
 
@@ -21,47 +21,53 @@ import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.Identifier;
 
-public class SlotLock extends YASBM.Feature {
-    public static SlotLock instance = new SlotLock();
+public class ItemLock extends YASBM.Feature {
+    public static ItemLock instance = new ItemLock();
 
     private static KeyBinding key;
     private static final Identifier SLOT_LOCK = new Identifier(YASBM.MODID, "textures/lock.png");
-
+    
+    @Override
     public void init() {
         key = KeyBindingHelper.registerKeyBinding(new KeyBinding(
             "key.slotLock",
             GLFW.GLFW_KEY_L,
             "key.categories."+YASBM.MODID
         ));
-    }
+    };
 
     private static boolean isEnabled() {
-        return ModConfig.get().general.lockSlotsEnabled && Utils.isOnSkyblock();
+        return ModConfig.get().item.itemLockEnabled && Utils.isOnSkyblock();
     }
-    private boolean isLocked(int slot) {
-        return ModConfig.get().general.lockedSlots.contains(slot);
+    private boolean isLocked(ItemStack item) {
+        @Nullable String uuid = Utils.getItemUUID(item);
+        return uuid != null && ModConfig.get().item.lockedUUIDs.contains(uuid);
     }
 
-    public void onItemDrop(int slot, CallbackInfoReturnable<Boolean> cir) {
-        if (!isEnabled() || !isLocked(slot)) {cir.setReturnValue(true); return;}
+    @Override
+    public void onItemDrop(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+        if (!isEnabled() || !isLocked(stack)) {cir.setReturnValue(true); return;}
         cir.setReturnValue(false);
     }
-    public void onItemDrop(int slot, CallbackInfo ci) {
-        if (!isEnabled() || !isLocked(slot)) return;
+    @Override
+    public void onItemDrop(ItemStack stack, CallbackInfo ci) {
+        if (!isEnabled() || !isLocked(stack)) return;
         ci.cancel();
     }
+    @Override
     public void onDrawSlot(MatrixStack matrices, Slot slot, DrawableHelper g) {
         if (!isEnabled()) return;
-        if (!ModConfig.get().general.lockedSlots.contains(slot.getIndex())) return;
-        RenderSystem.enableTexture();
+        if (!isLocked(slot.getStack())) return;
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem._setShaderTexture(0,SLOT_LOCK);
+        RenderSystem.setShaderTexture(0,SLOT_LOCK);
         g.drawTexture(matrices, slot.x, slot.y, 0, 0, 16, 16);
         DrawableHelper.drawCenteredText(matrices, YASBM.client.textRenderer, "locked", slot.x, slot.y, 0xFFFFFF); // TODO: Placeholder
     }
+    @Override
     public void onGuiKeyPress(int keyCode, int scanCode) {
         if (!isEnabled() || !key.matchesKey(keyCode, scanCode)) return;
 
@@ -69,14 +75,14 @@ public class SlotLock extends YASBM.Feature {
         if (screen == null || !(screen instanceof HandledScreen) || !(screen instanceof InventoryScreen)) return;
         @Nullable Slot slot = ((HandledScreenAccessor) screen).getFocusedSlot();
         if (slot == null || !slot.hasStack()) return;
-        
+        @Nullable String uuid = Utils.getItemUUID(slot.getStack());
+        if (uuid == null) return;
 
-        Integer index = slot.getIndex();
-        List<Integer> lockedSlots = ModConfig.get().general.lockedSlots;
-        if (lockedSlots.contains(index)) {
-            lockedSlots.remove(index);
+        List<String> lockedSlots = ModConfig.get().item.lockedUUIDs;
+        if (lockedSlots.contains(uuid)) {
+            lockedSlots.remove(uuid);
         } else {
-            lockedSlots.add(index);
+            lockedSlots.add(uuid);
         }
         
         AutoConfig.getConfigHolder(ModConfig.class).save();

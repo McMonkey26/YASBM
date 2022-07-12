@@ -1,8 +1,8 @@
 package com.pew.yetanotherskyblockmod.mixin;
 
-import javax.annotation.Nullable;
-
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -12,15 +12,16 @@ import com.pew.yetanotherskyblockmod.YASBM;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 
 @Environment(EnvType.CLIENT)
 @Mixin(PlayerInventory.class)
 public class PlayerInventoryMixin {
-    @Shadow @Nullable public int selectedSlot;
+    @Shadow @Final @Mutable private PlayerEntity player;
 
     @Inject(method = "dropSelectedItem", at = @At("HEAD"), cancellable = true)
-    public boolean dropSelectedItem(boolean dropEntireStack, CallbackInfoReturnable<Boolean> cir) {
-        return YASBM.getInstance().onWorldItemDrop(this.selectedSlot, cir);
+    private boolean dropSelectedItem(boolean dropEntireStack, CallbackInfoReturnable<Boolean> cir) {
+        return YASBM.getInstance().onWorldItemDrop(this.player.getMainHandStack(), cir);
     }
 }

@@ -1,23 +1,27 @@
 package com.pew.yetanotherskyblockmod.mixin;
 
+import java.util.Iterator;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import com.pew.yetanotherskyblockmod.YASBM;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.hud.BossBarHud;
+import net.minecraft.client.gui.hud.ClientBossBar;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.boss.BossBar;
 
 @Environment(EnvType.CLIENT)
 @Mixin(BossBarHud.class)
 public class BossBarHudMixin {
-	@Inject(method = "renderBossBar", at = @At("HEAD"), cancellable = true)
-	public void drawSlotRet(MatrixStack matrices, int x, int y, BossBar bossBar, CallbackInfo ci) {
-		YASBM.getInstance().onRenderBossBar(matrices, x, y, bossBar, ci);
+	@Inject(method = "render", at = @At(value = "INVOKE", target = "renderBossBar"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
+	private void renderBossBar(MatrixStack matrices, CallbackInfo ci, int i, int j, Iterator<ClientBossBar> bars, ClientBossBar clientBossBar, int k, int l) {
+		YASBM.getInstance().onRenderBossBar(matrices, (BossBar)clientBossBar, ci);
 	}
 }

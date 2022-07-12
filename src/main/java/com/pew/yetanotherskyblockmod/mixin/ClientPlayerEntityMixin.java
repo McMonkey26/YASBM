@@ -3,7 +3,6 @@ package com.pew.yetanotherskyblockmod.mixin;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.mojang.authlib.GameProfile;
@@ -25,11 +24,6 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 
     @Inject(method = "dropSelectedItem", at = @At("HEAD"), cancellable = true)
     public boolean dropSelectedItem(boolean dropEntireStack, CallbackInfoReturnable<Boolean> cir) {
-        return YASBM.getInstance().onWorldItemDrop(this.getInventory().selectedSlot, cir);
-    }
-
-    @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
-    public void sendChatMessage(String message, CallbackInfo ci) {
-        YASBM.getInstance().onMessageSent(message,ci);
+        return YASBM.getInstance().onWorldItemDrop(this.getMainHandStack(), cir);
     }
 }

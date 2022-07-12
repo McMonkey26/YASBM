@@ -11,8 +11,11 @@
     "ClientPlayerEntityMixin",
     "HandledScreenAccessor",
     "HandledScreenMixin",
+    "ItemAccessor",
+    "ItemStackMixin",
     "MinecraftClientMixin",
     "PlayerInventoryMixin",
+    "PlayerListHudMixin",
     "ScreenHandlerMixin",
     "ScreenMixin"
   ],

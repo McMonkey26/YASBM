@@ -14,7 +14,8 @@ public class CustomTabList extends YASBM.Feature {
     public void init() {
         
     }
-    
+
+    @Override
     public void onDrawTablist(MatrixStack matrices, Scoreboard scoreboard, ScoreboardObjective so, DrawableHelper g) {
         
     };

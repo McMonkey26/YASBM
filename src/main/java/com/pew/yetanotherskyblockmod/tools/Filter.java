@@ -1,27 +1,23 @@
 package com.pew.yetanotherskyblockmod.tools;
 
-import java.util.Map;
-import java.util.Map.Entry;
-
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import com.pew.yetanotherskyblockmod.YASBM;
-import com.pew.yetanotherskyblockmod.config.ModConfig;
 
 import net.minecraft.text.Text;
 
 public class Filter extends YASBM.Feature {
     public static Filter instance = new Filter();
 
+    @Override
     public void init() {}
     
-    private static Map<String,Integer> getFilter() {
-        return ModConfig.get().tools.filter;
-    }
+    // private static Map<String,Integer> getFilter() {
+    //     return ModConfig.get().tools.filter;
+    // }
 
     @Override
-    public void onChat(Text text, int id, CallbackInfo ci) {
+    public Text onMessageReccieved(Text text) {
         YASBM.LOGGER.info(Text.Serializer.toJson(text));
+        // YASBM.LOGGER.info("e "+text.getSiblings().get(0).asString());
         // for (Entry<String,Integer> entry : getFilter().entrySet()) {
         //     String filter = entry.getKey();
         //     Integer actions = entry.getValue();
@@ -40,5 +36,6 @@ public class Filter extends YASBM.Feature {
         //         }
         //     } TODO: This
         // }
+        return text;
     }
 }
