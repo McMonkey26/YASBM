@@ -4,17 +4,11 @@ import com.pew.yetanotherskyblockmod.YASBM;
 
 import net.minecraft.text.Text;
 
-public class Filter extends YASBM.Feature {
-    public static Filter instance = new Filter();
-
+public class Filter implements com.pew.yetanotherskyblockmod.Features.Feature {
     @Override
-    public void init() {}
+    public void init() {
+    }
     
-    // private static Map<String,Integer> getFilter() {
-    //     return ModConfig.get().tools.filter;
-    // }
-
-    @Override
     public Text onMessageReccieved(Text text) {
         YASBM.LOGGER.info(Text.Serializer.toJson(text));
         // YASBM.LOGGER.info("e "+text.getSiblings().get(0).asString());

@@ -5,16 +5,13 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-import com.pew.yetanotherskyblockmod.YASBM;
 import com.pew.yetanotherskyblockmod.config.ModConfig;
 import com.pew.yetanotherskyblockmod.util.Utils;
 
 import net.minecraft.text.Text;
 
-public class Ignore extends YASBM.Feature {
-    public static Ignore instance = new Ignore();
-
-    private static Set<String> ignored;
+public class Ignore implements com.pew.yetanotherskyblockmod.Features.Feature {
+    private Set<String> ignored;
 
     @Override
     public void init() {
@@ -35,7 +32,7 @@ public class Ignore extends YASBM.Feature {
         return text;
     }
 
-    public static void add(String username) {
+    public void add(String username) {
         @Nullable String uuid = Utils.getUUID(username);
         if (uuid != null) {
             ModConfig.get().tools.ignored.add(uuid);

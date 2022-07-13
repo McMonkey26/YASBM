@@ -1,6 +1,8 @@
 {
     "key.categories.yetanotherskyblockmod": "Yet Another Skyblock Mod",
-    "key.slotLock": "Slot Lock",
+    "key.itemLock": "Lock Item",
+    "key.copyBlock": "WAILA Copy",
+    "key.copyItem": "Held Item Copy",
 
     "text.autoconfig.yetanotherskyblockmod.title": "Yet Another Skyblock Mod Settings",
   

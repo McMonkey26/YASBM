@@ -25,20 +25,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.Identifier;
 
-public class ItemLock extends YASBM.Feature {
-    public static ItemLock instance = new ItemLock();
-
+public class ItemLock implements com.pew.yetanotherskyblockmod.Features.Feature {
+    
     private static KeyBinding key;
     private static final Identifier SLOT_LOCK = new Identifier(YASBM.MODID, "textures/lock.png");
-    
+
     @Override
     public void init() {
         key = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-            "key.slotLock",
+            "key.itemLock",
             GLFW.GLFW_KEY_L,
             "key.categories."+YASBM.MODID
         ));
-    };
+    }
 
     private static boolean isEnabled() {
         return ModConfig.get().item.itemLockEnabled && Utils.isOnSkyblock();

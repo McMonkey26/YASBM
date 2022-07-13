@@ -3,19 +3,17 @@ package com.pew.yetanotherskyblockmod.item;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pew.yetanotherskyblockmod.YASBM;
 import com.pew.yetanotherskyblockmod.config.ModConfig;
 
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 
-public class SBTooltip extends YASBM.Feature {
-    public static SBTooltip instance = new SBTooltip();
-
+public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.Feature {
     @Override
-    public void init() {}
-    
+    public void init() {
+    }
+
     private boolean isEnabled() {
         return ModConfig.get().item.sbTooltipEnabled;
     }

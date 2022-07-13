@@ -14,6 +14,9 @@ import com.pew.yetanotherskyblockmod.YASBM;
 
 import net.minecraft.client.ClientBrandRetriever;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.AbstractNbtList;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.scoreboard.ScoreboardObjective;
 
 public class Utils {
@@ -21,7 +24,7 @@ public class Utils {
     
     private static boolean _isOnSkyblock() {
         if (YASBM.client.isInSingleplayer() || ClientBrandRetriever.getClientModName() == null || 
-            !ClientBrandRetriever.getClientModName().toLowerCase().contains("hypixel")) return false;
+            !YASBM.client.player.getServerBrand().contains("hypixel")) return false;
         ScoreboardObjective titleObj = YASBM.client.player.world.getScoreboard().getObjectiveForSlot(1);
         String title = titleObj.getDisplayName().asString().replaceAll("(?i)\\u00A7.", "");
         for (String skyblock : new String[]{"SKYBLOCK", "\u7A7A\u5C9B\u751F\u5B58", "\u7A7A\u5CF6\u751F\u5B58"}) {
@@ -88,5 +91,37 @@ public class Utils {
             return item.getSubNbt("ExtraAttributes").getString("uuid");
         }
         return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static JsonObject toJSON(NbtCompound nbt) {
+        JsonObject jo = new JsonObject();
+        for (String key : nbt.getKeys()) {
+            NbtElement v = nbt.get(key);
+            if (v.getNbtType() instanceof NbtCompound) {
+                jo.add(key, toJSON((NbtCompound)v));
+            } else if (v.getNbtType() instanceof AbstractNbtList) {
+                jo.add(key, toJSON((AbstractNbtList<NbtElement>)v));
+            } else {
+                jo.addProperty(key, v.asString());
+            }
+        }
+        return jo;
+    }
+    @SuppressWarnings("unchecked")
+    public static JsonArray toJSON(AbstractNbtList<NbtElement> nbt) {
+        JsonArray ja = new JsonArray();
+        Iterator<NbtElement> i = nbt.iterator();
+        while (i.hasNext()) {
+            NbtElement v = i.next();
+            if (v.getNbtType() instanceof NbtCompound) {
+                ja.add(toJSON((NbtCompound)v));
+            } else if (v.getNbtType() instanceof AbstractNbtList) {
+                ja.add(toJSON((AbstractNbtList<NbtElement>)v));
+            } else {
+                ja.add(v.asString());
+            }
+        }
+        return ja;
     }
 }
