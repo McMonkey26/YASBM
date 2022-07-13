@@ -1,19 +1,16 @@
 # YASBM
 Yet Another SkyBlock Mod
-
+<br/><br/>
 ### Features:
-
-> Hide Witherborn
-> WAILA Copy
-> Held Item Copy
-
+- Hide Witherborn
+- WAILA Copy
+- Held Item Copy
+<br/><br/>
 ### Untested Features:
-
-> Skyblock Tooltips
-> Item Locking
-
+- Skyblock Tooltips
+- Item Locking
+<br/><br/>
 ### Planned Features:
-
 > In Game Profile Viewer  
 > Custom Enchantment Colors  
 > Improved SB Menus  
