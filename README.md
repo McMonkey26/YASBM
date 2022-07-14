@@ -1,15 +1,18 @@
 # YASBM
 Yet Another SkyBlock Mod
-
+<br/><br/>
 ### Features:
-
-nothing yet lmao
-
+- Hide Witherborn
+- WAILA Copy
+- Held Item Copy
+<br/><br/>
+### Untested Features:
+- Skyblock Tooltips
+- Item Locking
+<br/><br/>
 ### Planned Features:
-
 > In Game Profile Viewer  
 > Custom Enchantment Colors  
-> Slot Locking  
 > Improved SB Menus  
 > Calendar Event Notifations (Jacob's Events, Spooky Festivals, etc)  
 > Custom Trade Menu  
@@ -53,16 +56,12 @@ nothing yet lmao
 > Better Dungeon Item Tooltips  
 > Bazaar Flipper  
 > Auction House Flipper  
-> Easily Accept/Decline Party Invites, Friend Requests, etc.  
-> Expertise/Compact/Cultivating in Lore  
+> Easily Accept/Decline Party Invites, Friend Requests, etc.   
 > Skill XP/Hour and Items/Hour Tracker  
 > Search through Log Files  
 > Copy Chat  
-> Copy Inventories as JSON  
-> Copy whatever you're looking at (NPC, mob, armor stands, skulls, dropped items)
 > Analyze Chests and Item Values  
 > Additional Info in Tooltips (item age, pet xp, price per item on the auction house)
 > Completely Custom Skyblock HUD  
 > Type in Chat while in GUIs  
 > Search through Chat with CTRL + F  
-> Type your Held Item in Chat
