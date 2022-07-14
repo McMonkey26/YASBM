@@ -3,6 +3,9 @@ package com.pew.yetanotherskyblockmod.util;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.time.Period;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Iterator;
 
 import javax.annotation.Nullable;
@@ -38,7 +41,6 @@ public class Utils {
         // return location != "Other";
         return true; // So I can test
     }
-
     public static void _getLocation() {
         if (!_isOnSkyblock()) {location = "Other"; return;}
         for (ScoreboardObjective objective : YASBM.client.player.world.getScoreboard().getObjectives()) {
@@ -123,5 +125,22 @@ public class Utils {
             }
         }
         return ja;
+    }
+
+    public static final float DAYS_IN_YEAR = 365.2425f;
+    public static String getShortDuration(ZonedDateTime timestamp) {
+        final ZonedDateTime now = ZonedDateTime.now(ZoneId.of("America/Toronto"));
+        final Period p = Period.between(timestamp.toLocalDate(), now.toLocalDate());
+        if (p.getYears() >= 1) {
+            return roundToPrecision(p.getYears()+ p.getDays()/DAYS_IN_YEAR, 1)+" Years";
+        } else if (p.getMonths() >= 1) {
+            return roundToPrecision(p.getMonths()+ p.getDays()/(DAYS_IN_YEAR/12), 1)+" Months";
+        } else {
+            return p.getDays()+" Days";
+        }
+    }
+    public static double roundToPrecision(double number, int decimalpoints) {
+        double a = Math.pow(10, decimalpoints);
+        return Math.round( number * a ) / a;
     }
 }

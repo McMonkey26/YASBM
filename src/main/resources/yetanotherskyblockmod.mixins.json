@@ -9,6 +9,7 @@
     "BossBarHudMixin",
     "ChatHudMixin",
     "ClientPlayerEntityMixin",
+    "ClientPlayNetworkHandlerMixin",
     "HandledScreenAccessor",
     "HandledScreenMixin",
     "ItemAccessor",

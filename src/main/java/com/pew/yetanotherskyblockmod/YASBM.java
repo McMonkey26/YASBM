@@ -23,7 +23,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.ScoreboardObjective;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 
 public class YASBM implements ClientModInitializer {
@@ -43,12 +42,12 @@ public class YASBM implements ClientModInitializer {
 		Features.init();
 	}
 
-	public Text onMessageReccieved(Text text) {
+	public @Nullable Text onMessageReccieved(Text text) {
+		YASBM.LOGGER.info(Text.Serializer.toJson(text));
 		@Nullable Text msg = text;
-		msg = Features.Tools.Ignore.onMessageReccieved(msg);
-		if (msg == null) return LiteralText.EMPTY;
-		msg = Features.Tools.Filter.onMessageReccieved(msg);
-		if (msg == null) return LiteralText.EMPTY;
+		msg = Features.Tools.Clean.onMessageReccieved(text);
+		if (msg == null) return null;
+		// msg = onHypixelMessage(text.asString()); // needs to be changed
 		return msg;
 	} // incoming
 	
@@ -57,6 +56,14 @@ public class YASBM implements ClientModInitializer {
 		// message = Features.Tools.Emojis.onMessageSent(message);
 		return message;
     } // outgoing
+
+	public @Nullable String onHypixelMessage(String message) {
+		message = Features.Tools.Ignore.onHypixelMessage(message);
+		if (message == null) return null;
+		message = Features.Tools.Filter.onHypixelMessage(message);
+		if (message == null) return null;
+		return message;
+	}
 
 	public boolean onWorldItemDrop(ItemStack itemStack, CallbackInfoReturnable<Boolean> cir) {
 		Features.Item.ItemLock.onItemDrop(itemStack, cir);
@@ -73,6 +80,7 @@ public class YASBM implements ClientModInitializer {
 
     public void onGuiKeyPress(int keyCode, int scanCode, int modifiers) {
 		Features.Item.ItemLock.onGuiKeyPress(keyCode, scanCode);
+		Features.Item.CopyItem.onGuiKeyPress(keyCode, scanCode);
     }
 
     public void onWorldLoad() {
@@ -90,5 +98,9 @@ public class YASBM implements ClientModInitializer {
 
     public ArrayList<Text> onTooltipExtra(List<Text> list, NbtCompound extra, TooltipContext context) {
         return new ArrayList<Text>(Features.Item.SBTooltip.onTooltip(list, extra, context));
+    }
+
+    public Text onOverlayMessageReccieved(Text text) {
+        return Features.Hud.StatBars.onOverlayMessageReccieved(text);
     }
 }

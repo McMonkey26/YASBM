@@ -29,6 +29,8 @@ public class Features {
 
         public default String onMessageSent(String message) {throw new AssertionError();};
 		public default Text onMessageReccieved(Text text) {throw new AssertionError();};
+        public default Text onOverlayMessageReccieved(Text text) {throw new AssertionError();};
+        public default String onHypixelMessage(String message) {throw new AssertionError();};
 		public default void onItemDrop(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {};
 		public default void onItemDrop(ItemStack stack, CallbackInfo ci) {};
         public default void onDrawSlot(MatrixStack matrices, Slot slot, DrawableHelper g) {};
@@ -52,8 +54,13 @@ public class Features {
     }
 
     public static class Hud {
-        public static final Feature HideWitherborn = new HideWitherborn();
+        public static final Feature BetterMenus = new BetterMenus();
         public static final Feature CustomTabList = new CustomTabList();
+        public static final Feature FarmingOverlay = new FarmingOverlay();
+        public static final Feature HideWitherborn = new HideWitherborn();
+        public static final Feature StatBars = new StatBars();
+        public static final Feature UpdateLog = new UpdateLog();
+        public static final Feature XPTracker = new XPTracker();
     }
 
     public static class Item {
@@ -80,8 +87,13 @@ public class Features {
         add(General.CopyBlock);
         add(General.ReforgeStop);
         add(General.RodColors);
+        add(Hud.BetterMenus);
         add(Hud.CustomTabList);
+        add(Hud.FarmingOverlay);
         add(Hud.HideWitherborn);
+        add(Hud.StatBars);
+        add(Hud.UpdateLog);
+        add(Hud.XPTracker);
         add(Item.CopyItem);
         add(Item.Customization);
         add(Item.ItemLock);

@@ -120,7 +120,20 @@ public class ModConfig implements ConfigData {
         @ConfigEntry.Gui.Tooltip
         public boolean itemLockEnabled = true;
         public boolean customizationEnabled = false;
-        public boolean sbTooltipEnabled = true;
+
+        @ConfigEntry.Gui.CollapsibleObject
+        public SBTooltip sbTooltip = new SBTooltip();
+        public static class SBTooltip {
+            public static enum ConfigState {
+                OFF, KEYBIND, ON
+            }
+            public ConfigState missingEnchants   = ConfigState.OFF;
+            public ConfigState stackingEnchants  = ConfigState.OFF;
+            public ConfigState marketPrices      = ConfigState.OFF;
+            public ConfigState npcPrices         = ConfigState.OFF;
+            public ConfigState itemAge           = ConfigState.OFF;
+            public ConfigState sbItemId          = ConfigState.OFF;
+        }
 
         @ConfigEntry.Gui.Excluded
         public List<String> lockedUUIDs = new ArrayList<>();
