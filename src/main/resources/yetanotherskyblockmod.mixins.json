@@ -10,6 +10,8 @@
     "ChatHudMixin",
     "ClientPlayerEntityMixin",
     "ClientPlayNetworkHandlerMixin",
+    "FishingBobberEntityMixin",
+    "FishingBobberEntityRendererMixin",
     "HandledScreenAccessor",
     "HandledScreenMixin",
     "ItemAccessor",
