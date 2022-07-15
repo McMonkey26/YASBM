@@ -12,6 +12,7 @@ import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
+import me.shedaniel.math.Color;
 
 @Config(name=YASBM.MODID)
 // @Config.Gui.CategoryBackground(category = "general", background = "")
@@ -27,6 +28,18 @@ public class ModConfig implements ConfigData {
         public boolean reforgeStopEnabled = true;
         @ConfigEntry.Gui.Tooltip
         public boolean wailaEnabled = true;
+
+        @ConfigEntry.Gui.CollapsibleObject
+        public FishingUtilsConfig fishingUtils = new FishingUtilsConfig();
+        public static class FishingUtilsConfig {
+            @ConfigEntry.Gui.Tooltip
+            public boolean warnWhenClose = true;
+            @ConfigEntry.Gui.Tooltip
+            public boolean showOthers = false;
+
+            public Color myLineColor = Color.ofRGBA(255, 255, 255, 255);
+            public Color myParticleColor = Color.ofRGBA(255, 255, 255, 255);
+        }
     }
 
     @ConfigEntry.Category("tools")

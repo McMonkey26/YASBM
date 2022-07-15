@@ -50,7 +50,7 @@ public class Features {
         public static final Feature BetterMusic = new BetterMusic();
         public static final Feature CopyBlock = new CopyBlock();
         public static final Feature ReforgeStop = new ReforgeStop();
-        public static final Feature RodColors = new RodColors();
+        public static final FishingUtils FishingUtils = new FishingUtils(); // special
     }
 
     public static class Hud {
@@ -86,7 +86,7 @@ public class Features {
         add(General.BetterMusic);
         add(General.CopyBlock);
         add(General.ReforgeStop);
-        add(General.RodColors);
+        add(General.FishingUtils);
         add(Hud.BetterMenus);
         add(Hud.CustomTabList);
         add(Hud.FarmingOverlay);
