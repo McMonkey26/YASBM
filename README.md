@@ -17,11 +17,14 @@ Yet Another SkyBlock Mod
 > Calendar Event Notifations (Jacob's Events, Spooky Festivals, etc)  
 > Custom Trade Menu  
 > Custom Fishing Rod Colors
+> Fishing Bait List
 > Item Customization (Rename items, change enchantment glint color)  
-> Fairy Soul Waypoints  
+> Fairy Soul & Relic Waypoints  
 > Pet XP Display  
 > Farming Overlay (Collection, Hoe Counter, Angle, Crops/Minute)  
-> Dungeon Map  
+> Dungeon Map
+> Crimson Isles & Crystal Hollows Map
+> Crystal Hollows Waypoints
 > Dungeon Profit Tracker  
 > Dungeon Score Tracker  
 > Dungeon Puzzle Solvers  
@@ -37,18 +40,17 @@ Yet Another SkyBlock Mod
 > Custom Tab List  
 > Command Aliases
 > Slayer Drop Tracker
+> Slayer Progress Indicator
+> Voidgloom Utils (Voidgloom Beacon Timer, Voidgloom Beacon Alert, Voidgloom Skull Alert, Voidgloom Beacon Beam)
 > Event Drop Tracker
 > Reparty Command
 > Key Shortcuts  
 > Spam Hider  
 > Dungeon Boss HP Display  
-> Crystal Hollows Map  
-> Crystal Hollows Waypoints
-> Show Enchanted Book, Potion, Minion Level, Dungeon Stars as Stack Size  
-> Show Pet Candies as Stack Size  
+> Show Enchanted Book, Potion, Minion Level, Pet Candies as Stack Size  
 > Show NPC Sell Values on Tooltip  
-> Hide Witherborn Bossbars  
-> Jerry Event Timer  
+> Event Timers
+> Birch Park Rainmaker Timer
 > Choose Reforges to Stop At  
 > Improved Storage Menu
 > Hide Food/Armor Bar  
@@ -65,3 +67,7 @@ Yet Another SkyBlock Mod
 > Completely Custom Skyblock HUD  
 > Type in Chat while in GUIs  
 > Search through Chat with CTRL + F  
+> Dolphin and Rock pet counters
+> Legion Player counter
+> Pet Display
+> Booster Cookie Timer

@@ -143,4 +143,14 @@ public class Utils {
         double a = Math.pow(10, decimalpoints);
         return Math.round( number * a ) / a;
     }
+
+    public static final int[] rainbow = new int[]{
+        0xFF0000, // Red
+        0xFF8800, // Orange
+        0xFFFF00, // Yellow
+        0x00FF00, // Green
+        0x00FFFF, // Teal
+        0x0000FF, // Blue
+        0xFF00FF, // Purple
+    };
 }

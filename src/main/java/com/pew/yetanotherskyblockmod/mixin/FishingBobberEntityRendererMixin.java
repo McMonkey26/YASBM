@@ -19,8 +19,9 @@ import net.minecraft.entity.projectile.FishingBobberEntity;
 @Environment(EnvType.CLIENT)
 @Mixin(FishingBobberEntityRenderer.class)
 public class FishingBobberEntityRendererMixin {
-    @Inject(method = "render", at = @At("HEAD"), cancellable = true) // Don't bother passing through main function, this isn't needed elsewhere
+    @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     private void render(FishingBobberEntity fishingBobberEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci) {
+        // Don't bother passing through main function, this isn't needed elsewhere
         Features.General.FishingUtils.onRenderBobber(fishingBobberEntity, matrixStack, ci);
     }
 

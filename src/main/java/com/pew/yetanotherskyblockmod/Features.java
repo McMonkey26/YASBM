@@ -27,12 +27,14 @@ public class Features {
     public static interface Feature {
 		public void init();
 
+        public default void onConfigUpdate() {};
         public default String onMessageSent(String message) {throw new AssertionError();};
 		public default Text onMessageReccieved(Text text) {throw new AssertionError();};
         public default Text onOverlayMessageReccieved(Text text) {throw new AssertionError();};
         public default String onHypixelMessage(String message) {throw new AssertionError();};
-		public default void onItemDrop(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {};
-		public default void onItemDrop(ItemStack stack, CallbackInfo ci) {};
+		public default void onItemDrop(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {}; // World
+		public default void onItemDrop(ItemStack stack, CallbackInfo ci) {};                     // Inventory
+        public default void onDrawHud(MatrixStack matrices, DrawableHelper g) {};
         public default void onDrawSlot(MatrixStack matrices, Slot slot, DrawableHelper g) {};
 		public default void onDrawTablist(MatrixStack matrices, Scoreboard scoreboard, ScoreboardObjective so, DrawableHelper g) {};
         public default List<Text> onTooltip(List<Text> tooltip, NbtCompound extra, TooltipContext context) {throw new AssertionError();};

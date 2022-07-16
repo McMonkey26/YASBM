@@ -43,13 +43,14 @@ public class ItemLock implements com.pew.yetanotherskyblockmod.Features.Feature 
         return ModConfig.get().item.itemLockEnabled && Utils.isOnSkyblock();
     }
     private boolean isLocked(ItemStack item) {
+        if (item.isEmpty() || !item.hasNbt()) return false;
         @Nullable String uuid = Utils.getItemUUID(item);
         return uuid != null && ModConfig.get().item.lockedUUIDs.contains(uuid);
     }
 
     @Override
     public void onItemDrop(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-        if (!isEnabled() || !isLocked(stack)) {cir.setReturnValue(true); return;}
+        if (!isEnabled() || !isLocked(stack)) return;
         cir.setReturnValue(false);
     }
     @Override

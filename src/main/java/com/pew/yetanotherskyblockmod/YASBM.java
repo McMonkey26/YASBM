@@ -42,13 +42,16 @@ public class YASBM implements ClientModInitializer {
 		Features.init();
 	}
 
+	public void onConfigUpdate() {
+		Features.General.FishingUtils.onConfigUpdate();
+	}
+
 	public @Nullable Text onMessageReccieved(Text text) {
 		YASBM.LOGGER.info(Text.Serializer.toJson(text));
-		@Nullable Text msg = text;
-		msg = Features.Tools.Clean.onMessageReccieved(text);
-		if (msg == null) return null;
-		// msg = onHypixelMessage(text.asString()); // needs to be changed
-		return msg;
+		// text = Features.Tools.Clean.onMessageReccieved(text);
+		// if (text == null) return null;
+		// text = onHypixelMessage(text.asString()); // needs to be changed
+		return text;
 	} // incoming
 	
 	public String onMessageSent(String message) {
@@ -65,9 +68,9 @@ public class YASBM implements ClientModInitializer {
 		return message;
 	}
 
-	public boolean onWorldItemDrop(ItemStack itemStack, CallbackInfoReturnable<Boolean> cir) {
+	public void onWorldItemDrop(ItemStack itemStack, CallbackInfoReturnable<Boolean> cir) {
+		Features.Hud.UpdateLog.onItemDrop(itemStack, cir); // for testing
 		Features.Item.ItemLock.onItemDrop(itemStack, cir);
-		return cir.getReturnValue();
 	}
 
 	public void onInventoryItemDrop(ItemStack itemStack, CallbackInfo ci) {
@@ -102,5 +105,9 @@ public class YASBM implements ClientModInitializer {
 
     public Text onOverlayMessageReccieved(Text text) {
         return Features.Hud.StatBars.onOverlayMessageReccieved(text);
+    }
+
+    public void onDrawHud(MatrixStack matrices, DrawableHelper g) {
+		Features.Hud.UpdateLog.onDrawHud(matrices, g);
     }
 }

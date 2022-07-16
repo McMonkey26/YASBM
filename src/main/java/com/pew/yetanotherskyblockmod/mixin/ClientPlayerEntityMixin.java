@@ -23,7 +23,7 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
     }
 
     @Inject(method = "dropSelectedItem", at = @At("HEAD"), cancellable = true)
-    public boolean dropSelectedItem(boolean dropEntireStack, CallbackInfoReturnable<Boolean> cir) {
-        return YASBM.getInstance().onWorldItemDrop(this.getMainHandStack(), cir);
+    private void dropSelectedItem(boolean dropEntireStack, CallbackInfoReturnable<Boolean> cir) {
+        YASBM.getInstance().onWorldItemDrop(this.getMainHandStack(), cir);
     }
 }

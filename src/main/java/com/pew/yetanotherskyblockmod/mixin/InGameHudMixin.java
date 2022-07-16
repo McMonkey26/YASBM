@@ -10,16 +10,14 @@ import com.pew.yetanotherskyblockmod.YASBM;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.screen.slot.Slot;
 
 @Environment(EnvType.CLIENT)
-@Mixin(HandledScreen.class)
-public class HandledScreenMixin {
-	
-	@Inject(method = "drawSlot", at = @At("HEAD"))
-	public void drawSlotRet(MatrixStack matrices, Slot slot, CallbackInfo ci) {
-		YASBM.getInstance().onDrawSlot(matrices, slot, (DrawableHelper)(Object)this);
-	}
+@Mixin(InGameHud.class)
+public class InGameHudMixin {
+    @Inject(method = "render", at = @At("HEAD"), cancellable = false)
+    private void render(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
+        YASBM.getInstance().onDrawHud(matrices, (DrawableHelper)(Object)this);
+    }
 }

@@ -14,6 +14,15 @@
     "text.autoconfig.yetanotherskyblockmod.option.general.reforgeStopEnabled.@Tooltip": "Allows you to set a desired reforge (so you don't skip it)",
     "text.autoconfig.yetanotherskyblockmod.option.general.wailaEnabled": "WhatAmILookingAt",
     "text.autoconfig.yetanotherskyblockmod.option.general.wailaEnabled.@Tooltip": "Adds a keybind to get the data of the block you're looking at.",
+    "text.autoconfig.yetanotherskyblockmod.option.general.fishingUtils": "Fishing Utils",
+    "text.autoconfig.yetanotherskyblockmod.option.general.fishingUtils.warnWhenClose": "Warn When Close",
+    "text.autoconfig.yetanotherskyblockmod.option.general.fishingUtils.warnWhenClose.@Tooltip": "Alerts you when fish are nearby",
+    "text.autoconfig.yetanotherskyblockmod.option.general.fishingUtils.showOthers": "Show Other Lines",
+    "text.autoconfig.yetanotherskyblockmod.option.general.fishingUtils.showOthers.@Tooltip": "Whether or not to hide others' fishing rods and particles.",
+    "text.autoconfig.yetanotherskyblockmod.option.general.fishingUtils.chromaSpeed": "Chroma Speed",
+    "text.autoconfig.yetanotherskyblockmod.option.general.fishingUtils.chromaSpeed.@Tooltip": "The speed at which to cycle colors (0 = disable)",
+    "text.autoconfig.yetanotherskyblockmod.option.general.fishingUtils.myLineColor": "Line Color",
+    "text.autoconfig.yetanotherskyblockmod.option.general.fishingUtils.myParticleColor": "Particle Color",
 
     "text.autoconfig.yetanotherskyblockmod.category.tools": "Tools",
     "text.autoconfig.yetanotherskyblockmod.option.tools.afk": "AFK",
@@ -40,8 +49,13 @@
     "text.autoconfig.yetanotherskyblockmod.option.item.itemLockEnabled": "Item Locking",
     "text.autoconfig.yetanotherskyblockmod.option.item.itemLockEnabled.@Tooltip": "Prevents you from dropping items with specific UUIDs.",
     "text.autoconfig.yetanotherskyblockmod.option.item.customizationEnabled": "Item Customization",
-    "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltipEnabled": "Better Tooltips",
-    "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltipEnabled.@Tooltip": "Adds better skyblock-based tooltips.",
+    "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltip": "Better Tooltips",
+    "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltip.missingEnchants": "Missin Enchants",
+    "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltip.stackingEnchants": "Stacking Enchants",
+    "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltip.marketPrices": "AH/BZ Prices",
+    "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltip.npcPrices": "NPC Prices",
+    "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltip.itemAge": "Item Age",
+    "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltip.sbItemId": "Item ID",
 
     "text.autoconfig.yetanotherskyblockmod.category.dungeons": "Dungeons"
 }

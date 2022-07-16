@@ -9,14 +9,19 @@ import com.pew.yetanotherskyblockmod.YASBM;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
+import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import me.shedaniel.math.Color;
+import me.shedaniel.math.Rectangle;
+import net.minecraft.util.ActionResult;
 
 @Config(name=YASBM.MODID)
 // @Config.Gui.CategoryBackground(category = "general", background = "")
 public class ModConfig implements ConfigData {
+    @ConfigEntry.Gui.Excluded
+    private static ConfigHolder<ModConfig> holder;
 
     @ConfigEntry.Category("general")
     @ConfigEntry.Gui.TransitiveObject
@@ -36,6 +41,10 @@ public class ModConfig implements ConfigData {
             public boolean warnWhenClose = true;
             @ConfigEntry.Gui.Tooltip
             public boolean showOthers = false;
+
+            @ConfigEntry.Gui.Tooltip
+            @ConfigEntry.BoundedDiscrete(min=0, max=60)
+            public int chromaSpeed = 0;
 
             public Color myLineColor = Color.ofRGBA(255, 255, 255, 255);
             public Color myParticleColor = Color.ofRGBA(255, 255, 255, 255);
@@ -123,6 +132,13 @@ public class ModConfig implements ConfigData {
             public boolean storageMenuEnabled= true;
         }
 
+        @ConfigEntry.Gui.CollapsibleObject
+        public UpdateLogConfig updateLog = new UpdateLogConfig();
+        public static class UpdateLogConfig {
+            public Rectangle bounds = new Rectangle(0, 0, 70, 100);
+            public Color textColor = Color.ofRGBA(100, 100, 100, 200);
+            public Color background = Color.ofRGBA(50, 50, 50, 100);
+        }
         // custom bars, farming overlay, xp tracker
     }
 
@@ -160,10 +176,14 @@ public class ModConfig implements ConfigData {
     }
 
     public static void init() {
-        AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
+        holder = AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
+        holder.registerSaveListener((ConfigHolder<ModConfig> holder, ModConfig config) -> {
+            YASBM.getInstance().onConfigUpdate();
+            return ActionResult.PASS;
+        });
     }
 
     public static ModConfig get() {
-        return AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+        return holder.get();
     }
 }
