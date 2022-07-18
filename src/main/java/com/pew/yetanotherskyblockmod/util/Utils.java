@@ -21,6 +21,7 @@ import net.minecraft.nbt.AbstractNbtList;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.scoreboard.ScoreboardObjective;
+import net.minecraft.text.Text;
 
 public class Utils {
     private static String location = "None";
@@ -153,4 +154,8 @@ public class Utils {
         0x0000FF, // Blue
         0xFF00FF, // Purple
     };
+
+    public static void actionBar(Text text) {
+        YASBM.client.player.sendMessage(text, true);
+    }
 }

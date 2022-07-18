@@ -13,6 +13,7 @@ import com.pew.yetanotherskyblockmod.util.Utils;
 
 import blue.endless.jankson.annotation.Nullable;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.item.TooltipContext;
@@ -40,10 +41,15 @@ public class YASBM implements ClientModInitializer {
 	public void onInitializeClient() {
 		ModConfig.init();
 		Features.init();
+		ClientTickEvents.END_CLIENT_TICK.register((client) -> this.onTick());
 	}
 
 	public void onConfigUpdate() {
 		Features.General.FishingUtils.onConfigUpdate();
+	}
+
+	public void onTick() {
+		Features.Hud.UpdateLog.onTick();
 	}
 
 	public @Nullable Text onMessageReccieved(Text text) {
@@ -110,4 +116,8 @@ public class YASBM implements ClientModInitializer {
     public void onDrawHud(MatrixStack matrices, DrawableHelper g) {
 		Features.Hud.UpdateLog.onDrawHud(matrices, g);
     }
+
+	public void onChatClear(boolean history) {
+		Features.Hud.UpdateLog.clear();
+	}
 }

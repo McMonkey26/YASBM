@@ -28,6 +28,7 @@ public class Features {
 		public void init();
 
         public default void onConfigUpdate() {};
+        public default void onTick() {};
         public default String onMessageSent(String message) {throw new AssertionError();};
 		public default Text onMessageReccieved(Text text) {throw new AssertionError();};
         public default Text onOverlayMessageReccieved(Text text) {throw new AssertionError();};
@@ -61,7 +62,7 @@ public class Features {
         public static final Feature FarmingOverlay = new FarmingOverlay();
         public static final Feature HideWitherborn = new HideWitherborn();
         public static final Feature StatBars = new StatBars();
-        public static final Feature UpdateLog = new UpdateLog();
+        public static final UpdateLog UpdateLog = new UpdateLog();
         public static final Feature XPTracker = new XPTracker();
     }
 

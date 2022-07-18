@@ -139,6 +139,17 @@ public class ModConfig implements ConfigData {
             public Color textColor = Color.ofRGBA(100, 100, 100, 200);
             public Color background = Color.ofRGBA(50, 50, 50, 100);
         }
+
+        @ConfigEntry.Gui.Excluded
+        public StatBarConfig statBars = new StatBarConfig();
+        public static class StatBarConfig {
+            public Rectangle healthbar = null;
+            public Rectangle manabar = null;
+            public Rectangle defenseicon = null;
+
+            public boolean showHealthChange = true;
+            public boolean showEhp = false;
+        }
         // custom bars, farming overlay, xp tracker
     }
 
