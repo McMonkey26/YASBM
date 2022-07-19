@@ -1,15 +1,15 @@
 # YASBM
 Yet Another SkyBlock Mod
-<br/><br/>
+<br>
 ### Features:
 - Hide Witherborn
 - WAILA Copy
 - Held Item Copy
-<br/><br/>
+<br>
 ### Untested Features:
 - Skyblock Tooltips (TODO: Item Price, Dungeon Quality, Pet XP)
 - Item Locking
-<br/><br/>
+<br>
 ### WIP Features
 - Fishing Utilities (TODO: Close fish alert, bait list)
 - Update Log HUD (TODO: Resizable)
@@ -17,8 +17,9 @@ Yet Another SkyBlock Mod
 - Filter, Ignore (TODO: Hypixel Chat Parsing)
 <hr>
 ### Planned Features:
+
 > In Game Profile Viewer  
-> Custom Enchantment Colors  
+> Custom Enchantment Colors
 > Improved SB Menus  
 > Calendar Event Notifations & Timers (Jacob's Events, Spooky Festivals, etc)  
 > Birch Park Rainmaker Timer
