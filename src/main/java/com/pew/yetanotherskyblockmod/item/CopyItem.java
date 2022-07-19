@@ -8,7 +8,6 @@ import com.pew.yetanotherskyblockmod.YASBM;
 import com.pew.yetanotherskyblockmod.mixin.HandledScreenAccessor;
 import com.pew.yetanotherskyblockmod.util.Utils;
 
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -27,14 +26,14 @@ public class CopyItem implements com.pew.yetanotherskyblockmod.Features.Feature 
             GLFW.GLFW_KEY_UNKNOWN,
             "key.categories."+YASBM.MODID
         ));
+    }
 
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (key.isUnbound() || !key.isPressed()) return;
-            key.setPressed(false);
-            ItemStack helditem = client.player.getMainHandStack();
-            if (!helditem.hasNbt()) return;
-            client.keyboard.setClipboard(Utils.toJSON(helditem.getNbt()).toString());
-        });
+    public void onTick() {
+        if (key.isUnbound() || !key.isPressed()) return;
+        key.setPressed(false);
+        ItemStack helditem = YASBM.client.player.getMainHandStack();
+        if (!helditem.hasNbt()) return;
+        YASBM.client.keyboard.setClipboard(Utils.toJSON(helditem.getNbt()).toString());
     }
 
     public void onGuiKeyPress(int keyCode, int scanCode) {

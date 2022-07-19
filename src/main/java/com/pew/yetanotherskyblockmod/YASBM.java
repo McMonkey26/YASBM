@@ -3,6 +3,8 @@ package com.pew.yetanotherskyblockmod;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -11,7 +13,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.pew.yetanotherskyblockmod.config.ModConfig;
 import com.pew.yetanotherskyblockmod.util.Utils;
 
-import blue.endless.jankson.annotation.Nullable;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
@@ -50,6 +51,9 @@ public class YASBM implements ClientModInitializer {
 
 	public void onTick() {
 		Features.Hud.UpdateLog.onTick();
+		Features.Tools.Keys.onTick();
+		Features.General.WAILACopy.onTick();
+		Features.Item.CopyItem.onTick();
 	}
 
 	public @Nullable Text onMessageReccieved(Text text) {
@@ -62,7 +66,7 @@ public class YASBM implements ClientModInitializer {
 	
 	public String onMessageSent(String message) {
 		// message = Features.Tools.Aliases.onMessageSent(message);
-		// message = Features.Tools.Emojis.onMessageSent(message);
+		message = Features.Tools.Emojis.onMessageSent(message);
 		return message;
     } // outgoing
 

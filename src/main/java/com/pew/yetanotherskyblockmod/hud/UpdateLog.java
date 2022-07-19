@@ -29,7 +29,6 @@ public class UpdateLog implements com.pew.yetanotherskyblockmod.Features.Feature
     public void init() {}
 
     public void onTick() {
-        // YASBM.LOGGER.info("Queue: "+queue.size()+" | Interp: "+interp.size()+" | History: "+lines.size());
         lines.addAll(0, lqueue);
         lqueue.clear();
         if (queue.isEmpty()) return;
@@ -121,15 +120,14 @@ public class UpdateLog implements com.pew.yetanotherskyblockmod.Features.Feature
         }
 
         public int render(MatrixStack matrices) { // Returns the height of the rendered line
-            // Rectangle dims = ModConfig.get().hud.updateLog.bounds;
-            // VertexConsumerProvider.Immediate immediate = VertexConsumerProvider.immediate(Tessellator.getInstance().getBuffer());
-            // Matrix4f matrix = matrices.peek().getPositionMatrix();
-            // float width = YASBM.client.textRenderer.getWidth(this.text.asOrderedText());
+            Rectangle dims = ModConfig.get().hud.updateLog.bounds;
+            float width = YASBM.client.textRenderer.getWidth(this.text.asOrderedText());
             float scale = 1;
-            // if (width > dims.width) {
-            //     scale = dims.width/width;
-            //     Matrix4f.scale(scale, scale, scale);
-            // }
+            if (width > dims.width) {
+                scale = dims.width/width;
+                matrices.push();
+                matrices.scale(scale, scale, 1);
+            }
             YASBM.client.textRenderer.drawWithShadow(matrices, this.text, this.location.x, this.location.y, this.color);
             return (int)(LINESPACE * scale); // its an estimation ok
         }

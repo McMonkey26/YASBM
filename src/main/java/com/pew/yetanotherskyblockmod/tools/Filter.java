@@ -1,43 +1,77 @@
 package com.pew.yetanotherskyblockmod.tools;
 
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.pew.yetanotherskyblockmod.Features;
-import com.pew.yetanotherskyblockmod.YASBM;
-import com.pew.yetanotherskyblockmod.config.ModConfig;
+import javax.annotation.Nullable;
 
-import blue.endless.jankson.annotation.Nullable;
+import org.apache.commons.lang3.StringUtils;
+
+import com.pew.yetanotherskyblockmod.Features;
+import com.pew.yetanotherskyblockmod.config.ModConfig;
+import com.pew.yetanotherskyblockmod.util.Utils;
+
+import net.minecraft.text.HoverEvent;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
 
 public class Filter implements com.pew.yetanotherskyblockmod.Features.Feature {
+    private static final Style censorstyle = Style.EMPTY.withColor(0xFF0000);
+
     @Override
-    public void init() {
-    }
+    public void init() {}
     
     private Map<String, Integer> getFilter() {
         return ModConfig.get().tools.filter;
     }
 
-    public @Nullable String onHypixelMessage(String chattype, String user, String msg) {
+    public @Nullable Text onHypixelMessage(String chattype, String rank, String user, Text msg) {
         for (Entry<String,Integer> entry : getFilter().entrySet()) {
-            String filter = entry.getKey();
+            String filter = entry.getKey().toLowerCase();
             Integer actions = entry.getValue();
 
-            if (msg.toLowerCase().contains(filter.toLowerCase())) {
-                // if        ((actions & 1 << 0) == 1 << 0) {
-                //     msg = censor(msg,filter);
-                //     continue; TODO: This
-                // } else
-                if ((actions & 1 << 1) == 1 << 1) {
+            if (msg.asString().toLowerCase().contains(filter)) {
+                if ((actions & 1 << 0) == 1 << 0) {
+                    msg = censor(msg,filter);
+                    continue;
+                } else if ((actions & 1 << 1) == 1 << 1) {
                     ((Ignore)Features.Tools.Ignore).add(user);
                     return null;
                 }
                 if (chattype.contains("Party")) {
-                    if((actions & 2 << 0) == 2 << 0) YASBM.client.player.sendChatMessage("/p leave");
-                    if((actions & 2 << 1) == 2 << 1) YASBM.client.player.sendChatMessage("/wdr "+user+" -b PC_C");
+                    if((actions & 2 << 0) == 2 << 0) Utils.command("p leave");
+                    if((actions & 2 << 1) == 2 << 1) Utils.command("wdr "+user+" -b PC_C");
                 }
             }
         }
         return msg;
+    }
+
+    private Text censor(Text input, String filter) {
+        if (!input.asString().toLowerCase().contains(filter)) return input;
+        MutableText censored = new LiteralText("*".repeat(filter.length()));
+        if (ModConfig.get().tools.showOnHover) {
+            censored.setStyle(censorstyle.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, 
+                new LiteralText("Text Censored: ").setStyle(Style.EMPTY.withColor(0xFF0000).withItalic(true)).append(
+                new LiteralText(filter).setStyle(Style.EMPTY.withColor(0x555555).withItalic(true)))
+            )));
+        } else {
+            censored.setStyle(censorstyle);
+        }
+
+        MutableText output = new LiteralText("").setStyle(input.getStyle()); // Style passthrough for recursion
+        String[] parts = StringUtils.splitByWholeSeparator(input.asString(), filter);
+        for (int i = parts.length - 1; i >= 0; i--) {
+            output.append(new LiteralText(parts[i]).setStyle(input.getStyle()));
+            if (i > 0) output.append(censored); // Fencepost
+        }
+
+        ListIterator<Text> it = input.getSiblings().listIterator();
+        while (it.hasNext()) {it.set(censor(it.next(), filter));}
+
+        return output;
     }
 }

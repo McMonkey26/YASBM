@@ -51,7 +51,7 @@ public class Features {
 
     public static class General {
         public static final Feature BetterMusic = new BetterMusic();
-        public static final Feature CopyBlock = new CopyBlock();
+        public static final Feature WAILACopy = new WAILACopy();
         public static final Feature ReforgeStop = new ReforgeStop();
         public static final FishingUtils FishingUtils = new FishingUtils(); // special
     }
@@ -87,7 +87,7 @@ public class Features {
         add(Dungeons.Reparty);
         add(Dungeons.ScoreEstimator);
         add(General.BetterMusic);
-        add(General.CopyBlock);
+        add(General.WAILACopy);
         add(General.ReforgeStop);
         add(General.FishingUtils);
         add(Hud.BetterMenus);

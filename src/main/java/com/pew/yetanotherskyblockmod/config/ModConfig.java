@@ -55,6 +55,7 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.TransitiveObject
     public Tools tools = new Tools();
     public static class Tools {
+        public boolean showOnHover = false;
         @ConfigEntry.Gui.Tooltip
         public Map<String,Integer> filter = new HashMap<>();
         /*
@@ -95,9 +96,11 @@ public class ModConfig implements ConfigData {
             put("party", "ヽ(^◇^*)/");
         }};
 
+        @ConfigEntry.Gui.Excluded
+        public Map<Character, String> keys = new HashMap<>();
+
         @ConfigEntry.Gui.CollapsibleObject
         public AFK afk = new AFK();
-
         public static class AFK {
             @ConfigEntry.Gui.Tooltip
             public List<String> reasons = new ArrayList<>() {{

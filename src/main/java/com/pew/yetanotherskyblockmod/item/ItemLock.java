@@ -2,6 +2,8 @@ package com.pew.yetanotherskyblockmod.item;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -12,7 +14,6 @@ import com.pew.yetanotherskyblockmod.config.ModConfig;
 import com.pew.yetanotherskyblockmod.mixin.HandledScreenAccessor;
 import com.pew.yetanotherskyblockmod.util.Utils;
 
-import blue.endless.jankson.annotation.Nullable;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.gui.DrawableHelper;

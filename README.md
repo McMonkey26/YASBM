@@ -7,17 +7,22 @@ Yet Another SkyBlock Mod
 - Held Item Copy
 <br/><br/>
 ### Untested Features:
-- Skyblock Tooltips
+- Skyblock Tooltips (TODO: Item Price, Dungeon Quality, Pet XP)
 - Item Locking
 <br/><br/>
+### WIP Features
+- Fishing Utilities (TODO: Close fish alert, bait list)
+- Update Log HUD (TODO: Resizable)
+- Clean, Emojis, Keys (TODO: Customizable)
+- Filter, Ignore (TODO: Hypixel Chat Parsing)
+<hr>
 ### Planned Features:
 > In Game Profile Viewer  
 > Custom Enchantment Colors  
 > Improved SB Menus  
-> Calendar Event Notifations (Jacob's Events, Spooky Festivals, etc)  
-> Custom Trade Menu  
-> Custom Fishing Rod Colors
-> Fishing Bait List
+> Calendar Event Notifations & Timers (Jacob's Events, Spooky Festivals, etc)  
+> Birch Park Rainmaker Timer
+> Custom Menus (Trade Menu, AH Search & Price, Storage)
 > Item Customization (Rename items, change enchantment glint color)  
 > Fairy Soul & Relic Waypoints  
 > Pet XP Display  
@@ -26,47 +31,29 @@ Yet Another SkyBlock Mod
 > Crimson Isles & Crystal Hollows Map
 > Crystal Hollows Waypoints
 > Dungeon Profit Tracker  
-> Dungeon Score Tracker  
-> Dungeon Puzzle Solvers  
-> Terminal Solvers  
-> Item Price Tooltips  
-> Auction House Search GUI  
-> Auction House Price GUI  
-> Experimentation Table Solvers  
-> Metal Detector Triangulation  
-> Wishing Compass Triangulation  
-> Ancestral Spade Triangulation  
+> Dungeon Score Tracker
+> Dungeon Boss HP Display
+> Solvers (Dungeon Puzzle, Terminal, Experimentation Table)
+> Triangulation (Metal Detector, Wishing Compass, Ancestral Spade)
+> Tools (Command Aliases)
+> Pressing enter exits sign
 > Fully Customizable Music  
-> Custom Tab List  
-> Command Aliases
-> Slayer Drop Tracker
-> Slayer Progress Indicator
+> Custom Tab List
+> Slayer Helpers (Drop Tracker, Progress Indicator)
 > Voidgloom Utils (Voidgloom Beacon Timer, Voidgloom Beacon Alert, Voidgloom Skull Alert, Voidgloom Beacon Beam)
 > Event Drop Tracker
 > Reparty Command
-> Key Shortcuts  
-> Spam Hider  
-> Dungeon Boss HP Display  
-> Show Enchanted Book, Potion, Minion Level, Pet Candies as Stack Size  
-> Show NPC Sell Values on Tooltip  
-> Event Timers
-> Birch Park Rainmaker Timer
-> Choose Reforges to Stop At  
-> Improved Storage Menu
-> Hide Food/Armor Bar  
-> Custom HP/Mana/Stat display  
-> Better Dungeon Item Tooltips  
-> Bazaar Flipper  
-> Auction House Flipper  
+> Show Enchanted Book, Potion, Minion Level, Pet Candies as Stack Size
+> Choose Reforges to Stop At
+> Hide Food/Armor Bar, HP/Mana/Stat display
+> Bazaar/Auction House Flipper  
 > Easily Accept/Decline Party Invites, Friend Requests, etc.   
 > Skill XP/Hour and Items/Hour Tracker  
 > Search through Log Files  
 > Copy Chat  
 > Analyze Chests and Item Values  
-> Additional Info in Tooltips (item age, pet xp, price per item on the auction house)
-> Completely Custom Skyblock HUD  
-> Type in Chat while in GUIs  
-> Search through Chat with CTRL + F  
+> Type in Chat while in GUIs
+> Search through Chat with CTRL + F
 > Dolphin and Rock pet counters
 > Legion Player counter
 > Pet Display

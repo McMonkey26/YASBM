@@ -158,4 +158,7 @@ public class Utils {
     public static void actionBar(Text text) {
         YASBM.client.player.sendMessage(text, true);
     }
+    public static void command(String command) {
+        YASBM.client.player.sendChatMessage("/"+command);
+    }
 }
