@@ -69,7 +69,6 @@ public abstract class ItemStackMixin {
     public List<Text> getTooltip(@Nullable PlayerEntity player, TooltipContext context) {
         ItemStack cast = (ItemStack) (Object) this;
         ArrayList<Text> list = Lists.newArrayList();
-
         if (Utils.isOnSkyblock()) {
             MutableText mutableText = new LiteralText("").append(cast.getName()).formatted(cast.getRarity().formatting);
             if (cast.hasCustomName()) {
@@ -96,15 +95,15 @@ public abstract class ItemStackMixin {
                                 list.add(Texts.setStyleIfAbsent(mutableText2, LORE_STYLE));
                                 continue;
                             } catch (Exception exception) {
+                                YASBM.LOGGER.warn("[Mixin] "+exception.getMessage());
                                 nbtCompound.remove(ItemStack.LORE_KEY);
                             }
                         }
                     }
                 }
-
                 if (nbt.contains("ExtraAttributes")) {
                     NbtElement e = nbt.get("ExtraAttributes");
-                    if (e.getNbtType() instanceof NbtCompound) {
+                    if (e instanceof NbtCompound) {
                         NbtCompound extra = (NbtCompound) e;
                         ArrayList<Text> edit = YASBM.getInstance().onTooltipExtra(list, extra, context);
                         if (edit.size() > 0) list = edit;

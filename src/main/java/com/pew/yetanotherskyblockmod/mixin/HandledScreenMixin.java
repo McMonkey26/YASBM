@@ -19,7 +19,7 @@ import net.minecraft.screen.slot.Slot;
 public class HandledScreenMixin {
 	
 	@Inject(method = "drawSlot", at = @At("HEAD"))
-	public void drawSlotRet(MatrixStack matrices, Slot slot, CallbackInfo ci) {
+	private void drawSlot(MatrixStack matrices, Slot slot, CallbackInfo ci) {
 		YASBM.getInstance().onDrawSlot(matrices, slot, (DrawableHelper)(Object)this);
 	}
 }

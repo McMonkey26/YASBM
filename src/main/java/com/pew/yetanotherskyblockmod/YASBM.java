@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.pew.yetanotherskyblockmod.config.ModConfig;
+import com.pew.yetanotherskyblockmod.util.AspectOfTheJerry;
 import com.pew.yetanotherskyblockmod.util.Utils;
 
 import net.fabricmc.api.ClientModInitializer;
@@ -57,7 +58,7 @@ public class YASBM implements ClientModInitializer {
 	}
 
 	public @Nullable Text onMessageReccieved(Text text) {
-		YASBM.LOGGER.info(Text.Serializer.toJson(text));
+		YASBM.LOGGER.info("[MAIN] "+Text.Serializer.toJson(text));
 		// text = Features.Tools.Clean.onMessageReccieved(text);
 		// if (text == null) return null;
 		// text = onHypixelMessage(text.asString()); // needs to be changed
@@ -65,6 +66,7 @@ public class YASBM implements ClientModInitializer {
 	} // incoming
 	
 	public String onMessageSent(String message) {
+		message = AspectOfTheJerry.instance.onMessageSent(message);
 		// message = Features.Tools.Aliases.onMessageSent(message);
 		message = Features.Tools.Emojis.onMessageSent(message);
 		return message;
@@ -97,7 +99,7 @@ public class YASBM implements ClientModInitializer {
     }
 
     public void onWorldLoad() {
-        LOGGER.info(Utils.getLocation());
+        LOGGER.info("[MAIN] "+Utils.getLocation());
     }
 
 	public void onRenderBossBar(MatrixStack matrices, BossBar bossBar, CallbackInfo ci) {

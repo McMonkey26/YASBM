@@ -14,6 +14,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.pew.yetanotherskyblockmod.YASBM;
+import com.pew.yetanotherskyblockmod.config.ModConfig;
 
 import net.minecraft.client.ClientBrandRetriever;
 import net.minecraft.item.ItemStack;
@@ -40,7 +41,7 @@ public class Utils {
     }
     public static boolean isOnSkyblock() {
         // return location != "Other";
-        return true; // So I can test
+        return ModConfig.get().isOnSkyblock; // So I can test
     }
     public static void _getLocation() {
         if (!_isOnSkyblock()) {location = "Other"; return;}
@@ -68,7 +69,7 @@ public class Utils {
             JsonObject jo = JsonParser.parseString(output).getAsJsonObject();
             return jo.get("id").getAsString();
         } catch (Exception e) {
-            YASBM.LOGGER.warn(e.getMessage());
+            YASBM.LOGGER.warn("[Utils] "+e.getMessage());
             return null;
         }
     }
@@ -84,7 +85,7 @@ public class Utils {
             JsonArray ja = JsonParser.parseString(output).getAsJsonArray();
             return ja.get(ja.size()-1).getAsJsonObject().get("name").getAsString();
         } catch (Exception e) {
-            YASBM.LOGGER.warn(e.getMessage());
+            YASBM.LOGGER.warn("[Utils] "+e.getMessage());
             return null;
         }
     }

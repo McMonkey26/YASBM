@@ -12,6 +12,8 @@ import java.util.Map;
 
 import org.lwjgl.glfw.GLFW;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.pew.yetanotherskyblockmod.YASBM;
 import com.pew.yetanotherskyblockmod.config.ModConfig;
 import com.pew.yetanotherskyblockmod.config.ModConfig.Item.SBTooltip.ConfigState;
@@ -21,11 +23,14 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.Feature {
     private static KeyBinding key;
-    private static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/DD/yy hh:mm a", Locale.US);
+    private static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("M/dd/yy h:mm a", Locale.US);
     private static Map<String, String> ageCache = new HashMap<String, String>();
 
     @Override
@@ -44,8 +49,12 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.Feature
 
     @Override
     public List<Text> onTooltip(List<Text> list, NbtCompound extra, TooltipContext context) {
-        if (context.isAdvanced() && extra.contains("id") && isEnabled(ModConfig.get().item.sbTooltip.sbItemId)) {
-            list.add(Text.of("Skyblock ID: "+extra.getString("id")));
+        if (!ModConfig.get().item.sbTooltip.enabled) return list;
+        if (extra.contains("id") && isEnabled(ModConfig.get().item.sbTooltip.sbItemId)) {
+            list.add(
+                new LiteralText("Skyblock ID: ").formatted(Formatting.DARK_GRAY).append(
+                new LiteralText(extra.getString("id")).formatted(Formatting.DARK_GRAY, Formatting.UNDERLINE))
+            );
         }
         if (isEnabled(ModConfig.get().item.sbTooltip.stackingEnchants)) {
             if (extra.contains("compact_blocks")) list.add(Text.of("Compacted Blocks: "+
@@ -55,19 +64,29 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.Feature
             else if (extra.contains("expertise_kills")) list.add(Text.of("Expertise Kills: "+
                 getStackEnchantString(extra.getInt("expertise_kills"), StackingEnchant.EXPERTISE)));
         }
+        if (isEnabled(ModConfig.get().item.sbTooltip.petXpInfo) && extra.contains("petInfo")) {
+            JsonObject petinfo = JsonParser.parseString(extra.getString("petInfo")).getAsJsonObject();
+            if (petinfo.has("exp")) list.add(Text.of("Pet EXP: "+Math.round(petinfo.get("exp").getAsDouble() * 100) / 100));
+        }
         if (!ModConfig.get().item.sbTooltip.itemAge.equals(ConfigState.OFF) && extra.contains("timestamp")) {
             if (isEnabled(ModConfig.get().item.sbTooltip.itemAge)) {try {
+                MutableText out = new LiteralText("Item Age: ~").formatted(Formatting.DARK_GRAY);
                 if (extra.contains("uuid") && ageCache.containsKey(extra.getString("uuid"))) {
-                    list.add(Text.of("Item Age: ~"+ageCache.get(extra.getString("uuid"))));
-                    return list;
+                    out.append(new LiteralText(ageCache.get(extra.getString("uuid"))).formatted(Formatting.DARK_GRAY, Formatting.ITALIC));
+                } else {
+                    ZonedDateTime timestamp = LocalDateTime.parse(extra.getString("timestamp"), dateFormat).atZone(ZoneId.of("America/Toronto"));
+                    String shorttime = Utils.getShortDuration(timestamp);
+                    if (extra.contains("uuid")) ageCache.put(extra.getString("uuid"), shorttime);
+                    out.append(new LiteralText(shorttime).formatted(Formatting.DARK_GRAY, Formatting.ITALIC));
                 }
-                ZonedDateTime timestamp = LocalDateTime.parse(extra.getString("timestamp"), dateFormat).atZone(ZoneId.of("America/Toronto"));
-                String shorttime = Utils.getShortDuration(timestamp);
-                if (extra.contains("uuid")) ageCache.put(extra.getString("uuid"), shorttime);
-                list.add(Text.of("Item Age: ~"+shorttime));
-                return list;
-            } catch (DateTimeParseException e) {}};
-            list.add(Text.of("Created: "+extra.getString("timestamp")));
+                list.add(out);
+            } catch (DateTimeParseException e) {
+                list.add(
+                    new LiteralText("Created: ").formatted(Formatting.DARK_GRAY).append(
+                    new LiteralText(extra.getString("timestamp")).formatted(Formatting.DARK_GRAY))
+                );
+                YASBM.LOGGER.warn("[SBTooltip] "+e.getMessage());
+            }};
         }
         return list;
     }

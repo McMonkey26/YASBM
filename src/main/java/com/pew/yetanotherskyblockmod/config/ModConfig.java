@@ -23,6 +23,8 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.Excluded
     private static ConfigHolder<ModConfig> holder;
 
+    public boolean isOnSkyblock = false; // testing
+
     @ConfigEntry.Category("general")
     @ConfigEntry.Gui.TransitiveObject
     public General general = new General();
@@ -55,7 +57,9 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.TransitiveObject
     public Tools tools = new Tools();
     public static class Tools {
+        @ConfigEntry.Gui.Tooltip
         public boolean showOnHover = false;
+        
         @ConfigEntry.Gui.Tooltip
         public Map<String,Integer> filter = new HashMap<>();
         /*
@@ -167,11 +171,13 @@ public class ModConfig implements ConfigData {
         @ConfigEntry.Gui.CollapsibleObject
         public SBTooltip sbTooltip = new SBTooltip();
         public static class SBTooltip {
+            public boolean enabled = true;
             public static enum ConfigState {
                 OFF, KEYBIND, ON
             }
             public ConfigState missingEnchants   = ConfigState.OFF;
             public ConfigState stackingEnchants  = ConfigState.OFF;
+            public ConfigState petXpInfo         = ConfigState.OFF;
             public ConfigState marketPrices      = ConfigState.OFF;
             public ConfigState npcPrices         = ConfigState.OFF;
             public ConfigState itemAge           = ConfigState.OFF;

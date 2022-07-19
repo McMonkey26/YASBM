@@ -20,6 +20,7 @@ classes/
 
 .settings/
 .vscode/
+.VSCodeCounter/
 bin/
 .classpath
 .project

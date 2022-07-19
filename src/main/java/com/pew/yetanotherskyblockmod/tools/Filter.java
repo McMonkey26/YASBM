@@ -17,10 +17,9 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 public class Filter implements com.pew.yetanotherskyblockmod.Features.Feature {
-    private static final Style censorstyle = Style.EMPTY.withColor(0xFF0000);
-
     @Override
     public void init() {}
     
@@ -54,12 +53,12 @@ public class Filter implements com.pew.yetanotherskyblockmod.Features.Feature {
         if (!input.asString().toLowerCase().contains(filter)) return input;
         MutableText censored = new LiteralText("*".repeat(filter.length()));
         if (ModConfig.get().tools.showOnHover) {
-            censored.setStyle(censorstyle.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, 
+            censored.setStyle(Style.EMPTY.withColor(Formatting.RED).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, 
                 new LiteralText("Text Censored: ").setStyle(Style.EMPTY.withColor(0xFF0000).withItalic(true)).append(
                 new LiteralText(filter).setStyle(Style.EMPTY.withColor(0x555555).withItalic(true)))
             )));
         } else {
-            censored.setStyle(censorstyle);
+            censored.formatted(Formatting.RED);
         }
 
         MutableText output = new LiteralText("").setStyle(input.getStyle()); // Style passthrough for recursion

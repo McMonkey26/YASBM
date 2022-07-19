@@ -6,7 +6,10 @@
     "key.showTooltip": "Show Tooltip",
 
     "text.autoconfig.yetanotherskyblockmod.title": "Yet Another Skyblock Mod Settings",
-  
+    
+    "text.autoconfig.yetanotherskyblockmod.category.default": "-",
+    "text.autoconfig.yetanotherskyblockmod.option.isOnSkyblock": "Skyblock Mode",
+
     "text.autoconfig.yetanotherskyblockmod.category.general": "General",
     "text.autoconfig.yetanotherskyblockmod.option.general.betterMusicEnabled": "Better Music",
     "text.autoconfig.yetanotherskyblockmod.option.general.betterMusicEnabled.@Tooltip": "Replaces noteblock tracks with the full audio file",
@@ -25,6 +28,8 @@
     "text.autoconfig.yetanotherskyblockmod.option.general.fishingUtils.myParticleColor": "Particle Color",
 
     "text.autoconfig.yetanotherskyblockmod.category.tools": "Tools",
+    "text.autoconfig.yetanotherskyblockmod.option.tools.showOnHover": "Show On Hover",
+    "text.autoconfig.yetanotherskyblockmod.option.tools.showOnHover.@Tooltip": "Display the filtered term when you hover over it",
     "text.autoconfig.yetanotherskyblockmod.option.tools.afk": "AFK",
     "text.autoconfig.yetanotherskyblockmod.option.tools.afk.reasons": "Reasons",
     "text.autoconfig.yetanotherskyblockmod.option.tools.afk.reasons.@Tooltip": "What to automatically reply with when you're afk",
@@ -44,14 +49,17 @@
     "text.autoconfig.yetanotherskyblockmod.option.hud.betterMenus.auctionMenuEnabled": "Auction House Menus",
     "text.autoconfig.yetanotherskyblockmod.option.hud.betterMenus.bazaarMenuEnabled": "Bazaar Menus",
     "text.autoconfig.yetanotherskyblockmod.option.hud.betterMenus.storageMenuEnabled": "Storage Menus",
+    "text.autoconfig.yetanotherskyblockmod.option.hud.updateLog": "Update Log",
 
     "text.autoconfig.yetanotherskyblockmod.category.item": "Items",
     "text.autoconfig.yetanotherskyblockmod.option.item.itemLockEnabled": "Item Locking",
     "text.autoconfig.yetanotherskyblockmod.option.item.itemLockEnabled.@Tooltip": "Prevents you from dropping items with specific UUIDs.",
     "text.autoconfig.yetanotherskyblockmod.option.item.customizationEnabled": "Item Customization",
     "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltip": "Better Tooltips",
-    "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltip.missingEnchants": "Missin Enchants",
+    "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltip.enabled": "Enabled",
+    "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltip.missingEnchants": "Missing Enchants",
     "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltip.stackingEnchants": "Stacking Enchants",
+    "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltip.petXpInfo" : "Pet XP",
     "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltip.marketPrices": "AH/BZ Prices",
     "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltip.npcPrices": "NPC Prices",
     "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltip.itemAge": "Item Age",
