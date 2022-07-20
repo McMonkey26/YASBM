@@ -58,7 +58,7 @@ public class YASBM implements ClientModInitializer {
 	}
 
 	public @Nullable Text onMessageReccieved(Text text) {
-		YASBM.LOGGER.info("[MAIN] "+Text.Serializer.toJson(text));
+		if (!client.isInSingleplayer()) YASBM.LOGGER.info("[MAIN] "+Text.Serializer.toJson(text));
 		// text = Features.Tools.Clean.onMessageReccieved(text);
 		// if (text == null) return null;
 		// text = onHypixelMessage(text.asString()); // needs to be changed

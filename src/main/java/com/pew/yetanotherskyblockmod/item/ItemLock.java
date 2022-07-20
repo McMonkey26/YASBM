@@ -38,7 +38,7 @@ public class ItemLock implements com.pew.yetanotherskyblockmod.Features.Feature 
         ));
     }
 
-    private static boolean isEnabled() {
+    public static boolean isEnabled() {
         return ModConfig.get().item.itemLockEnabled && Utils.isOnSkyblock();
     }
     private boolean isLocked(ItemStack item) {

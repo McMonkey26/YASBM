@@ -11,6 +11,7 @@ import com.pew.yetanotherskyblockmod.YASBM;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
@@ -23,7 +24,28 @@ public class ScreenHandlerMixin {
 
     @Inject(method = "onSlotClick", at = @At("HEAD"), cancellable = true)
     public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player, CallbackInfo ci) {
-        if (slotIndex < 0 && actionType.equals(SlotActionType.CLONE)) return;
-        YASBM.getInstance().onInventoryItemDrop(this.getSlot(slotIndex).getStack(), ci);
+        switch (actionType) {
+            case PICKUP:
+            case PICKUP_ALL:
+            case QUICK_MOVE:
+            case QUICK_CRAFT:
+            case THROW:
+                if (slotIndex < 0) return;
+                YASBM.getInstance().onInventoryItemDrop(this.getSlot(slotIndex).getStack(), ci);
+            break;
+            case SWAP:
+                ItemStack s1 = this.getSlot(slotIndex).getStack();
+                ItemStack s2 = player.getInventory().getStack(button);
+                if (s1.isEmpty() && s2.isEmpty()) {
+                    YASBM.LOGGER.warn("[Mixin] Failed to locate relevant slot for item swap action.");
+                    if (com.pew.yetanotherskyblockmod.item.ItemLock.isEnabled()) ci.cancel(); // just in case
+                    break;
+                }
+                if (!s1.isEmpty()) YASBM.getInstance().onInventoryItemDrop(s1, ci);
+                if (!s2.isEmpty()) YASBM.getInstance().onInventoryItemDrop(s2, ci);
+            break;
+            default:
+            break;
+        }
     }
 }

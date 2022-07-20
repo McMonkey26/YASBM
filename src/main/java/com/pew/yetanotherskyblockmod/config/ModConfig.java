@@ -175,13 +175,15 @@ public class ModConfig implements ConfigData {
             public static enum ConfigState {
                 OFF, KEYBIND, ON
             }
+            public ConfigState dungeonQuality    = ConfigState.ON;
             public ConfigState missingEnchants   = ConfigState.OFF;
+            public ConfigState rune              = ConfigState.ON;
             public ConfigState stackingEnchants  = ConfigState.OFF;
-            public ConfigState petXpInfo         = ConfigState.OFF;
+            public ConfigState petXpInfo         = ConfigState.KEYBIND;
             public ConfigState marketPrices      = ConfigState.OFF;
             public ConfigState npcPrices         = ConfigState.OFF;
             public ConfigState itemAge           = ConfigState.OFF;
-            public ConfigState sbItemId          = ConfigState.OFF;
+            public ConfigState sbItemId          = ConfigState.KEYBIND;
         }
 
         @ConfigEntry.Gui.Excluded

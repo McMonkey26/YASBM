@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
 
@@ -55,6 +56,13 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.Feature
                 new LiteralText("Skyblock ID: ").formatted(Formatting.DARK_GRAY).append(
                 new LiteralText(extra.getString("id")).formatted(Formatting.DARK_GRAY, Formatting.UNDERLINE))
             );
+        }
+        if (!isEnabled(ModConfig.get().item.sbTooltip.rune)) {
+            ListIterator<Text> it = list.listIterator();
+            while (it.hasNext()) {
+                Text i = it.next();
+                if (i.asString().matches("^(?:§.)?◆ \\w+ Rune I{1,3}$")) {it.remove(); break;}
+            }
         }
         if (isEnabled(ModConfig.get().item.sbTooltip.stackingEnchants)) {
             if (extra.contains("compact_blocks")) list.add(Text.of("Compacted Blocks: "+

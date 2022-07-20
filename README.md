@@ -7,7 +7,7 @@ Yet Another SkyBlock Mod
 - Held Item Copy
 <br/><br/>
 ### Untested Features:
-- Skyblock Tooltips (TODO: Item Price, Dungeon Quality, Pet XP)
+- Skyblock Tooltips (TODO: Item Price, Dungeon Quality)
 - Item Locking
 <br/><br/>
 ### WIP Features
