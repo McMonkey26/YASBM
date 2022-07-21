@@ -5,12 +5,11 @@ Yet Another SkyBlock Mod
 - Hide Witherborn
 - WAILA Copy
 - Held Item Copy
-<br/><br/>
-### Untested Features:
-- Skyblock Tooltips (TODO: Item Price, Dungeon Quality)
+- Chat Copy
 - Item Locking
 <br/><br/>
 ### WIP Features
+- Skyblock Tooltips (TODO: Item Price, Dungeon Quality)
 - Fishing Utilities (TODO: Close fish alert, bait list)
 - Update Log HUD (TODO: Resizable)
 - Clean, Emojis, Keys (TODO: Customizable)

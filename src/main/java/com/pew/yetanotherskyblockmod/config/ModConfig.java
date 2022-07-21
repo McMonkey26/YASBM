@@ -36,6 +36,8 @@ public class ModConfig implements ConfigData {
         @ConfigEntry.Gui.Tooltip
         public boolean wailaEnabled = true;
 
+        public boolean chatCopyEnabled = false;
+
         @ConfigEntry.Gui.CollapsibleObject
         public FishingUtilsConfig fishingUtils = new FishingUtilsConfig();
         public static class FishingUtilsConfig {

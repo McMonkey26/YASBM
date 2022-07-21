@@ -3,6 +3,7 @@ package com.pew.yetanotherskyblockmod.util;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -25,6 +26,8 @@ import net.minecraft.scoreboard.ScoreboardObjective;
 import net.minecraft.text.Text;
 
 public class Utils {
+    public static final DecimalFormat US = new DecimalFormat("#,###.#");
+
     private static String location = "None";
     
     private static boolean _isOnSkyblock() {

@@ -6,10 +6,12 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.lwjgl.glfw.GLFW;
 
@@ -33,6 +35,10 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.Feature
     private static KeyBinding key;
     private static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("M/dd/yy h:mm a", Locale.US);
     private static Map<String, String> ageCache = new HashMap<String, String>();
+    private static final Set<String> cullLines = new HashSet<>() {{
+       add("§7§eRight-click to add this pet to");
+       add("§eyour pet menu!");
+    }};
 
     @Override
     public void init() {
@@ -51,18 +57,23 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.Feature
     @Override
     public List<Text> onTooltip(List<Text> list, NbtCompound extra, TooltipContext context) {
         if (!ModConfig.get().item.sbTooltip.enabled) return list;
+
+        ListIterator<Text> it = list.listIterator();
+        while (it.hasNext()) {
+            String i = it.next().asString();
+            if (cullLines.contains(i)) {it.remove(); continue;}
+            if (isEnabled(ModConfig.get().item.sbTooltip.rune) && i.matches("^(?:§.)?◆ \\w+ Rune I{1,3}$")) {it.remove(); continue;}
+        }
+        if (isEnabled(ModConfig.get().item.sbTooltip.petXpInfo) && extra.contains("petInfo")) {
+            JsonObject petinfo = JsonParser.parseString(extra.getString("petInfo")).getAsJsonObject();
+            if (petinfo.has("exp")) list.add(new LiteralText("Pet EXP: ").formatted(Formatting.GRAY).append(
+                new LiteralText(Utils.US.format(Math.round(petinfo.get("exp").getAsDouble() * 100) / 100)).formatted(Formatting.GRAY)));
+        }
         if (extra.contains("id") && isEnabled(ModConfig.get().item.sbTooltip.sbItemId)) {
             list.add(
                 new LiteralText("Skyblock ID: ").formatted(Formatting.DARK_GRAY).append(
                 new LiteralText(extra.getString("id")).formatted(Formatting.DARK_GRAY, Formatting.UNDERLINE))
             );
-        }
-        if (!isEnabled(ModConfig.get().item.sbTooltip.rune)) {
-            ListIterator<Text> it = list.listIterator();
-            while (it.hasNext()) {
-                Text i = it.next();
-                if (i.asString().matches("^(?:§.)?◆ \\w+ Rune I{1,3}$")) {it.remove(); break;}
-            }
         }
         if (isEnabled(ModConfig.get().item.sbTooltip.stackingEnchants)) {
             if (extra.contains("compact_blocks")) list.add(Text.of("Compacted Blocks: "+
@@ -71,10 +82,6 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.Feature
                 getStackEnchantString(extra.getInt("farmed_cultivating"), StackingEnchant.CULTIVATING)));
             else if (extra.contains("expertise_kills")) list.add(Text.of("Expertise Kills: "+
                 getStackEnchantString(extra.getInt("expertise_kills"), StackingEnchant.EXPERTISE)));
-        }
-        if (isEnabled(ModConfig.get().item.sbTooltip.petXpInfo) && extra.contains("petInfo")) {
-            JsonObject petinfo = JsonParser.parseString(extra.getString("petInfo")).getAsJsonObject();
-            if (petinfo.has("exp")) list.add(Text.of("Pet EXP: "+Math.round(petinfo.get("exp").getAsDouble() * 100) / 100));
         }
         if (!ModConfig.get().item.sbTooltip.itemAge.equals(ConfigState.OFF) && extra.contains("timestamp")) {
             if (isEnabled(ModConfig.get().item.sbTooltip.itemAge)) {try {

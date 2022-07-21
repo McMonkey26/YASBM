@@ -15,6 +15,8 @@ import com.pew.yetanotherskyblockmod.util.AspectOfTheJerry;
 import com.pew.yetanotherskyblockmod.util.Utils;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
@@ -28,6 +30,7 @@ import net.minecraft.scoreboard.ScoreboardObjective;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 
+@Environment(EnvType.CLIENT)
 public class YASBM implements ClientModInitializer {
 	public static final String MODID = "yetanotherskyblockmod";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
