@@ -14,11 +14,11 @@ import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.text.Text;
 
 @Environment(EnvType.CLIENT)
-@Mixin(value = ChatHud.class)
+@Mixin(ChatHud.class)
 public class ChatHudMixin {
     @ModifyArg(
         method = "addMessage(Lnet/minecraft/text/Text;)V",
-        at = @At(value = "INVOKE", target = "addMessage(Lnet/minecraft/text/Text;I)V"),
+        at = @At(value = "INVOKE", target = "net/minecraft/client/gui/hud/ChatHud.addMessage (Lnet/minecraft/text/Text;I)V"),
         index = 0
     )
     private Text addMessage(Text text) {

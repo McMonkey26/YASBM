@@ -16,7 +16,7 @@ import net.minecraft.text.Text;
 public class ClientPlayNetworkHandlerMixin {
     @ModifyArg(
         method = "onOverlayMessage",
-        at = @At(value = "INVOKE", target = "setOverlayMessage"),
+        at = @At(value = "INVOKE", target = "net/minecraft/client/gui/hud/InGameHud.setOverlayMessage (Lnet/minecraft/text/Text;Z)V"),
         index = 0
     )
     private Text setOverlayMessage(Text text) {

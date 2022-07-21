@@ -20,7 +20,7 @@ import net.minecraft.entity.boss.BossBar;
 @Environment(EnvType.CLIENT)
 @Mixin(BossBarHud.class)
 public class BossBarHudMixin {
-	@Inject(method = "render", at = @At(value = "INVOKE", target = "renderBossBar"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
+	@Inject(method = "render", at = @At(value = "INVOKE", target = "net/minecraft/client/gui/hud/BossBarHud.renderBossBar (Lnet/minecraft/client/util/math/MatrixStack;IILnet/minecraft/entity/boss/BossBar;)V"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
 	private void renderBossBar(MatrixStack matrices, CallbackInfo ci, int i, int j, Iterator<ClientBossBar> bars, ClientBossBar clientBossBar, int k, int l) {
 		YASBM.getInstance().onRenderBossBar(matrices, (BossBar)clientBossBar, ci);
 	}

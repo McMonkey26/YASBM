@@ -22,7 +22,7 @@ public class ScreenMixin {
 
 	@ModifyArg(
         method = "sendMessage(Ljava/lang/String;Z)V",
-        at = @At(value = "INVOKE", target = "sendChatMessage"),
+        at = @At(value = "INVOKE", target = "net/minecraft/client/network/ClientPlayerEntity.sendChatMessage (Ljava/lang/String;)V"),
         index = 0
     )
     private String sendMessage(String message) {
