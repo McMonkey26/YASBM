@@ -22,6 +22,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.boss.BossBar;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -36,6 +37,7 @@ public class YASBM implements ClientModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
 	public static final MinecraftClient client = MinecraftClient.getInstance();
+	private static int lastTick = 0;
 
 	private static final YASBM instance = new YASBM();
 	public static YASBM getInstance() {
@@ -50,10 +52,15 @@ public class YASBM implements ClientModInitializer {
 	}
 
 	public void onConfigUpdate() {
-		Features.General.FishingUtils.onConfigUpdate();
+		Features.Helper.Fishing.onConfigUpdate();
 	}
 
 	public void onTick() {
+		if (lastTick >= 60 && client.player != null) {
+			Utils._getLocation(client.player.getWorld());
+			lastTick = 0;
+		}
+		lastTick++;
 		Features.Hud.UpdateLog.onTick();
 		Features.Tools.Keys.onTick();
 		Features.General.WAILACopy.onTick();
@@ -62,6 +69,7 @@ public class YASBM implements ClientModInitializer {
 
 	public @Nullable Text onMessageReccieved(Text text) {
 		if (!client.isInSingleplayer()) YASBM.LOGGER.info("[MAIN] "+Text.Serializer.toJson(text));
+		text = Features.General.ChatCopy.onMessageReccieved(text);
 		// text = Features.Tools.Clean.onMessageReccieved(text);
 		// if (text == null) return null;
 		// text = onHypixelMessage(text.asString()); // needs to be changed
@@ -101,11 +109,12 @@ public class YASBM implements ClientModInitializer {
 		Features.Item.CopyItem.onGuiKeyPress(keyCode, scanCode);
     }
 
-    public void onWorldLoad() {
-        LOGGER.info("[MAIN] "+Utils.getLocation());
+    public void onWorldLoad(ClientWorld world) {
+		Utils._getLocation(world);
+        LOGGER.info("[MAIN] "+Utils.getZone());
     }
 
-	public void onRenderBossBar(MatrixStack matrices, BossBar bossBar, CallbackInfo ci) {
+	public void onDrawBossBar(MatrixStack matrices, BossBar bossBar, CallbackInfo ci) {
 		Features.Hud.HideWitherborn.onRenderBossBar(matrices, bossBar, ci);
 	}
 

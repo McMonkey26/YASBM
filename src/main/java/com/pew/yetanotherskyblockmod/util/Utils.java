@@ -17,47 +17,42 @@ import com.google.gson.JsonParser;
 import com.pew.yetanotherskyblockmod.YASBM;
 import com.pew.yetanotherskyblockmod.config.ModConfig;
 
-import net.minecraft.client.ClientBrandRetriever;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.AbstractNbtList;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.scoreboard.ScoreboardObjective;
 import net.minecraft.text.Text;
+import net.minecraft.world.World;
 
 public class Utils {
     public static final DecimalFormat US = new DecimalFormat("#,###.#");
 
-    private static String location = "None";
-    
-    private static boolean _isOnSkyblock() {
-        if (YASBM.client.isInSingleplayer() || ClientBrandRetriever.getClientModName() == null || 
-            !YASBM.client.player.getServerBrand().contains("hypixel")) return false;
-        ScoreboardObjective titleObj = YASBM.client.player.world.getScoreboard().getObjectiveForSlot(1);
+    private static enum Location {
+        None, Singleplayer, Multiplayer, Hypixel, Skyblock
+    }
+    private static Location location = Location.None; // None, Singleplayer, Multiplayer, Hypixel, Skyblock [None, Unknown, etc.]
+    private static @Nullable String zone = "";
+
+    public static Location _getLocation(World world) {
+        if (YASBM.client.player == null) return Location.None;
+        if (YASBM.client.isInSingleplayer()) return Location.Singleplayer;
+        if (!YASBM.client.player.getServerBrand().contains("hypixel")) return Location.Multiplayer;
+        ScoreboardObjective titleObj = world.getScoreboard().getObjectiveForSlot(1);
         String title = titleObj.getDisplayName().asString().replaceAll("(?i)\\u00A7.", "");
-        for (String skyblock : new String[]{"SKYBLOCK", "\u7A7A\u5C9B\u751F\u5B58", "\u7A7A\u5CF6\u751F\u5B58"}) {
-            if (title.startsWith(skyblock)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    public static boolean isOnSkyblock() {
-        // return location != "Other";
-        return ModConfig.get().isOnSkyblock; // So I can test
-    }
-    public static void _getLocation() {
-        if (!_isOnSkyblock()) {location = "Other"; return;}
-        for (ScoreboardObjective objective : YASBM.client.player.world.getScoreboard().getObjectives()) {
+        if (!title.contains("SKYBLOCK")) return Location.Hypixel;
+        for (ScoreboardObjective objective : world.getScoreboard().getObjectives()) {
             String text = objective.getDisplayName().asString();
             if (!text.contains("⏣")) continue;
-            location = text.replaceAll("(?:[&§][a-f\\dk-or])|[^a-z\s']", "");
-            return;
+            zone = text.replaceAll("(?:[&§][a-f\\dk-or])|[^a-z\s']", "").trim();
         }
-        location = "Unknown";
+        return Location.Skyblock;
     }
-    public static String getLocation() {
-        return location;
+    public static boolean isOnSkyblock() {
+        return location.equals(Location.Skyblock) || ModConfig.get().isOnSkyblock;  // So I can test
+    }
+    public static @Nullable String getZone() {
+        return zone;
     }
 
     public static @Nullable String getUUID(String username) {
@@ -93,11 +88,14 @@ public class Utils {
         }
     }
 
+    public static @Nullable NbtCompound getItemExtra(ItemStack item) {
+        return (item != null && item.hasNbt() && item.getNbt().contains("ExtraAttributes")) ?
+            item.getSubNbt("ExtraAttributes") : null;
+    }
+
     public static @Nullable String getItemUUID(ItemStack item) {
-        if (item != null && item.hasNbt() && item.getNbt().contains("ExtraAttributes") && item.getSubNbt("ExtraAttributes").contains("uuid")) {
-            return item.getSubNbt("ExtraAttributes").getString("uuid");
-        }
-        return null;
+        @Nullable NbtCompound extra = getItemExtra(item);
+        return (extra != null && extra.contains("uuid")) ? item.getSubNbt("ExtraAttributes").getString("uuid") : null;
     }
 
     @SuppressWarnings("unchecked")
@@ -148,16 +146,6 @@ public class Utils {
         double a = Math.pow(10, decimalpoints);
         return Math.round( number * a ) / a;
     }
-
-    public static final int[] rainbow = new int[]{
-        0xFF0000, // Red
-        0xFF8800, // Orange
-        0xFFFF00, // Yellow
-        0x00FF00, // Green
-        0x00FFFF, // Teal
-        0x0000FF, // Blue
-        0xFF00FF, // Purple
-    };
 
     public static void actionBar(Text text) {
         YASBM.client.player.sendMessage(text, true);

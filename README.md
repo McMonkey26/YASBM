@@ -43,14 +43,13 @@ Yet Another SkyBlock Mod
 > Voidgloom Utils (Voidgloom Beacon Timer, Voidgloom Beacon Alert, Voidgloom Skull Alert, Voidgloom Beacon Beam)
 > Event Drop Tracker
 > Reparty Command
-> Show Enchanted Book, Potion, Minion Level, Pet Candies as Stack Size
+> Show Enchanted Book, Potion, Minion Level as Stack Size
 > Choose Reforges to Stop At
 > Hide Food/Armor Bar, HP/Mana/Stat display
 > Bazaar/Auction House Flipper  
 > Easily Accept/Decline Party Invites, Friend Requests, etc.   
 > Skill XP/Hour and Items/Hour Tracker  
 > Search through Log Files  
-> Copy Chat  
 > Analyze Chests and Item Values  
 > Type in Chat while in GUIs
 > Search through Chat with CTRL + F

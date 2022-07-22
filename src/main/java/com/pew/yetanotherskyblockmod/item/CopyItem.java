@@ -29,7 +29,7 @@ public class CopyItem implements com.pew.yetanotherskyblockmod.Features.Feature 
     }
 
     public void onTick() {
-        if (key.isUnbound() || !key.isPressed()) return;
+        if (YASBM.client.player == null || key.isUnbound() || !key.isPressed()) return;
         key.setPressed(false);
         ItemStack helditem = YASBM.client.player.getMainHandStack();
         if (!helditem.hasNbt()) return;

@@ -1,5 +1,8 @@
 package com.pew.yetanotherskyblockmod.hud;
 
+import com.pew.yetanotherskyblockmod.YASBM;
+import com.pew.yetanotherskyblockmod.util.Utils;
+
 // import com.mojang.blaze3d.systems.RenderSystem;
 // import com.pew.yetanotherskyblockmod.YASBM;
 // import com.pew.yetanotherskyblockmod.config.ModConfig;
@@ -25,10 +28,12 @@ public class StatBars implements com.pew.yetanotherskyblockmod.Features.Feature 
 
     @Override
     public Text onOverlayMessageReccieved(Text text) {
+        YASBM.LOGGER.info("[StatBars] "+Text.Serializer.toJson(text));
         return text;
     }
 
     public void onDrawHud(MatrixStack matrices, DrawableHelper g) {
+        if (!Utils.isOnSkyblock()) return;
         // StatBarConfig config = ModConfig.get().hud.statBars;
         // if (config.healthbar != null) {
         //     RenderSystem.setShaderTexture(0, healthbar);

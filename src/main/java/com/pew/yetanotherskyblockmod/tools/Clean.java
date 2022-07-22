@@ -26,6 +26,7 @@ public class Clean implements com.pew.yetanotherskyblockmod.Features.Feature {
     }
 
     public Text onMessageReccieved(Text text) {
+        
         Iterator<Pattern> it = clean.keySet().iterator();
         while (it.hasNext()) {
             Pattern p = it.next();

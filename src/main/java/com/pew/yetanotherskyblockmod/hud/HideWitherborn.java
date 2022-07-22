@@ -12,14 +12,10 @@ public class HideWitherborn implements com.pew.yetanotherskyblockmod.Features.Fe
     @Override
     public void init() {
     }
-
-    private boolean isEnabled() {
-        return ModConfig.get().hud.hideWitherbornEnabled && Utils.isOnSkyblock();
-    }
     
     @Override
     public void onRenderBossBar(MatrixStack matrices, BossBar bossBar, CallbackInfo ci) {
-        if (!isEnabled()) return;
+        if (!ModConfig.get().hud.hideWitherbornEnabled || !Utils.isOnSkyblock()) return;
         if (bossBar.getName().asString().contains("Witherborn")) ci.cancel();
     }
 }

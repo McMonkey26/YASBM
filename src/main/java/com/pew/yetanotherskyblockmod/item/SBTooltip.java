@@ -33,7 +33,7 @@ import net.minecraft.util.Formatting;
 
 public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.Feature {
     private static KeyBinding key;
-    private static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("M/dd/yy h:mm a", Locale.US);
+    private static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("M/d/yy h:mm a", Locale.US);
     private static Map<String, String> ageCache = new HashMap<String, String>();
     private static final Set<String> cullLines = new HashSet<>() {{
        add("§7§eRight-click to add this pet to");
@@ -56,7 +56,7 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.Feature
 
     @Override
     public List<Text> onTooltip(List<Text> list, NbtCompound extra, TooltipContext context) {
-        if (!ModConfig.get().item.sbTooltip.enabled) return list;
+        if (!Utils.isOnSkyblock() || !ModConfig.get().item.sbTooltip.enabled) return list;
 
         ListIterator<Text> it = list.listIterator();
         while (it.hasNext()) {

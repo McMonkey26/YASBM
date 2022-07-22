@@ -23,6 +23,6 @@ public class FishingBobberEntityMixin { /* CREDIT: Curious George#2712 */
 
     @Inject(method = "tickFishingLogic(Lnet/minecraft/util/math/BlockPos;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;spawnParticles(Lnet/minecraft/particle/ParticleEffect;DDDIDDDD)I", shift = At.Shift.BEFORE, ordinal = 1), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
     private void tickFishingLogic(BlockPos pos, CallbackInfo ci, ServerWorld serverWorld, int i, BlockPos blockPos, float f, float g, float h, double d, double e, double j, BlockState blockState, float k, float l) {
-        Features.General.FishingUtils.onTickFishingLogic(((FishingBobberEntity) (Object) this), ci, d, e, j, l, k);
+        Features.Helper.Fishing.onTickFishingLogic(((FishingBobberEntity) (Object) this), ci, d, e, j, l, k);
     }
 }

@@ -19,6 +19,7 @@ import net.minecraft.text.Text;
 
 import com.pew.yetanotherskyblockmod.dungeons.*;
 import com.pew.yetanotherskyblockmod.general.*;
+import com.pew.yetanotherskyblockmod.helpers.*;
 import com.pew.yetanotherskyblockmod.hud.*;
 import com.pew.yetanotherskyblockmod.item.*;
 import com.pew.yetanotherskyblockmod.tools.*;
@@ -51,15 +52,21 @@ public class Features {
 
     public static class General {
         public static final Feature BetterMusic = new BetterMusic();
-        public static final Feature WAILACopy = new WAILACopy();
+        public static final Feature ChatCopy    = new ChatCopy();
+        public static final Feature WAILACopy   = new WAILACopy();
         public static final Feature ReforgeStop = new ReforgeStop();
-        public static final FishingUtils FishingUtils = new FishingUtils(); // special
+    }
+
+    public static class Helper {
+        public static final Feature Enchanting=new Enchanting();
+        public static final Feature Farming = new Farming();
+        public static final Fishing Fishing = new Fishing(); // special
+        public static final Feature Mining  = new Mining();
     }
 
     public static class Hud {
         public static final Feature BetterMenus = new BetterMenus();
         public static final Feature CustomTabList = new CustomTabList();
-        public static final Feature FarmingOverlay = new FarmingOverlay();
         public static final Feature HideWitherborn = new HideWitherborn();
         public static final Feature StatBars = new StatBars();
         public static final UpdateLog UpdateLog = new UpdateLog();
@@ -71,6 +78,7 @@ public class Features {
         public static final Feature Customization = new Customization();
         public static final Feature ItemLock = new ItemLock();
         public static final Feature SBTooltip = new SBTooltip();
+        public static final StackSize StackSize = new StackSize();
     }
 
     public static class Tools {
@@ -87,12 +95,13 @@ public class Features {
         add(Dungeons.Reparty);
         add(Dungeons.ScoreEstimator);
         add(General.BetterMusic);
+        add(General.ChatCopy);
         add(General.WAILACopy);
         add(General.ReforgeStop);
-        add(General.FishingUtils);
+        add(Helper.Fishing);
+        add(Helper.Farming);
         add(Hud.BetterMenus);
         add(Hud.CustomTabList);
-        add(Hud.FarmingOverlay);
         add(Hud.HideWitherborn);
         add(Hud.StatBars);
         add(Hud.UpdateLog);
@@ -101,6 +110,7 @@ public class Features {
         add(Item.Customization);
         add(Item.ItemLock);
         add(Item.SBTooltip);
+        add(Item.StackSize);
         add(Tools.Aliases);
         add(Tools.Clean);
         add(Tools.Emojis);

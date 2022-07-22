@@ -37,10 +37,21 @@ public class ModConfig implements ConfigData {
         public boolean wailaEnabled = true;
 
         public boolean chatCopyEnabled = false;
+    }
+
+    @ConfigEntry.Category("helpers")
+    @ConfigEntry.Gui.TransitiveObject
+    public Helpers helpers = new Helpers();
+    public static class Helpers {
+        @ConfigEntry.Gui.CollapsibleObject
+        public FarmingConfig farming = new FarmingConfig();
+        public static class FarmingConfig {
+            
+        }
 
         @ConfigEntry.Gui.CollapsibleObject
-        public FishingUtilsConfig fishingUtils = new FishingUtilsConfig();
-        public static class FishingUtilsConfig {
+        public FishingConfig fishing = new FishingConfig();
+        public static class FishingConfig {
             @ConfigEntry.Gui.Tooltip
             public boolean warnWhenClose = true;
             @ConfigEntry.Gui.Tooltip
@@ -169,6 +180,8 @@ public class ModConfig implements ConfigData {
         @ConfigEntry.Gui.Tooltip
         public boolean itemLockEnabled = true;
         public boolean customizationEnabled = false;
+        @ConfigEntry.Gui.Tooltip
+        public boolean stackSizeEnabled = true;
 
         @ConfigEntry.Gui.CollapsibleObject
         public SBTooltip sbTooltip = new SBTooltip();
@@ -178,14 +191,14 @@ public class ModConfig implements ConfigData {
                 OFF, KEYBIND, ON
             }
             public ConfigState dungeonQuality    = ConfigState.ON;
-            public ConfigState missingEnchants   = ConfigState.OFF;
+            public ConfigState missingEnchants   = ConfigState.KEYBIND;
             public ConfigState rune              = ConfigState.ON;
             public ConfigState stackingEnchants  = ConfigState.OFF;
-            public ConfigState petXpInfo         = ConfigState.KEYBIND;
+            public ConfigState petXpInfo         = ConfigState.ON;
             public ConfigState marketPrices      = ConfigState.OFF;
             public ConfigState npcPrices         = ConfigState.OFF;
-            public ConfigState itemAge           = ConfigState.OFF;
-            public ConfigState sbItemId          = ConfigState.KEYBIND;
+            public ConfigState itemAge           = ConfigState.KEYBIND;
+            public ConfigState sbItemId          = ConfigState.ON;
         }
 
         @ConfigEntry.Gui.Excluded
