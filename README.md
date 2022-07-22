@@ -7,6 +7,7 @@ Yet Another SkyBlock Mod
 - Held Item Copy
 - Chat Copy
 - Item Locking
+- Stack Size (Untested: Enchanted Book, Potion, Minion Level)
 <br/><br/>
 ### WIP Features
 - Skyblock Tooltips (TODO: Item Price, Dungeon Quality)
@@ -43,7 +44,6 @@ Yet Another SkyBlock Mod
 > Voidgloom Utils (Voidgloom Beacon Timer, Voidgloom Beacon Alert, Voidgloom Skull Alert, Voidgloom Beacon Beam)
 > Event Drop Tracker
 > Reparty Command
-> Show Enchanted Book, Potion, Minion Level as Stack Size
 > Choose Reforges to Stop At
 > Hide Food/Armor Bar, HP/Mana/Stat display
 > Bazaar/Auction House Flipper  
