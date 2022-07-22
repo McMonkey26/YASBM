@@ -5,7 +5,7 @@ Yet Another SkyBlock Mod
 - Hide Witherborn
 - WAILA Copy
 - Held Item Copy
-- Chat Copy
+- Chat Copy (Seems to be broken)
 - Item Locking
 - Stack Size (Untested: Enchanted Book, Potion, Minion Level)
 <br/><br/>
@@ -26,7 +26,6 @@ Yet Another SkyBlock Mod
 > Custom Menus (Trade Menu, AH Search & Price, Storage)
 > Item Customization (Rename items, change enchantment glint color)  
 > Fairy Soul & Relic Waypoints  
-> Pet XP Display  
 > Farming Overlay (Collection, Hoe Counter, Angle, Crops/Minute)  
 > Dungeon Map
 > Crimson Isles & Crystal Hollows Map
@@ -38,7 +37,7 @@ Yet Another SkyBlock Mod
 > Triangulation (Metal Detector, Wishing Compass, Ancestral Spade)
 > Tools (Command Aliases)
 > Pressing enter exits sign
-> Fully Customizable Music  
+> Fully Customizable Music
 > Custom Tab List
 > Slayer Helpers (Drop Tracker, Progress Indicator)
 > Voidgloom Utils (Voidgloom Beacon Timer, Voidgloom Beacon Alert, Voidgloom Skull Alert, Voidgloom Beacon Beam)

@@ -29,6 +29,8 @@ public class UpdateLog implements com.pew.yetanotherskyblockmod.Features.Feature
     public void init() {}
 
     public void onTick() {
+        if (!ModConfig.get().hud.updateLog.enabled) return;
+
         lines.addAll(0, lqueue);
         lqueue.clear();
         if (queue.isEmpty()) return;
@@ -37,6 +39,8 @@ public class UpdateLog implements com.pew.yetanotherskyblockmod.Features.Feature
     }
 
     public void onDrawHud(MatrixStack matrices, DrawableHelper g) {
+        if (!ModConfig.get().hud.updateLog.enabled) return;
+
         Rectangle dims = ModConfig.get().hud.updateLog.bounds;
         DrawableHelper.fill(matrices, dims.getMinX(), dims.getMinY(), dims.getMaxX(), dims.getMaxY(), ModConfig.get().hud.updateLog.background.hashCode());
         int y = dims.getMinY() - LINESPACE;

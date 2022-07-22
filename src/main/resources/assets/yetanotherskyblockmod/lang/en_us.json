@@ -21,6 +21,7 @@
 
 
     "text.autoconfig.yetanotherskyblockmod.category.helpers": "Helpers",
+    "text.autoconfig.yetanotherskyblockmod.option.helpers.farming": "Farming Utils",
     "text.autoconfig.yetanotherskyblockmod.option.helpers.fishing": "Fishing Utils",
     "text.autoconfig.yetanotherskyblockmod.option.helpers.fishing.warnWhenClose": "Warn When Close",
     "text.autoconfig.yetanotherskyblockmod.option.helpers.fishing.warnWhenClose.@Tooltip": "Alerts you when fish are nearby",
@@ -70,6 +71,8 @@
     "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltip.npcPrices": "NPC Prices",
     "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltip.itemAge": "Item Age",
     "text.autoconfig.yetanotherskyblockmod.option.item.sbTooltip.sbItemId": "Item ID",
+    "text.autoconfig.yetanotherskyblockmod.option.item.stackSizeEnabled": "Stack Sizes",
+    "text.autoconfig.yetanotherskyblockmod.option.item.stackSizeEnabled.@Tooltip": "Displays Pet, Minion, Potion, and Enchanted Book Levels as stack sizes.",
 
     "text.autoconfig.yetanotherskyblockmod.category.dungeons": "Dungeons"
 }

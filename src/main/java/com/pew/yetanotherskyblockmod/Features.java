@@ -1,7 +1,8 @@
 package com.pew.yetanotherskyblockmod;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -62,6 +63,7 @@ public class Features {
         public static final Feature Farming = new Farming();
         public static final Fishing Fishing = new Fishing(); // special
         public static final Feature Mining  = new Mining();
+        public static final Feature Slayers = new Slayers();
     }
 
     public static class Hud {
@@ -90,7 +92,7 @@ public class Features {
         public static final Feature Keys = new Keys();
     }
 
-    public static List<Feature> features = new ArrayList<Feature>() {{
+    public static Set<Feature> features = new HashSet<Feature>() {{
         add(Dungeons.ChestProfit);
         add(Dungeons.Reparty);
         add(Dungeons.ScoreEstimator);
@@ -98,8 +100,11 @@ public class Features {
         add(General.ChatCopy);
         add(General.WAILACopy);
         add(General.ReforgeStop);
+        add(Helper.Enchanting);
         add(Helper.Fishing);
         add(Helper.Farming);
+        add(Helper.Mining);
+        add(Helper.Slayers);
         add(Hud.BetterMenus);
         add(Hud.CustomTabList);
         add(Hud.HideWitherborn);

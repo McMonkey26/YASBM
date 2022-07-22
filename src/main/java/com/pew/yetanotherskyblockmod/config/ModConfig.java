@@ -155,6 +155,8 @@ public class ModConfig implements ConfigData {
         @ConfigEntry.Gui.CollapsibleObject
         public UpdateLogConfig updateLog = new UpdateLogConfig();
         public static class UpdateLogConfig {
+            public boolean enabled = true;
+
             public Rectangle bounds = new Rectangle(0, 0, 70, 100);
             public Color textColor = Color.ofRGBA(100, 100, 100, 200);
             public Color background = Color.ofRGBA(50, 50, 50, 100);
