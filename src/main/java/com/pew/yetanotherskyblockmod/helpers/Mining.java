@@ -1,5 +1,8 @@
 package com.pew.yetanotherskyblockmod.helpers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.pew.yetanotherskyblockmod.config.ModConfig;
 import com.pew.yetanotherskyblockmod.mixin.ItemRendererAccessor;
@@ -25,7 +28,7 @@ public class Mining implements com.pew.yetanotherskyblockmod.Features.Feature {
         if (extra == null || !extra.contains("drill_fuel")) return;
 
         float current = extra.getInt("drill_fuel");
-        float max = Utils.calculateMaxFuel(stack);
+        float max = calculateMaxFuel(extra);
 
         RenderSystem.disableDepthTest();
         RenderSystem.disableTexture();
@@ -37,5 +40,16 @@ public class Mining implements com.pew.yetanotherskyblockmod.Features.Feature {
         RenderSystem.enableBlend();
         RenderSystem.enableTexture();
         RenderSystem.enableDepthTest();
+    }
+
+    private static Map<String, Integer> fuelcaps = new HashMap<>() {{
+        put("MITHRIL_FUEL_TANK",       10_000);
+        put("TITANIUM_FUEL_TANK",      25_000);
+        put("GEMSTONE_FUEL_TANK",      50_000);
+        put("PERFECTLY_CUT_FUEL_TANK", 100_000);
+    }};
+    private static int calculateMaxFuel(NbtCompound extra) {
+        if (!extra.contains("drill_part_fuel_tank")) return 3000;
+        return fuelcaps.getOrDefault(extra.getString("drill_part_fuel_tank"), 3000);
     }
 }

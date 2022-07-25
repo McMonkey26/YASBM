@@ -34,7 +34,20 @@ public class Utils {
     private static Location location = Location.None; // None, Singleplayer, Multiplayer, Hypixel, Skyblock [None, Unknown, etc.]
     private static @Nullable String zone = "";
 
-    public static Location _getLocation(World world) {
+    private static int lastTick = 0;
+    public static void onTick() {
+        if (lastTick >= 60 && YASBM.client.player != null) {
+            location = Utils._getLocation(YASBM.client.player.getWorld());
+			lastTick = 0;
+		}
+		lastTick++;
+    }
+    public static void onWorldLoad(World world) {
+        location = Utils._getLocation(world);
+        lastTick = 0;
+    }
+
+    private static Location _getLocation(World world) {
         if (YASBM.client.player == null) return Location.None;
         if (YASBM.client.isInSingleplayer()) return Location.Singleplayer;
         if (!YASBM.client.player.getServerBrand().contains("hypixel")) return Location.Multiplayer;
@@ -53,6 +66,9 @@ public class Utils {
     }
     public static boolean isOnSkyblock() {
         return location.equals(Location.Skyblock) || ModConfig.get().isOnSkyblock;  // So I can test
+    }
+    public static String getLocation() {
+        return location.toString();
     }
     public static @Nullable String getZone() {
         return zone;
@@ -154,9 +170,5 @@ public class Utils {
     }
     public static void command(String command) {
         YASBM.client.player.sendChatMessage("/"+command);
-    }
-    
-    public static float calculateMaxFuel(ItemStack stack) {
-        return 3000;
     }
 }

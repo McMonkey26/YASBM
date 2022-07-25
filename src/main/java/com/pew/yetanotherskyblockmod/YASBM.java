@@ -38,7 +38,6 @@ public class YASBM implements ClientModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
 	public static final MinecraftClient client = MinecraftClient.getInstance();
-	private static int lastTick = 0;
 
 	private static final YASBM instance = new YASBM();
 	public static YASBM getInstance() {
@@ -57,11 +56,7 @@ public class YASBM implements ClientModInitializer {
 	}
 
 	public void onTick() {
-		if (lastTick >= 60 && client.player != null) {
-			Utils._getLocation(client.player.getWorld());
-			lastTick = 0;
-		}
-		lastTick++;
+		Utils.onTick();
 		Features.Hud.UpdateLog.onTick();
 		Features.Tools.Keys.onTick();
 		Features.General.WAILACopy.onTick();
@@ -103,7 +98,6 @@ public class YASBM implements ClientModInitializer {
 	}
 
 	public void onWorldItemDrop(ItemStack itemStack, CallbackInfoReturnable<Boolean> cir) {
-		Features.Hud.UpdateLog.onItemDrop(itemStack, cir); // for testing
 		Features.Item.ItemLock.onItemDrop(itemStack, cir);
 	}
 
@@ -121,8 +115,8 @@ public class YASBM implements ClientModInitializer {
     }
 
     public void onWorldLoad(ClientWorld world) {
-		Utils._getLocation(world);
-        LOGGER.info("[MAIN] "+Utils.getZone());
+		Utils.onWorldLoad(world);
+        LOGGER.info("[MAIN] Location: "+Utils.getLocation()+"> "+Utils.getZone());
     }
 
 	public void onDrawBossBar(MatrixStack matrices, BossBar bossBar, CallbackInfo ci) {
