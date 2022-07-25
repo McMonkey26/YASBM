@@ -16,6 +16,7 @@
     "HandledScreenMixin",
     "InGameHudMixin",
     "ItemAccessor",
+    "ItemRendererAccessor",
     "ItemRendererMixin",
     "ItemStackMixin",
     "MinecraftClientMixin",

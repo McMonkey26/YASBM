@@ -6,6 +6,7 @@ import com.pew.yetanotherskyblockmod.Features.Feature;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.StringNbtReader;
+import net.minecraft.text.Text;
 
 public class AspectOfTheJerry implements Feature {
 	public static final Feature instance = new AspectOfTheJerry(); // Registry substitute
@@ -189,6 +190,10 @@ public class AspectOfTheJerry implements Feature {
 					e.printStackTrace();
 					return "I am an idiot";
 				}
+			case "say":
+				YASBM.client.player.sendMessage(
+					Text.Serializer.fromJson("{\"strikethrough\":false,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/socialoptions CapybaraGang\"},\"hoverEvent\":{\"action\":\"show_text\",\"contents\":{\"strikethrough\":false,\"text\":\"§eClick to show social options for §aCapybaraGang\"}},\"extra\":[{\"bold\":false,\"italic\":false,\"underlined\":false,\"strikethrough\":false,\"obfuscated\":false,\"color\":\"#FFFFFF\",\"text\":\": ./visit capybaragang need someone to craft me a juju 14.7m collat in items paying 1m after u craft the bow./visit capybaragang need someone to craft me a juju 14.7m collat in items paying 1m after u craft the bow\"}],\"text\":\"§a[VIP] CapybaraGang§f\"}")
+				, false);
 			default:
 				return msg;
 		}

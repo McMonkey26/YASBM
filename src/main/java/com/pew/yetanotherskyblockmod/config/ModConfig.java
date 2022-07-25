@@ -64,6 +64,15 @@ public class ModConfig implements ConfigData {
             public Color myLineColor = Color.ofRGBA(255, 255, 255, 255);
             public Color myParticleColor = Color.ofRGBA(255, 255, 255, 255);
         }
+
+        @ConfigEntry.Gui.CollapsibleObject
+        public MiningConfig mining = new MiningConfig();
+        public static class MiningConfig {
+            public boolean enabled = true;
+
+            @ConfigEntry.Gui.Tooltip
+            public boolean drillFuelBarsEnabled = true;
+        }
     }
 
     @ConfigEntry.Category("tools")
@@ -179,8 +188,6 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.TransitiveObject
     public Item item = new Item();
     public static class Item {
-        @ConfigEntry.Gui.Tooltip
-        public boolean itemLockEnabled = true;
         public boolean customizationEnabled = false;
         @ConfigEntry.Gui.Tooltip
         public boolean stackSizeEnabled = true;
@@ -203,8 +210,13 @@ public class ModConfig implements ConfigData {
             public ConfigState sbItemId          = ConfigState.ON;
         }
 
+        @ConfigEntry.Gui.Tooltip
+        public boolean itemLockEnabled = true;
         @ConfigEntry.Gui.Excluded
         public List<String> lockedUUIDs = new ArrayList<>();
+        @ConfigEntry.Gui.Excluded
+        public Map<String, Map<Integer, Character>> enchantColors = new HashMap<>();
+        // Enchant Name, Enchant Level, Color
     }
 
     @ConfigEntry.Category("dungeons")

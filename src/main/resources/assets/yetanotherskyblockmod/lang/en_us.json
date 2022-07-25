@@ -55,6 +55,7 @@
     "text.autoconfig.yetanotherskyblockmod.option.hud.betterMenus.bazaarMenuEnabled": "Bazaar Menus",
     "text.autoconfig.yetanotherskyblockmod.option.hud.betterMenus.storageMenuEnabled": "Storage Menus",
     "text.autoconfig.yetanotherskyblockmod.option.hud.updateLog": "Update Log",
+    "text.autoconfig.yetanotherskyblockmod.option.hud.updateLog.enabled": "Enabled",
 
     "text.autoconfig.yetanotherskyblockmod.category.item": "Items",
     "text.autoconfig.yetanotherskyblockmod.option.item.itemLockEnabled": "Item Locking",

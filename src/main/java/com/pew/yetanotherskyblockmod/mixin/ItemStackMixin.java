@@ -65,6 +65,14 @@ public abstract class ItemStackMixin {
     @Shadow
     public abstract int getHideFlags();
 
+    /**
+     * Fetches the text that should be rendered in an item's tooltip
+     * Works differently whether you're on skyblock or not.
+     * 
+     * @param player  
+     * @param context Specifies whether advanced tooltip information should be shown
+     * @return        The list of text to render in the tooltip
+     */
     @Overwrite
     public List<Text> getTooltip(@Nullable PlayerEntity player, TooltipContext context) {
         ItemStack cast = (ItemStack) (Object) this;

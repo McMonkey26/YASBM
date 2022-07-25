@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.pew.yetanotherskyblockmod.config.ModConfig;
+import com.pew.yetanotherskyblockmod.mixin.ItemRendererAccessor;
 import com.pew.yetanotherskyblockmod.util.AspectOfTheJerry;
 import com.pew.yetanotherskyblockmod.util.Utils;
 
@@ -69,10 +70,20 @@ public class YASBM implements ClientModInitializer {
 
 	public @Nullable Text onMessageReccieved(Text text) {
 		if (!client.isInSingleplayer()) YASBM.LOGGER.info("[MAIN] "+Text.Serializer.toJson(text));
+		String s = text.asString();
+		for (Text sibling : text.getSiblings()) {
+			s += " | "+sibling.asString();
+		};
+		YASBM.LOGGER.info("Got Chat Components: "+s);
+
 		text = Features.General.ChatCopy.onMessageReccieved(text);
 		// text = Features.Tools.Clean.onMessageReccieved(text);
 		// if (text == null) return null;
-		// text = onHypixelMessage(text.asString()); // needs to be changed
+		// if (Utils.isOnHypixel()) {
+		// 	String msg = text.getSiblings().get(0).asString().substring(2);
+		// 	msg = onHypixelMessage(chattype, rank, username, msg);
+		// 	text.getSiblings().set(0, Text.of(msg));
+		// }
 		return text;
 	} // incoming
 	
@@ -83,10 +94,10 @@ public class YASBM implements ClientModInitializer {
 		return message;
     } // outgoing
 
-	public @Nullable String onHypixelMessage(String message) {
-		message = Features.Tools.Ignore.onHypixelMessage(message);
+	public @Nullable String onHypixelMessage(String chattype, String rank, String username, String message) {
+		message = Features.Tools.Ignore.onHypixelMessage(chattype, rank, username, message);
 		if (message == null) return null;
-		message = Features.Tools.Filter.onHypixelMessage(message);
+		message = Features.Tools.Filter.onHypixelMessage(chattype, rank, username, message);
 		if (message == null) return null;
 		return message;
 	}
@@ -124,7 +135,9 @@ public class YASBM implements ClientModInitializer {
     }
 
     public ArrayList<Text> onTooltipExtra(List<Text> list, NbtCompound extra, TooltipContext context) {
-        return new ArrayList<Text>(Features.Item.SBTooltip.onTooltip(list, extra, context));
+		// list = Features.Item.EnchantColors.onTooltip(list, extra, context);
+		list = Features.Item.SBTooltip.onTooltip(list, extra, context);
+        return new ArrayList<Text>(list);
     }
 
     public Text onOverlayMessageReccieved(Text text) {
@@ -138,4 +151,8 @@ public class YASBM implements ClientModInitializer {
 	public void onChatClear(boolean history) {
 		Features.Hud.UpdateLog.clear();
 	}
+
+    public void onRenderGuiItemOverlay(ItemStack stack, int x, int y, ItemRendererAccessor g) {
+		Features.Helper.Mining.onRenderGuiItemOverlay(stack, x, y, g);
+    }
 }

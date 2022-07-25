@@ -12,6 +12,7 @@ Yet Another SkyBlock Mod
 ### WIP Features
 - Skyblock Tooltips (TODO: Item Price, Dungeon Quality)
 - Fishing Utilities (TODO: Close fish alert, bait list)
+- Mining  Utilities (TODO: Max Fuel Calculation, other features)
 - Update Log HUD (TODO: Resizable)
 - Clean, Emojis, Keys (TODO: Customizable)
 - Filter, Ignore (TODO: Hypixel Chat Parsing)

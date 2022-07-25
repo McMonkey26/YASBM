@@ -8,8 +8,6 @@ import javax.annotation.Nullable;
 import com.pew.yetanotherskyblockmod.config.ModConfig;
 import com.pew.yetanotherskyblockmod.util.Utils;
 
-import net.minecraft.text.Text;
-
 public class Ignore implements com.pew.yetanotherskyblockmod.Features.Feature {
     private Set<String> ignored;
 
@@ -27,9 +25,9 @@ public class Ignore implements com.pew.yetanotherskyblockmod.Features.Feature {
     }
     
     @Override
-    public Text onMessageReccieved(Text text) {
-        // if (ignored.contains(name)) {ci.cancel();}
-        return text;
+    public String onHypixelMessage(String chattype, String rank, String username, String message) {
+        if (ignored.contains(username)) return null;
+        return message;
     }
 
     public void add(String username) {

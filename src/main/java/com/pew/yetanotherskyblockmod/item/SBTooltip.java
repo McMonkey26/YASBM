@@ -54,7 +54,6 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.Feature
             (state.equals(ConfigState.KEYBIND) && key.isPressed());
     }
 
-    @Override
     public List<Text> onTooltip(List<Text> list, NbtCompound extra, TooltipContext context) {
         if (!Utils.isOnSkyblock() || !ModConfig.get().item.sbTooltip.enabled) return list;
 

@@ -48,6 +48,9 @@ public class Utils {
         }
         return Location.Skyblock;
     }
+    public static boolean isOnHypixel() {
+        return location.equals(Location.Hypixel) || isOnSkyblock();
+    }
     public static boolean isOnSkyblock() {
         return location.equals(Location.Skyblock) || ModConfig.get().isOnSkyblock;  // So I can test
     }
@@ -92,7 +95,6 @@ public class Utils {
         return (item != null && item.hasNbt() && item.getNbt().contains("ExtraAttributes")) ?
             item.getSubNbt("ExtraAttributes") : null;
     }
-
     public static @Nullable String getItemUUID(ItemStack item) {
         @Nullable NbtCompound extra = getItemExtra(item);
         return (extra != null && extra.contains("uuid")) ? item.getSubNbt("ExtraAttributes").getString("uuid") : null;
@@ -152,5 +154,9 @@ public class Utils {
     }
     public static void command(String command) {
         YASBM.client.player.sendChatMessage("/"+command);
+    }
+    
+    public static float calculateMaxFuel(ItemStack stack) {
+        return 3000;
     }
 }

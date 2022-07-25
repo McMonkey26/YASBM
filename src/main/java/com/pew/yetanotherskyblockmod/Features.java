@@ -23,6 +23,7 @@ import com.pew.yetanotherskyblockmod.general.*;
 import com.pew.yetanotherskyblockmod.helpers.*;
 import com.pew.yetanotherskyblockmod.hud.*;
 import com.pew.yetanotherskyblockmod.item.*;
+import com.pew.yetanotherskyblockmod.mixin.ItemRendererAccessor;
 import com.pew.yetanotherskyblockmod.tools.*;
 
 public class Features {
@@ -34,7 +35,7 @@ public class Features {
         public default String onMessageSent(String message) {throw new AssertionError();};
 		public default Text onMessageReccieved(Text text) {throw new AssertionError();};
         public default Text onOverlayMessageReccieved(Text text) {throw new AssertionError();};
-        public default String onHypixelMessage(String message) {throw new AssertionError();};
+        public default String onHypixelMessage(String chattype, String rank, String username, String message) {throw new AssertionError();};
 		public default void onItemDrop(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {}; // World
 		public default void onItemDrop(ItemStack stack, CallbackInfo ci) {};                     // Inventory
         public default void onDrawHud(MatrixStack matrices, DrawableHelper g) {};
@@ -42,7 +43,8 @@ public class Features {
 		public default void onDrawTablist(MatrixStack matrices, Scoreboard scoreboard, ScoreboardObjective so, DrawableHelper g) {};
         public default List<Text> onTooltip(List<Text> tooltip, NbtCompound extra, TooltipContext context) {throw new AssertionError();};
 		public default void onGuiKeyPress(int keyCode, int scanCode) {};
-		public default void onRenderBossBar(MatrixStack matrices, BossBar bossBar, CallbackInfo ci) {};
+		public default void onRenderBossBar(MatrixStack matrices, BossBar bossBar, CallbackInfo ci) {}
+        public default void onRenderGuiItemOverlay(ItemStack stack, int x, int y, ItemRendererAccessor g) {};
     }
 
     public static class Dungeons {
@@ -78,6 +80,7 @@ public class Features {
     public static class Item {
         public static final Feature CopyItem = new CopyItem();
         public static final Feature Customization = new Customization();
+        // public static final Feature EnchantColors = new EnchantColors();
         public static final Feature ItemLock = new ItemLock();
         public static final Feature SBTooltip = new SBTooltip();
         public static final StackSize StackSize = new StackSize();
