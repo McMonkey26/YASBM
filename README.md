@@ -5,17 +5,17 @@ Yet Another SkyBlock Mod
 - Hide Witherborn
 - WAILA Copy
 - Held Item Copy
-- Chat Copy (Seems to be broken)
+- Chat Copy
 - Item Locking
 - Stack Size (Untested: Enchanted Book, Potion, Minion Level)
 <br/><br/>
 ### WIP Features
 - Skyblock Tooltips (TODO: Item Price, Dungeon Quality)
 - Fishing Utilities (TODO: Close fish alert, bait list)
-- Mining  Utilities (TODO: Max Fuel Calculation, other features)
+- Mining Utilities (TODO: other features)
 - Update Log HUD (TODO: Resizable)
 - Clean, Emojis, Keys (TODO: Customizable)
-- Filter, Ignore (TODO: Hypixel Chat Parsing)
+- Filter, Ignore (TODO: Hypixel Chat Type Parsing & Testing)
 <hr>
 <h3>Planned Features:</h3>
 
@@ -57,3 +57,5 @@ Yet Another SkyBlock Mod
 > Legion Player counter
 > Pet Display
 > Booster Cookie Timer
+
+> Scoreboard#addTeam remove logging

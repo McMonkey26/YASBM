@@ -32,7 +32,7 @@ public class Filter implements com.pew.yetanotherskyblockmod.Features.Feature {
             String filter = entry.getKey().toLowerCase();
             Integer actions = entry.getValue();
 
-            if (msg.asString().toLowerCase().contains(filter)) {
+            if (msg.getString().toLowerCase().contains(filter)) {
                 if ((actions & 1 << 0) == 1 << 0) {
                     msg = censor(msg,filter);
                     continue;
@@ -50,7 +50,7 @@ public class Filter implements com.pew.yetanotherskyblockmod.Features.Feature {
     }
 
     private Text censor(Text input, String filter) {
-        if (!input.asString().toLowerCase().contains(filter)) return input;
+        if (!input.getString().toLowerCase().contains(filter)) return input;
         MutableText censored = new LiteralText("*".repeat(filter.length()));
         if (ModConfig.get().tools.showOnHover) {
             censored.setStyle(Style.EMPTY.withColor(Formatting.RED).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, 
@@ -62,7 +62,7 @@ public class Filter implements com.pew.yetanotherskyblockmod.Features.Feature {
         }
 
         MutableText output = new LiteralText("").setStyle(input.getStyle()); // Style passthrough for recursion
-        String[] parts = StringUtils.splitByWholeSeparator(input.asString(), filter);
+        String[] parts = StringUtils.splitByWholeSeparator(input.asString(), filter); // asString because we only process this component
         for (int i = parts.length - 1; i >= 0; i--) {
             output.append(new LiteralText(parts[i]).setStyle(input.getStyle()));
             if (i > 0) output.append(censored); // Fencepost

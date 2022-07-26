@@ -59,7 +59,7 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.Feature
 
         ListIterator<Text> it = list.listIterator();
         while (it.hasNext()) {
-            String i = it.next().asString();
+            String i = it.next().getString();
             if (cullLines.contains(i)) {it.remove(); continue;}
             if (isEnabled(ModConfig.get().item.sbTooltip.rune) && i.matches("^(?:§.)?◆ \\w+ Rune I{1,3}$")) {it.remove(); continue;}
         }

@@ -69,6 +69,9 @@ public abstract class ItemStackMixin {
      * Fetches the text that should be rendered in an item's tooltip
      * Works differently whether you're on skyblock or not.
      * 
+     * @author Pew
+     * @reason Prevent unnecessary tooltip actions if they are to be ignored anyways.
+     * 
      * @param player  
      * @param context Specifies whether advanced tooltip information should be shown
      * @return        The list of text to render in the tooltip

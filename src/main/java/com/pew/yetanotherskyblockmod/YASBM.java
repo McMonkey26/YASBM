@@ -64,12 +64,11 @@ public class YASBM implements ClientModInitializer {
 	}
 
 	public @Nullable Text onMessageReccieved(Text text) {
-		if (!client.isInSingleplayer()) YASBM.LOGGER.info("[MAIN] "+Text.Serializer.toJson(text));
-		String s = text.asString();
+		String s = text.getString();
 		for (Text sibling : text.getSiblings()) {
-			s += " | "+sibling.asString();
+			s += " | " + sibling.getString();
 		};
-		YASBM.LOGGER.info("Got Chat Components: "+s);
+		YASBM.LOGGER.info("[MAIN] "+Text.Serializer.toJson(text)+" - Got Chat Components: "+s);
 
 		text = Features.General.ChatCopy.onMessageReccieved(text);
 		// text = Features.Tools.Clean.onMessageReccieved(text);

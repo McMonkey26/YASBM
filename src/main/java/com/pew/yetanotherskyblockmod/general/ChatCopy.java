@@ -14,8 +14,8 @@ public class ChatCopy implements com.pew.yetanotherskyblockmod.Features.Feature 
     
     public Text onMessageReccieved(Text text) {
         if (!ModConfig.get().general.chatCopyEnabled) return text;
-        return text.copy().setStyle(text.getStyle()
-            .withClickEvent(new ClickEvent(Action.COPY_TO_CLIPBOARD, text.asString()))
+        return text.shallowCopy().setStyle(text.getStyle()
+            .withClickEvent(new ClickEvent(Action.COPY_TO_CLIPBOARD, text.getString()))
             .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText("chat.copy.click")))
         );
     };

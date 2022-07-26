@@ -2,8 +2,8 @@
     "key.categories.yetanotherskyblockmod": "Yet Another Skyblock Mod",
     "key.itemLock": "Lock Item",
     "key.copyBlock": "WAILA Copy",
-    "key.copyItem": "Held Item Copy",
-    "key.showTooltip": "Show Tooltip",
+    "key.copyItem": "Item Copy",
+    "key.showTooltip": "Show Detailed Tooltip",
 
     "text.autoconfig.yetanotherskyblockmod.title": "Yet Another Skyblock Mod Settings",
     
@@ -31,6 +31,10 @@
     "text.autoconfig.yetanotherskyblockmod.option.helpers.fishing.chromaSpeed.@Tooltip": "The speed at which to cycle colors (0 = disable)",
     "text.autoconfig.yetanotherskyblockmod.option.helpers.fishing.myLineColor": "Line Color",
     "text.autoconfig.yetanotherskyblockmod.option.helpers.fishing.myParticleColor": "Particle Color",
+    "text.autoconfig.yetanotherskyblockmod.option.helpers.mining": "Mining Utils",
+    "text.autoconfig.yetanotherskyblockmod.option.helpers.mining.enabled": "Enabled",
+    "text.autoconfig.yetanotherskyblockmod.option.helpers.mining.drillFuelBarsEnabled": "Drill Fuel Bars",
+    "text.autoconfig.yetanotherskyblockmod.option.helpers.mining.drillFuelBarsEnabled.@Tooltip": "Makes fuel levels appear as drill durability.",
 
     "text.autoconfig.yetanotherskyblockmod.category.tools": "Tools",
     "text.autoconfig.yetanotherskyblockmod.option.tools.showOnHover": "Show On Hover",

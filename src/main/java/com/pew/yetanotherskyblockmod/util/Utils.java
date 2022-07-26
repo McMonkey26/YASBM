@@ -21,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.AbstractNbtList;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.ScoreboardObjective;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
@@ -50,12 +51,13 @@ public class Utils {
     private static Location _getLocation(World world) {
         if (YASBM.client.player == null) return Location.None;
         if (YASBM.client.isInSingleplayer()) return Location.Singleplayer;
-        if (!YASBM.client.player.getServerBrand().contains("hypixel")) return Location.Multiplayer;
-        ScoreboardObjective titleObj = world.getScoreboard().getObjectiveForSlot(1);
-        String title = titleObj.getDisplayName().asString().replaceAll("(?i)\\u00A7.", "");
-        if (!title.contains("SKYBLOCK")) return Location.Hypixel;
-        for (ScoreboardObjective objective : world.getScoreboard().getObjectives()) {
-            String text = objective.getDisplayName().asString();
+        if (!YASBM.client.player.getServerBrand().toLowerCase().contains("hypixel")) return Location.Multiplayer;
+        Scoreboard scoreboard = world.getScoreboard();
+        ScoreboardObjective title = scoreboard.getObjectiveForSlot(1);
+        String titlestr = title == null ? "" : title.getDisplayName().getString().replaceAll("(?:[&§][a-f\\dk-or])|\\W", "");
+        if (!titlestr.contains("SKYBLOCK")) return Location.Hypixel; // TODO: Fix detection
+        for (ScoreboardObjective objective : scoreboard.getObjectives()) {
+            String text = objective.getDisplayName().getString();
             if (!text.contains("⏣")) continue;
             zone = text.replaceAll("(?:[&§][a-f\\dk-or])|[^a-z\s']", "").trim();
         }

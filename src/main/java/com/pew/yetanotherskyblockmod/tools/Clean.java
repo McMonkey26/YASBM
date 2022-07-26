@@ -30,7 +30,7 @@ public class Clean implements com.pew.yetanotherskyblockmod.Features.Feature {
         Iterator<Pattern> it = clean.keySet().iterator();
         while (it.hasNext()) {
             Pattern p = it.next();
-            Matcher match = p.matcher(text.asString());
+            Matcher match = p.matcher(text.getString());
             if (!match.matches()) continue;
             Integer actions = clean.get(p);
             if        ((actions & 1 << 0) == 1 << 0) {

@@ -55,7 +55,7 @@ public class Fishing implements com.pew.yetanotherskyblockmod.Features.Feature {
     public void onRenderBobber(FishingBobberEntity entity, MatrixStack matrixStack, CallbackInfo ci) {
         if (!Utils.isOnSkyblock()) return;
         
-        if (entity.getPlayerOwner().isMainPlayer()) {
+        if (entity.getPlayerOwner() != null && entity.getPlayerOwner().isMainPlayer()) {
             if (!ModConfig.get().helpers.fishing.warnWhenClose) return;
         } else if (!ModConfig.get().helpers.fishing.showOthers) ci.cancel();
     }
