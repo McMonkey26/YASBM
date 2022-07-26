@@ -228,7 +228,7 @@ public class AspectOfTheJerry implements Feature {
 								'{\"text\":\"§7Grants §a+50 §6☘ Mining Fortune§7, but\"}',
 								'{\"text\":\"§7fuel consumption is doubled.\"}',
 								'{\"text\":\"\"}',
-								'{\"text\":\"§7Fuel: §299,972§8/100k\"}',
+								'{\"text\":\"§7Fuel: §269,420§8/100k\"}',
 								'{\"text\":\"\"}',
 								'{\"text\":\"§6Ability: Mining Speed Boost §e§lRIGHT CLICK\"}',
 								'{\"text\":\"§7Grants §a+§a300% §6⸕ Mining\"}',
@@ -252,7 +252,7 @@ public class AspectOfTheJerry implements Feature {
 						},
 						  "ExtraAttributes": {
 							"rarity_upgrades": 1,
-							"drill_fuel": 99972,
+							"drill_fuel": 69420,
 							"modifier": "heated",
 							"compact_blocks": 4315688,
 							"originTag": "UNKNOWN",

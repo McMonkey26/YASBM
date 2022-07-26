@@ -53,6 +53,6 @@ public class Mining implements com.pew.yetanotherskyblockmod.Features.Feature {
     }};
     private static int calculateMaxFuel(NbtCompound extra) {
         if (!extra.contains("drill_part_fuel_tank")) return 3000;
-        return fuelcaps.getOrDefault(extra.getString("drill_part_fuel_tank"), 3000);
+        return fuelcaps.getOrDefault(extra.getString("drill_part_fuel_tank").toUpperCase(), 3000);
     }
 }
