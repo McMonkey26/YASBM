@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.pew.yetanotherskyblockmod.config.ModConfig;
-import com.pew.yetanotherskyblockmod.mixin.ItemRendererAccessor;
 import com.pew.yetanotherskyblockmod.util.AspectOfTheJerry;
 import com.pew.yetanotherskyblockmod.util.Utils;
 
@@ -22,6 +21,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.boss.BossBar;
@@ -146,7 +146,7 @@ public class YASBM implements ClientModInitializer {
 		Features.Hud.UpdateLog.clear();
 	}
 
-    public void onRenderGuiItemOverlay(ItemStack stack, int x, int y, ItemRendererAccessor g) {
-		Features.Helper.Mining.onRenderGuiItemOverlay(stack, x, y, g);
+    public void onRenderGuiItemOverlay(ItemStack stack, int x, int y, ItemRenderer itemRenderer) {
+		Features.Helper.Mining.onRenderGuiItemOverlay(stack, x, y, itemRenderer);
     }
 }

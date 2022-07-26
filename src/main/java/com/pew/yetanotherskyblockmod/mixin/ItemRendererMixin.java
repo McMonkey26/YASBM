@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.pew.yetanotherskyblockmod.Features;
 import com.pew.yetanotherskyblockmod.YASBM;
@@ -30,7 +31,7 @@ public class ItemRendererMixin {
     }
 
     @Inject(method = "renderGuiItemOverlay(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/item/ItemStack;IILjava/lang/String;)V", at = @At("HEAD"), cancellable = false)
-    private void renderGuiItemOverlay(TextRenderer t, ItemStack stack, int x, int y, String countLabel) {
-        YASBM.getInstance().onRenderGuiItemOverlay(stack, x, y, (ItemRendererAccessor) (Object) this);
+    private void renderGuiItemOverlay(TextRenderer t, ItemStack stack, int x, int y, String countLabel, CallbackInfo ci) {
+        YASBM.getInstance().onRenderGuiItemOverlay(stack, x, y, (ItemRenderer) (Object) this);
     }
 }

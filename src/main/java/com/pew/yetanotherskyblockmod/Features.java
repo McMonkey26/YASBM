@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.boss.BossBar;
 import net.minecraft.item.ItemStack;
@@ -23,7 +24,6 @@ import com.pew.yetanotherskyblockmod.general.*;
 import com.pew.yetanotherskyblockmod.helpers.*;
 import com.pew.yetanotherskyblockmod.hud.*;
 import com.pew.yetanotherskyblockmod.item.*;
-import com.pew.yetanotherskyblockmod.mixin.ItemRendererAccessor;
 import com.pew.yetanotherskyblockmod.tools.*;
 
 public class Features {
@@ -44,7 +44,7 @@ public class Features {
         public default List<Text> onTooltip(List<Text> tooltip, NbtCompound extra, TooltipContext context) {throw new AssertionError();};
 		public default void onGuiKeyPress(int keyCode, int scanCode) {};
 		public default void onRenderBossBar(MatrixStack matrices, BossBar bossBar, CallbackInfo ci) {}
-        public default void onRenderGuiItemOverlay(ItemStack stack, int x, int y, ItemRendererAccessor g) {};
+        public default void onRenderGuiItemOverlay(ItemStack stack, int x, int y, ItemRenderer itemRenderer) {};
     }
 
     public static class Dungeons {

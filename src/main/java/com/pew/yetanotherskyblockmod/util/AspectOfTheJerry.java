@@ -190,6 +190,105 @@ public class AspectOfTheJerry implements Feature {
 					e.printStackTrace();
 					return "I am an idiot";
 				}
+			case "meep":
+				try {
+					YASBM.client.player.giveItemStack(ItemStack.fromNbt(StringNbtReader.parse("""
+					{
+						"id": "minecraft:prismarine_shard",
+						"Count": 1,
+						"tag": {
+						  "ench": [],
+						  "HideFlags": 254,
+						"display": {
+							"Lore": [
+								'{\"text\":\"§8Breaking Power 10\"}',
+								'{\"text\":\"\"}',
+								'{\"text\":\"§7Damage: §c+70\"}',
+								'{\"text\":\"§7Mining Speed: §a+2,650 §d(+240)\"}',
+								'{\"text\":\"§7Mining Fortune: §a+420 §d(+120)\"}',
+								'{\"text\":\"§7Pristine: §a+7.2 §d(+2.2)\"}',
+								'{\"text\":\" §6[§6⸕§6] §6[§6⸕§6] §6[§a☘§6] §6[§a☘§6] §6[§e✦§6]\"}',
+								'{\"text\":\"\"}',
+								'{\"text\":\"§9Compact X\"}',
+								'{\"text\":\"§9Efficiency X\"}',
+								'{\"text\":\"§9Experience IV\"}',
+								'{\"text\":\"§9Fortune IV\"}',
+								'{\"text\":\"§9Pristine V\"}',
+								'{\"text\":\"§9Smelting Touch I\"}',
+								'{\"text\":\"\"}',
+								'{\"text\":\"§aPerfectly-Cut Fuel Tank\"}',
+								'{\"text\":\"§7Increases the fuel capacity to\"}',
+								'{\"text\":\"§7§2100,000§7.\"}',
+								'{\"text\":\"\"}',
+								'{\"text\":\"§aAmber-polished Drill Engine\"}',
+								'{\"text\":\"§7Grants §a§6+400⸕ Mining Speed§7.\"}',
+								'{\"text\":\"§7Grants §a§6+400⸕ Mining Speed§7.\"}',
+								'{\"text\":\"\"}',
+								'{\"text\":\"§aSunny Side Goblin Egg Part\"}',
+								'{\"text\":\"§7Grants §a+50 §6☘ Mining Fortune§7, but\"}',
+								'{\"text\":\"§7fuel consumption is doubled.\"}',
+								'{\"text\":\"\"}',
+								'{\"text\":\"§7Fuel: §299,972§8/100k\"}',
+								'{\"text\":\"\"}',
+								'{\"text\":\"§6Ability: Mining Speed Boost §e§lRIGHT CLICK\"}',
+								'{\"text\":\"§7Grants §a+§a300% §6⸕ Mining\"}',
+								'{\"text\":\"§6Speed §7for §a20s§7.\"}',
+								'{\"text\":\"§8Cooldown: §a120s\"}',
+								'{\"text\":\"\"}',
+								'{\"text\":\"§9Heated Bonus\"}',
+								'{\"text\":\"§7Grants §aincreased §6⸕ Mining\"}',
+								'{\"text\":\"§6Speed §7the deeper you venture.\"}',
+								'{\"text\":\"\"}',
+								'{\"text\":\"§b§l§ka§r §b§l§b§lDIVINE DRILL §b§l§ka\"}',
+								'{\"text\":\"§8§m-----------------\"}',
+								'{\"text\":\"§7Seller: §a[VIP§6+§a] FeuerTeufel__\"}',
+								'{\"text\":\"§7Buy it now: §61,372,500,000 coins\"}',
+								'{\"text\":\"\"}',
+								'{\"text\":\"§7Ends in: §e10d\"}',
+								'{\"text\":\"\"}',
+								'{\"text\":\"§eClick to inspect!\"}'
+							],
+							"Name": '{\"text\":\"§f§f§bHeated Divanu0027s Drill\"}'
+						},
+						  "ExtraAttributes": {
+							"rarity_upgrades": 1,
+							"drill_fuel": 99972,
+							"modifier": "heated",
+							"compact_blocks": 4315688,
+							"originTag": "UNKNOWN",
+							"enchantments": {
+							  "efficiency": 10,
+							  "fortune": 4,
+							  "smelting_touch": 1,
+							  "compact": 10,
+							  "pristine": 5,
+							  "telekinesis": 1,
+							  "experience": 4
+							},
+							"uuid": "20f6c9db-6b79-474d-951e-1e719a9d108e",
+							"drill_part_upgrade_module": "goblin_omelette_sunny_side",
+							"gems": {
+							  "JADE_1": "PERFECT",
+							  "JADE_0": "PERFECT",
+							  "MINING_0": "PERFECT",
+							  "AMBER_0": "PERFECT",
+							  "AMBER_1": "PERFECT",
+							  "MINING_0_gem": "TOPAZ"
+							},
+							"drill_part_engine": "amber_polished_drill_engine",
+							"id": "DIVAN_DRILL",
+							"drill_part_fuel_tank": "perfectly_cut_fuel_tank",
+							"timestamp": "3/3/21 9:00 AM"
+						  }
+						},
+						"Damage": 0
+					  }
+					""")));
+					return "agh";
+				} catch (CommandSyntaxException e) {
+					e.printStackTrace();
+					return "sdfd";
+				}
 			case "say":
 				YASBM.client.player.sendMessage(
 					Text.Serializer.fromJson("{\"strikethrough\":false,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/socialoptions CapybaraGang\"},\"hoverEvent\":{\"action\":\"show_text\",\"contents\":{\"strikethrough\":false,\"text\":\"§eClick to show social options for §aCapybaraGang\"}},\"extra\":[{\"bold\":false,\"italic\":false,\"underlined\":false,\"strikethrough\":false,\"obfuscated\":false,\"color\":\"#FFFFFF\",\"text\":\": ./visit capybaragang need someone to craft me a juju 14.7m collat in items paying 1m after u craft the bow./visit capybaragang need someone to craft me a juju 14.7m collat in items paying 1m after u craft the bow\"}],\"text\":\"§a[VIP] CapybaraGang§f\"}")
