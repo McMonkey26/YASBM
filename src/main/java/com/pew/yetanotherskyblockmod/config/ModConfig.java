@@ -37,6 +37,9 @@ public class ModConfig implements ConfigData {
         public boolean wailaEnabled = true;
 
         public boolean chatCopyEnabled = false;
+
+        @ConfigEntry.Gui.Tooltip
+        public boolean cleanupLogs = false;
     }
 
     @ConfigEntry.Category("helpers")
@@ -180,6 +183,15 @@ public class ModConfig implements ConfigData {
 
             public boolean showHealthChange = true;
             public boolean showEhp = false;
+        }
+
+        @ConfigEntry.Gui.CollapsibleObject
+        public LegionCounterConfig legionCounter = new LegionCounterConfig();
+        public static class LegionCounterConfig {
+            public boolean enabled = false;
+
+            public Color textColor = Color.ofRGBA(50, 100, 100, 200);
+            public Rectangle bounds = null;
         }
         // custom bars, farming overlay, xp tracker
     }

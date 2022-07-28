@@ -54,12 +54,13 @@ public class Utils {
         if (!YASBM.client.player.getServerBrand().toLowerCase().contains("hypixel")) return Location.Multiplayer;
         Scoreboard scoreboard = world.getScoreboard();
         ScoreboardObjective title = scoreboard.getObjectiveForSlot(1);
-        String titlestr = title == null ? "" : title.getDisplayName().getString().replaceAll("(?:[&§][a-f\\dk-or])|\\W", "");
-        if (!titlestr.contains("SKYBLOCK")) return Location.Hypixel; // TODO: Fix detection
+        String titlestr = title == null ? "" : title.getDisplayName().getString().replaceAll("(?:[&§][a-f\\dk-or])|\\W", "");        
+        if (!titlestr.equals("SKYBLOCK")) return Location.Hypixel;
         for (ScoreboardObjective objective : scoreboard.getObjectives()) {
             String text = objective.getDisplayName().getString();
-            if (!text.contains("⏣")) continue;
-            zone = text.replaceAll("(?:[&§][a-f\\dk-or])|[^a-z\s']", "").trim();
+            if (text.indexOf('⏣') >= 0) continue;
+            zone = text.replaceAll("(?:[&§][a-f\\dk-or])|[^\\w\s']", "").trim();
+            break;
         }
         return Location.Skyblock;
     }
@@ -73,7 +74,7 @@ public class Utils {
         return location.toString();
     }
     public static @Nullable String getZone() {
-        return zone;
+        return Utils.zone;
     }
 
     public static @Nullable String getUUID(String username) {

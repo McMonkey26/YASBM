@@ -19,19 +19,19 @@ Yet Another SkyBlock Mod
 <hr>
 <h3>Planned Features:</h3>
 
-> In Game Profile Viewer  
+> In Game Profile Viewer
 > Custom Enchantment Colors
-> Improved SB Menus  
-> Calendar Event Notifations & Timers (Jacob's Events, Spooky Festivals, etc)  
+> Improved SB Menus
+> Calendar Event Notifations & Timers (Jacob's Events, Spooky Festivals, etc)
 > Birch Park Rainmaker Timer
 > Custom Menus (Trade Menu, AH Search & Price, Storage)
-> Item Customization (Rename items, change enchantment glint color)  
-> Fairy Soul & Relic Waypoints  
-> Farming Overlay (Collection, Hoe Counter, Angle, Crops/Minute)  
+> Item Customization (Rename items, change enchantment glint color)
+> Fairy Soul & Relic Waypoints
+> Farming Overlay (Collection, Hoe Counter, Angle, Crops/Minute)
 > Dungeon Map
 > Crimson Isles & Crystal Hollows Map
 > Crystal Hollows Waypoints
-> Dungeon Profit Tracker  
+> Dungeon Profit Tracker
 > Dungeon Score Tracker
 > Dungeon Boss HP Display
 > Solvers (Dungeon Puzzle, Terminal, Experimentation Table)
@@ -46,16 +46,13 @@ Yet Another SkyBlock Mod
 > Reparty Command
 > Choose Reforges to Stop At
 > Hide Food/Armor Bar, HP/Mana/Stat display
-> Bazaar/Auction House Flipper  
-> Easily Accept/Decline Party Invites, Friend Requests, etc.   
-> Skill XP/Hour and Items/Hour Tracker  
-> Search through Log Files  
-> Analyze Chests and Item Values  
+> Bazaar/Auction House Flipper
+> Easily Accept/Decline Party Invites, Friend Requests, etc.
+> Skill XP/Hour and Items/Hour Tracker
+> Search through Logs
+> Analyze Chests and Item Values
 > Type in Chat while in GUIs
-> Search through Chat with CTRL + F
 > Dolphin and Rock pet counters
-> Legion Player counter
+> Legion Player Counter
 > Pet Display
 > Booster Cookie Timer
-
-> Scoreboard#addTeam remove logging

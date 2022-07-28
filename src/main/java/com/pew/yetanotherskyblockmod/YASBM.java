@@ -11,13 +11,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.pew.yetanotherskyblockmod.config.ModConfig;
-import com.pew.yetanotherskyblockmod.util.AspectOfTheJerry;
+import com.pew.yetanotherskyblockmod.util.ItemGrabber;
 import com.pew.yetanotherskyblockmod.util.Utils;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.item.TooltipContext;
@@ -27,6 +28,7 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.boss.BossBar;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.resource.ResourceType;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.ScoreboardObjective;
 import net.minecraft.screen.slot.Slot;
@@ -46,6 +48,8 @@ public class YASBM implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
+		ItemGrabber.register();
+		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(ItemGrabber.instance);
 		ModConfig.init();
 		Features.init();
 		ClientTickEvents.END_CLIENT_TICK.register((client) -> this.onTick());
@@ -61,6 +65,7 @@ public class YASBM implements ClientModInitializer {
 		Features.Tools.Keys.onTick();
 		Features.General.WAILACopy.onTick();
 		Features.Item.CopyItem.onTick();
+		Features.Hud.LegionCounter.onTick();
 	}
 
 	public @Nullable Text onMessageReccieved(Text text) {
@@ -82,7 +87,6 @@ public class YASBM implements ClientModInitializer {
 	} // incoming
 	
 	public String onMessageSent(String message) {
-		message = AspectOfTheJerry.instance.onMessageSent(message);
 		// message = Features.Tools.Aliases.onMessageSent(message);
 		message = Features.Tools.Emojis.onMessageSent(message);
 		return message;
@@ -114,6 +118,7 @@ public class YASBM implements ClientModInitializer {
     }
 
     public void onWorldLoad(ClientWorld world) {
+		Features.Hud.LegionCounter.onWorldLoad(world);
 		Utils.onWorldLoad(world);
         LOGGER.info("[MAIN] Location: "+Utils.getLocation()+"> "+Utils.getZone());
     }
@@ -139,6 +144,7 @@ public class YASBM implements ClientModInitializer {
 
     public void onDrawHud(MatrixStack matrices, DrawableHelper g) {
 		Features.Hud.UpdateLog.onDrawHud(matrices, g);
+		Features.Hud.LegionCounter.onDrawHud(matrices, g);
     }
 
 	public void onChatClear(boolean history) {

@@ -36,11 +36,7 @@ public class ScreenHandlerMixin {
             case SWAP:
                 ItemStack s1 = this.getSlot(slotIndex).getStack();
                 ItemStack s2 = player.getInventory().getStack(button);
-                if (s1.isEmpty() && s2.isEmpty()) {
-                    YASBM.LOGGER.warn("[Mixin] Failed to locate relevant slot for item swap action.");
-                    if (com.pew.yetanotherskyblockmod.item.ItemLock.isEnabled()) ci.cancel(); // just in case
-                    break;
-                }
+                if (s1.isEmpty() && s2.isEmpty()) break;
                 if (!s1.isEmpty()) YASBM.getInstance().onInventoryItemDrop(s1, ci);
                 if (!s2.isEmpty()) YASBM.getInstance().onInventoryItemDrop(s2, ci);
             break;

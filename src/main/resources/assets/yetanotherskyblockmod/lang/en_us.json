@@ -18,7 +18,8 @@
     "text.autoconfig.yetanotherskyblockmod.option.general.wailaEnabled": "WhatAmILookingAt",
     "text.autoconfig.yetanotherskyblockmod.option.general.wailaEnabled.@Tooltip": "Adds a keybind to get the data of the block you're looking at.",
     "text.autoconfig.yetanotherskyblockmod.option.general.chatCopyEnabled": "Chat Copy",
-
+    "text.autoconfig.yetanotherskyblockmod.option.general.cleanupLogs": "Cleanup Logs",
+    "text.autoconfig.yetanotherskyblockmod.option.general.cleanupLogs.@Tooltip": "Removes bloat from your log files.",
 
     "text.autoconfig.yetanotherskyblockmod.category.helpers": "Helpers",
     "text.autoconfig.yetanotherskyblockmod.option.helpers.farming": "Farming Utils",

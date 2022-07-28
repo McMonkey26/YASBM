@@ -18,6 +18,7 @@ import net.minecraft.client.util.math.MatrixStack;
 public class InGameHudMixin {
     @Inject(method = "render", at = @At("HEAD"), cancellable = false)
     private void render(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
+        if (YASBM.client.options.hudHidden) return; // support for f1
         YASBM.getInstance().onDrawHud(matrices, (DrawableHelper)(Object)this);
     }
 }

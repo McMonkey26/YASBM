@@ -11,6 +11,7 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.boss.BossBar;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -44,7 +45,8 @@ public class Features {
         public default List<Text> onTooltip(List<Text> tooltip, NbtCompound extra, TooltipContext context) {throw new AssertionError();};
 		public default void onGuiKeyPress(int keyCode, int scanCode) {};
 		public default void onRenderBossBar(MatrixStack matrices, BossBar bossBar, CallbackInfo ci) {}
-        public default void onRenderGuiItemOverlay(ItemStack stack, int x, int y, ItemRenderer itemRenderer) {};
+        public default void onRenderGuiItemOverlay(ItemStack stack, int x, int y, ItemRenderer itemRenderer) {}
+        public default void onWorldLoad(ClientWorld world) {};
     }
 
     public static class Dungeons {
@@ -72,6 +74,7 @@ public class Features {
         public static final Feature BetterMenus = new BetterMenus();
         public static final Feature CustomTabList = new CustomTabList();
         public static final Feature HideWitherborn = new HideWitherborn();
+        public static final Feature LegionCounter = new LegionCounter();
         public static final Feature StatBars = new StatBars();
         public static final UpdateLog UpdateLog = new UpdateLog();
         public static final Feature XPTracker = new XPTracker();
@@ -111,6 +114,7 @@ public class Features {
         add(Hud.BetterMenus);
         add(Hud.CustomTabList);
         add(Hud.HideWitherborn);
+        add(Hud.LegionCounter);
         add(Hud.StatBars);
         add(Hud.UpdateLog);
         add(Hud.XPTracker);
