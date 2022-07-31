@@ -21,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.AbstractNbtList;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.AbstractNbtNumber;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.ScoreboardObjective;
 import net.minecraft.text.Text;
@@ -58,7 +59,7 @@ public class Utils {
         if (!titlestr.equals("SKYBLOCK")) return Location.Hypixel;
         for (ScoreboardObjective objective : scoreboard.getObjectives()) {
             String text = objective.getDisplayName().getString();
-            if (text.indexOf('⏣') >= 0) continue;
+            if (text.indexOf('⏣') < 0) continue;
             zone = text.replaceAll("(?:[&§][a-f\\dk-or])|[^\\w\s']", "").trim();
             break;
         }
@@ -75,6 +76,10 @@ public class Utils {
     }
     public static @Nullable String getZone() {
         return Utils.zone;
+    }
+
+    public static String stripFormatting(String input) {
+        return input.replaceAll("[&§][a-f\\dk-or]","");
     }
 
     public static @Nullable String getUUID(String username) {
@@ -124,10 +129,12 @@ public class Utils {
         JsonObject jo = new JsonObject();
         for (String key : nbt.getKeys()) {
             NbtElement v = nbt.get(key);
-            if (v.getNbtType() instanceof NbtCompound) {
+            if (v instanceof NbtCompound) {
                 jo.add(key, toJSON((NbtCompound)v));
-            } else if (v.getNbtType() instanceof AbstractNbtList) {
+            } else if (v instanceof AbstractNbtList) {
                 jo.add(key, toJSON((AbstractNbtList<NbtElement>)v));
+            } else if (v instanceof AbstractNbtNumber) {
+                jo.addProperty(key, ((AbstractNbtNumber)v).numberValue());
             } else {
                 jo.addProperty(key, v.asString());
             }
@@ -140,10 +147,12 @@ public class Utils {
         Iterator<NbtElement> i = nbt.iterator();
         while (i.hasNext()) {
             NbtElement v = i.next();
-            if (v.getNbtType() instanceof NbtCompound) {
+            if (v instanceof NbtCompound) {
                 ja.add(toJSON((NbtCompound)v));
-            } else if (v.getNbtType() instanceof AbstractNbtList) {
+            } else if (v instanceof AbstractNbtList) {
                 ja.add(toJSON((AbstractNbtList<NbtElement>)v));
+            } else if (v instanceof AbstractNbtNumber) {
+                ja.add(((AbstractNbtNumber)v).numberValue());
             } else {
                 ja.add(v.asString());
             }
@@ -166,6 +175,16 @@ public class Utils {
     public static double roundToPrecision(double number, int decimalpoints) {
         double a = Math.pow(10, decimalpoints);
         return Math.round( number * a ) / a;
+    }
+    public static String getShortNumber(long num) {
+        if (num <= 0) return ""+num; // screw you.
+        if (num < 1000) return Long.toString(num);
+        java.text.CharacterIterator ci = new java.text.StringCharacterIterator("kMBTQ");
+        while (num >= 999_950) {
+            num /= 1000;
+            ci.next();
+        }
+        return String.format("%.1f%c", num / 1000.0, ci.current());
     }
 
     public static void actionBar(Text text) {

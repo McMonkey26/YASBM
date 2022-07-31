@@ -118,9 +118,8 @@ public class YASBM implements ClientModInitializer {
     }
 
     public void onWorldLoad(ClientWorld world) {
-		Features.Hud.LegionCounter.onWorldLoad(world);
 		Utils.onWorldLoad(world);
-        LOGGER.info("[MAIN] Location: "+Utils.getLocation()+"> "+Utils.getZone());
+		Features.Hud.LegionCounter.onWorldLoad(world);
     }
 
 	public void onDrawBossBar(MatrixStack matrices, BossBar bossBar, CallbackInfo ci) {

@@ -244,5 +244,357 @@
             }
         },
         "Damage": 0
+    },
+    "HYPERION": {
+        "tag": {
+            "Unbreakable": 1,
+            "HideFlags": 255,
+            "Enchantments": [
+                {
+                    "lvl": 0,
+                    "id": "minecraft:protection"
+                }
+            ],
+            "display": {
+                "Lore": [
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Gear Score: \"},{\"color\":\"light_purple\",\"text\":\"871 \"},{\"color\":\"dark_gray\",\"text\":\"(2152)\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Damage: \"},{\"color\":\"red\",\"text\":\"+321.2 \"},{\"color\":\"yellow\",\"text\":\"(+30) \"},{\"color\":\"dark_gray\",\"text\":\"(+806.1)\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Strength: \"},{\"color\":\"red\",\"text\":\"+238 \"},{\"color\":\"yellow\",\"text\":\"(+30) \"},{\"color\":\"gold\",\"text\":\"[+5] \"},{\"color\":\"blue\",\"text\":\"(+50) \"},{\"color\":\"dark_gray\",\"text\":\"(+632.15)\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Bonus Attack Speed: \"},{\"color\":\"red\",\"text\":\"+7% \"},{\"color\":\"blue\",\"text\":\"(+7%) \"},{\"color\":\"dark_gray\",\"text\":\"(+7.7%)\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Intelligence: \"},{\"color\":\"green\",\"text\":\"+534 \"},{\"color\":\"blue\",\"text\":\"(+125) \"},{\"color\":\"dark_gray\",\"text\":\"(+1,329.75)\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Ferocity: \"},{\"color\":\"green\",\"text\":\"+30.6 \"},{\"color\":\"dark_gray\",\"text\":\"(+33)\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"text\":\" \"},{\"color\":\"dark_gray\",\"text\":\"[\"},{\"color\":\"dark_gray\",\"text\":\"✎\"},{\"color\":\"dark_gray\",\"text\":\"] \"},{\"color\":\"dark_gray\",\"text\":\"[\"},{\"color\":\"dark_gray\",\"text\":\"⚔\"},{\"color\":\"dark_gray\",\"text\":\"]\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"bold\":true,\"color\":\"light_purple\",\"text\":\"\"},{\"bold\":true,\"color\":\"light_purple\",\"text\":\"Ultimate Wise V\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Deals +\"},{\"color\":\"red\",\"text\":\"50% \"},{\"color\":\"gray\",\"text\":\"damage to\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Withers. Grants \"},{\"color\":\"red\",\"text\":\"+1 \"},{\"color\":\"red\",\"text\":\"❁ Damage\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"red\",\"text\":\"\"},{\"color\":\"gray\",\"text\":\"and \"},{\"color\":\"green\",\"text\":\"+2 \"},{\"color\":\"aqua\",\"text\":\"✎ Intelligence\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"aqua\",\"text\":\"\"},{\"color\":\"gray\",\"text\":\"per \"},{\"color\":\"red\",\"text\":\"Catacombs \"},{\"color\":\"gray\",\"text\":\"level.\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"green\",\"text\":\"Scroll Abilities:\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gold\",\"text\":\"Ability: Wither Impact \"},{\"bold\":true,\"color\":\"yellow\",\"text\":\"RIGHT CLICK\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Teleport \"},{\"color\":\"green\",\"text\":\"10 blocks\"},{\"color\":\"gray\",\"text\":\" ahead of\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"you. Then implode dealing\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"\"},{\"color\":\"red\",\"text\":\"16,592 \"},{\"color\":\"gray\",\"text\":\"damage to nearby\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"enemies. Also applies the wither\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"shield scroll ability reducing\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"damage taken and granting an\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"absorption shield for \"},{\"color\":\"yellow\",\"text\":\"5\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"yellow\",\"text\":\"\"},{\"color\":\"gray\",\"text\":\"seconds.\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"dark_gray\",\"text\":\"Mana Cost: \"},{\"color\":\"dark_aqua\",\"text\":\"150\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"bold\":true,\"obfuscated\":true,\"color\":\"light_purple\",\"text\":\"a\"},{\"text\":\"\"},{\"bold\":false,\"italic\":false,\"underlined\":false,\"obfuscated\":false,\"strikethrough\":false,\"extra\":[{\"text\":\" \"}],\"text\":\"\"},{\"bold\":true,\"color\":\"light_purple\",\"text\":\"\"},{\"bold\":true,\"color\":\"light_purple\",\"text\":\"MYTHIC DUNGEON SWORD \"},{\"bold\":true,\"obfuscated\":true,\"color\":\"light_purple\",\"text\":\"a\"}],\"text\":\"\"}"
+                ],
+                "Name": "{\"italic\":false,\"extra\":[{\"color\":\"light_purple\",\"text\":\"Heroic Hyperion \"},{\"color\":\"gold\",\"text\":\"✪\"}],\"text\":\"\"}"
+            },
+            "ExtraAttributes": {
+                "rarity_upgrades": 1,
+                "hot_potato_count": 15,
+                "art_of_war_count": 1,
+                "modifier": "heroic",
+                "upgrade_level": 1,
+                "id": "HYPERION",
+                "enchantments": {
+                    "ultimate_wise": 5
+                },
+                "uuid": "553f31aa-5d64-4c2d-86d3-64e87dc4e724",
+                "ability_scroll": [
+                    "WITHER_SHIELD_SCROLL",
+                    "SHADOW_WARP_SCROLL",
+                    "IMPLOSION_SCROLL"
+                ],
+                "timestamp": "3/23/22 8:04 PM"
+            },
+            "Damage": 0
+        },
+        "Count": 1,
+        "id": "minecraft:iron_sword"
+    },
+    "MIDAS_STAFF": {
+        "id": "minecraft:golden_shovel",
+        "Damage": 0,
+        "ExtraAttributes": {
+            "originTag": "DARK_AUCTION",
+            "dungeon_item_level": 5,
+            "winning_bid": 100780000,
+            "rarity_upgrades": 1,
+            "uuid": "f42c3491-3831-4a8c-98ff-ef3895b00633",
+            "id": "MIDAS_STAFF",
+            "modifier": "heroic",
+            "timestamp": "10/29/21 11:02 PM",
+            "enchantments": {
+                "telekinesis": 1,
+                "ultimate_wise": 5,
+                "smite": 6
+            }
+        },
+        "Enchantments": [
+            {
+                "id": "minecraft:protection",
+                "lvl": 0
+            }
+        ],
+        "Unbreakable": 1,
+        "HideFlags": 255,
+        "display": {
+            "Lore": [
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Gear Score: \"},{\"color\":\"light_purple\",\"text\":\"474 \"},{\"color\":\"dark_gray\",\"text\":\"(1323)\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Damage: \"},{\"color\":\"red\",\"text\":\"+143 \"},{\"color\":\"dark_gray\",\"text\":\"(+401.7)\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Strength: \"},{\"color\":\"red\",\"text\":\"+215 \"},{\"color\":\"blue\",\"text\":\"(+50) \"},{\"color\":\"dark_gray\",\"text\":\"(+618)\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Bonus Attack Speed: \"},{\"color\":\"red\",\"text\":\"+7% \"},{\"color\":\"blue\",\"text\":\"(+7%) \"},{\"color\":\"dark_gray\",\"text\":\"(+10.5%)\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Intelligence: \"},{\"color\":\"green\",\"text\":\"+180 \"},{\"color\":\"blue\",\"text\":\"(+125) \"},{\"color\":\"dark_gray\",\"text\":\"(+540.75)\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"bold\":true,\"color\":\"light_purple\",\"text\":\"\"},{\"bold\":true,\"color\":\"light_purple\",\"text\":\"Ultimate Wise V\"},{\"color\":\"blue\",\"text\":\", \"},{\"color\":\"blue\",\"text\":\"Smite VI\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gold\",\"text\":\"Ability: Molten Wave \"},{\"bold\":true,\"color\":\"yellow\",\"text\":\"RIGHT CLICK\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Cast a wave of molten gold in\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"the direction you are facing!\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Deals up to \"},{\"color\":\"red\",\"text\":\"376,369.6\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"red\",\"text\":\"\"},{\"color\":\"gray\",\"text\":\"damage.\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"dark_gray\",\"text\":\"Mana Cost: \"},{\"color\":\"dark_aqua\",\"text\":\"201\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"dark_gray\",\"text\":\"Cooldown: \"},{\"color\":\"green\",\"text\":\"1s\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gold\",\"text\":\"Ability: Greed\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"The \"},{\"color\":\"dark_aqua\",\"text\":\"ability damage bonus \"},{\"color\":\"gray\",\"text\":\"of\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"this item is dependent on the\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"price paid for it at the \"},{\"color\":\"dark_purple\",\"text\":\"Dark\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"dark_purple\",\"text\":\"Auction\"},{\"color\":\"gray\",\"text\":\"!\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"The maximum bonus of this item\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"is \"},{\"color\":\"dark_aqua\",\"text\":\"26,000 \"},{\"color\":\"gray\",\"text\":\"if the bid was\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"\"},{\"color\":\"gold\",\"text\":\"100,000,000 Coins \"},{\"color\":\"gray\",\"text\":\"or higher!\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Price paid: \"},{\"color\":\"gold\",\"text\":\"100,780,000 Coins\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Base Ability Damage Bonus: \"},{\"color\":\"dark_aqua\",\"text\":\"26,000\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"bold\":true,\"obfuscated\":true,\"color\":\"light_purple\",\"text\":\"a\"},{\"text\":\"\"},{\"bold\":false,\"italic\":false,\"underlined\":false,\"obfuscated\":false,\"strikethrough\":false,\"extra\":[{\"text\":\" \"}],\"text\":\"\"},{\"bold\":true,\"color\":\"light_purple\",\"text\":\"\"},{\"bold\":true,\"color\":\"light_purple\",\"text\":\"MYTHIC DUNGEON SWORD \"},{\"bold\":true,\"obfuscated\":true,\"color\":\"light_purple\",\"text\":\"a\"}],\"text\":\"\"}"
+            ],
+            "Name": "{\"italic\":false,\"extra\":[{\"color\":\"light_purple\",\"text\":\"Heroic Midas Staff \"},{\"color\":\"gold\",\"text\":\"✪\"},{\"color\":\"gold\",\"text\":\"✪\"},{\"color\":\"gold\",\"text\":\"✪\"},{\"color\":\"gold\",\"text\":\"✪\"},{\"color\":\"gold\",\"text\":\"✪\"}],\"text\":\"\"}"
+        }
+    },
+    "FLORID_ZOMBIE_SWORD": {
+        "id": "minecraft:golden_sword",
+        "Damage": 0,
+        "ExtraAttributes": {
+            "originTag": "CRAFTING_GRID_COLLECT",
+            "dungeon_item_level": 5,
+            "uuid": "81a91546-1f57-4eed-bb46-432e1d3a30ae",
+            "id": "FLORID_ZOMBIE_SWORD",
+            "modifier": "heroic",
+            "timestamp": "3/5/21 12:52 AM"
+        },
+        "Unbreakable": 1,
+        "HideFlags": 99,
+        "display": {
+            "Lore": [
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Gear Score: \"},{\"color\":\"light_purple\",\"text\":\"408 \"},{\"color\":\"dark_gray\",\"text\":\"(1158)\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Damage: \"},{\"color\":\"red\",\"text\":\"+165 \"},{\"color\":\"dark_gray\",\"text\":\"(+463.5)\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Strength: \"},{\"color\":\"red\",\"text\":\"+128 \"},{\"color\":\"blue\",\"text\":\"(+40) \"},{\"color\":\"dark_gray\",\"text\":\"(+370.8)\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Bonus Attack Speed: \"},{\"color\":\"red\",\"text\":\"+5% \"},{\"color\":\"blue\",\"text\":\"(+5%) \"},{\"color\":\"dark_gray\",\"text\":\"(+7.5%)\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Intelligence: \"},{\"color\":\"green\",\"text\":\"+210 \"},{\"color\":\"blue\",\"text\":\"(+100) \"},{\"color\":\"dark_gray\",\"text\":\"(+618)\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"text\":\" \"},{\"color\":\"dark_gray\",\"text\":\"[\"},{\"color\":\"gray\",\"text\":\"✎\"},{\"color\":\"dark_gray\",\"text\":\"] \"},{\"color\":\"dark_gray\",\"text\":\"[\"},{\"color\":\"gray\",\"text\":\"❤\"},{\"color\":\"dark_gray\",\"text\":\"]\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gold\",\"text\":\"Ability: Instant Heal \"},{\"bold\":true,\"color\":\"yellow\",\"text\":\"RIGHT CLICK\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Heal for \"},{\"color\":\"red\",\"text\":\"168 \"},{\"color\":\"gray\",\"text\":\"+ \"},{\"color\":\"red\",\"text\":\"5%❤ \"},{\"color\":\"gray\",\"text\":\"and\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"heal players within \"},{\"color\":\"green\",\"text\":\"8 \"},{\"color\":\"gray\",\"text\":\"blocks\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"for \"},{\"color\":\"red\",\"text\":\"56❤\"},{\"color\":\"gray\",\"text\":\".\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"dark_gray\",\"text\":\"Mana Cost: \"},{\"color\":\"dark_aqua\",\"text\":\"56\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"dark_gray\",\"text\":\"Charges: \"},{\"color\":\"yellow\",\"text\":\"5 \"},{\"color\":\"dark_gray\",\"text\":\"/ \"},{\"color\":\"green\",\"text\":\"15s\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Gain \"},{\"color\":\"green\",\"text\":\"+2 \"},{\"color\":\"gray\",\"text\":\"extra max charges\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"when you play as a \"},{\"color\":\"green\",\"text\":\"Healer \"},{\"color\":\"gray\",\"text\":\"in\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Dungeons.\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"bold\":true,\"color\":\"gold\",\"text\":\"LEGENDARY DUNGEON SWORD\"}],\"text\":\"\"}"
+            ],
+            "Name": "{\"italic\":false,\"extra\":[{\"color\":\"gold\",\"text\":\"Heroic Florid Zombie Sword \"},{\"color\":\"gold\",\"text\":\"✪\"},{\"color\":\"gold\",\"text\":\"✪\"},{\"color\":\"gold\",\"text\":\"✪\"},{\"color\":\"gold\",\"text\":\"✪\"},{\"color\":\"gold\",\"text\":\"✪\"}],\"text\":\"\"}"
+        }
+    },
+    "GRAPPLING_HOOK": {
+        "id": "minecraft:fishing_rod",
+        "Damage": 0,
+        "Count": 1,
+        "tag": {
+            "ExtraAttributes": {
+                "id": "GRAPPLING_HOOK"
+            },
+            "Unbreakable": 1,
+            "HideFlags": 99,
+            "display": {
+                "Lore": [
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Travel around in style using\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"this Grappling Hook.\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"dark_gray\",\"text\":\"2 Second Cooldown\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"bold\":true,\"color\":\"green\",\"text\":\"UNCOMMON\"}],\"text\":\"\"}"
+                ],
+                "Name": "{\"italic\":false,\"extra\":[{\"color\":\"green\",\"text\":\"Grappling Hook\"}],\"text\":\"\"}"
+            }
+        }
+    },
+    "SKYBLOCK_MENU": {
+        "id": "minecraft:nether_star",
+        "Count": 1,
+        "Damage": 0,
+        "tag": {
+            "ExtraAttributes": {
+                "id": "SKYBLOCK_MENU"
+            },
+            "HideFlags": 99,
+            "display": {
+                "Lore": [
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"View all of your SkyBlock\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"progress, including your Skills,\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Collections, Recipes, and more!\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"yellow\",\"text\":\"Click to open!\"}],\"text\":\"\"}"
+                ],
+                "Name": "{\"italic\":false,\"extra\":[{\"color\":\"green\",\"text\":\"SkyBlock Menu \"},{\"color\":\"gray\",\"text\":\"(Click)\"}],\"text\":\"\"}"
+            }
+        }
+    },
+    "WISE_WITHER_CHESTPLATE": {
+        "id": "minecraft:leather_chestplate",
+        "Damage": 0,
+        "ExtraAttributes": {
+            "originTag": "WITHER_CHESTPLATE",
+            "dungeon_item_level": 2,
+            "color": "23:147:196",
+            "rarity_upgrades": 1,
+            "gems": {
+                "unlocked_slots": [
+                    "SAPPHIRE_0"
+                ],
+                "SAPPHIRE_0": "PERFECT"
+            },
+            "uuid": "4a1fa465-fa5b-4010-ac45-5ac20b3ad58c",
+            "upgrade_level": 5,
+            "id": "WISE_WITHER_CHESTPLATE",
+            "modifier": "loving",
+            "hot_potato_count": 15,
+            "timestamp": "10/27/21 3:27 AM",
+            "enchantments": {
+                "growth": 6,
+                "thorns": 3,
+                "rejuvenate": 5,
+                "ultimate_wisdom": 5,
+                "protection": 6,
+                "true_protection": 1,
+                "counter_strike": 5
+            }
+        },
+        "Unbreakable": 1,
+        "HideFlags": 99,
+        "display": {
+            "color": 1545156,
+            "Lore": [
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Gear Score: \"},{\"color\":\"light_purple\",\"text\":\"1084 \"},{\"color\":\"dark_gray\",\"text\":\"(3088)\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Health: \"},{\"color\":\"green\",\"text\":\"+450 \"},{\"color\":\"yellow\",\"text\":\"(+60) \"},{\"color\":\"blue\",\"text\":\"(+14) \"},{\"color\":\"dark_gray\",\"text\":\"(+1,310.16)\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Defense: \"},{\"color\":\"green\",\"text\":\"+194 \"},{\"color\":\"yellow\",\"text\":\"(+30) \"},{\"color\":\"blue\",\"text\":\"(+14) \"},{\"color\":\"dark_gray\",\"text\":\"(+562.38)\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Intelligence: \"},{\"color\":\"green\",\"text\":\"+425 \"},{\"color\":\"blue\",\"text\":\"(+120) \"},{\"color\":\"light_purple\",\"text\":\"(+30) \"},{\"color\":\"dark_gray\",\"text\":\"(+1,236)\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"True Defense: \"},{\"color\":\"green\",\"text\":\"+5 \"},{\"color\":\"dark_gray\",\"text\":\"(+7.5)\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"text\":\" \"},{\"color\":\"gold\",\"text\":\"[\"},{\"color\":\"aqua\",\"text\":\"✎\"},{\"color\":\"gold\",\"text\":\"] \"},{\"color\":\"dark_gray\",\"text\":\"[\"},{\"color\":\"dark_gray\",\"text\":\"⚔\"},{\"color\":\"dark_gray\",\"text\":\"]\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"bold\":true,\"color\":\"light_purple\",\"text\":\"\"},{\"bold\":true,\"color\":\"light_purple\",\"text\":\"Wisdom V\"},{\"color\":\"blue\",\"text\":\", \"},{\"color\":\"blue\",\"text\":\"Counter-Strike V\"},{\"color\":\"blue\",\"text\":\", \"},{\"color\":\"blue\",\"text\":\"Growth VI\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"blue\",\"text\":\"Protection VI\"},{\"color\":\"blue\",\"text\":\", \"},{\"color\":\"blue\",\"text\":\"Rejuvenate V\"},{\"color\":\"blue\",\"text\":\", \"},{\"color\":\"blue\",\"text\":\"Thorns III\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"blue\",\"text\":\"True Protection I\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Reduces the damage you take from\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"withers by \"},{\"color\":\"red\",\"text\":\"10%\"},{\"color\":\"gray\",\"text\":\".\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gold\",\"text\":\"Full Set Bonus: Witherborn\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Spawns a wither minion every\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"\"},{\"color\":\"yellow\",\"text\":\"30 \"},{\"color\":\"gray\",\"text\":\"seconds up to a maximum\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"\"},{\"color\":\"green\",\"text\":\"1 \"},{\"color\":\"gray\",\"text\":\"wither. Your withers will\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"travel to and explode on nearby\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"enemies.\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"blue\",\"text\":\"Loving Bonus\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Increases ability damage by\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"\"},{\"color\":\"green\",\"text\":\"5%\"},{\"color\":\"gray\",\"text\":\".\"}],\"text\":\"\"}",
+                "{\"italic\":false,\"text\":\"\"}",
+                "{\"italic\":false,\"extra\":[{\"bold\":true,\"obfuscated\":true,\"color\":\"light_purple\",\"text\":\"a\"},{\"text\":\"\"},{\"bold\":false,\"italic\":false,\"underlined\":false,\"obfuscated\":false,\"strikethrough\":false,\"extra\":[{\"text\":\" \"}],\"text\":\"\"},{\"bold\":true,\"color\":\"light_purple\",\"text\":\"\"},{\"bold\":true,\"color\":\"light_purple\",\"text\":\"MYTHIC DUNGEON CHESTPLATE \"},{\"bold\":true,\"obfuscated\":true,\"color\":\"light_purple\",\"text\":\"a\"}],\"text\":\"\"}"
+            ],
+            "Name": "{\"italic\":false,\"extra\":[{\"color\":\"light_purple\",\"text\":\"Loving Storm\\u0027s Chestplate \"},{\"color\":\"gold\",\"text\":\"✪\"},{\"color\":\"gold\",\"text\":\"✪\"},{\"color\":\"gold\",\"text\":\"✪\"},{\"color\":\"gold\",\"text\":\"✪\"},{\"color\":\"gold\",\"text\":\"✪\"}],\"text\":\"\"}"
+        }
+    },
+    "POWER_WITHER_CHESTPLATE": {
+        "id": "minecraft:leather_chestplate",
+        "Count": 1,
+        "Damage": 0,
+        "tag": {
+            "ExtraAttributes": {
+                "originTag": "DUNGEON_GENERATED_ITEM",
+                "dungeon_item_level": 9,
+                "color": "0:0:0",
+                "rarity_upgrades": 1,
+                "gems": {
+                    "unlocked_slots": [
+                        "JASPER_0",
+                        "COMBAT_0"
+                    ],
+                    "COMBAT_0": "PERFECT",
+                    "JASPER_0": "PERFECT",
+                    "COMBAT_0_gem": "JASPER"
+                },
+                "uuid": "ec5601cb-a316-46a9-b60b-70b2ad368a93",
+                "upgrade_level": 10,
+                "id": "POWER_WITHER_CHESTPLATE",
+                "modifier": "ancient",
+                "hot_potato_count": 15,
+                "timestamp": "2/15/22 12:07 AM",
+                "enchantments": {
+                    "growth": 7,
+                    "rejuvenate": 5,
+                    "protection": 7,
+                    "ultimate_legion": 5,
+                    "true_protection": 1,
+                    "counter_strike": 5
+                }
+            },
+            "Unbreakable": 1,
+            "HideFlags": 99,
+            "display": {
+                "color": 0,
+                "Lore": [
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Gear Score: \"},{\"color\":\"light_purple\",\"text\":\"1116 \"},{\"color\":\"dark_gray\",\"text\":\"(3155)\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Strength: \"},{\"color\":\"red\",\"text\":\"+111 \"},{\"color\":\"blue\",\"text\":\"(+35) \"},{\"color\":\"light_purple\",\"text\":\"(+32) \"},{\"color\":\"dark_gray\",\"text\":\"(+330.63)\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Crit Chance: \"},{\"color\":\"red\",\"text\":\"+15% \"},{\"color\":\"blue\",\"text\":\"(+15%) \"},{\"color\":\"dark_gray\",\"text\":\"(+22.5%)\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Crit Damage: \"},{\"color\":\"red\",\"text\":\"+59% \"},{\"color\":\"blue\",\"text\":\"(+26%) \"},{\"color\":\"dark_gray\",\"text\":\"(+173.04%)\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Health: \"},{\"color\":\"green\",\"text\":\"+458 \"},{\"color\":\"yellow\",\"text\":\"(+60) \"},{\"color\":\"blue\",\"text\":\"(+7) \"},{\"color\":\"dark_gray\",\"text\":\"(+1,334.88)\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Defense: \"},{\"color\":\"green\",\"text\":\"+212 \"},{\"color\":\"yellow\",\"text\":\"(+30) \"},{\"color\":\"blue\",\"text\":\"(+7) \"},{\"color\":\"dark_gray\",\"text\":\"(+611.82)\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Intelligence: \"},{\"color\":\"green\",\"text\":\"+36 \"},{\"color\":\"blue\",\"text\":\"(+25) \"},{\"color\":\"dark_gray\",\"text\":\"(+108.15)\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"True Defense: \"},{\"color\":\"green\",\"text\":\"+5 \"},{\"color\":\"dark_gray\",\"text\":\"(+7.5)\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"text\":\" \"},{\"color\":\"gold\",\"text\":\"[\"},{\"color\":\"light_purple\",\"text\":\"❁\"},{\"color\":\"gold\",\"text\":\"] \"},{\"color\":\"gold\",\"text\":\"[\"},{\"color\":\"light_purple\",\"text\":\"⚔\"},{\"color\":\"gold\",\"text\":\"]\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"bold\":true,\"color\":\"light_purple\",\"text\":\"\"},{\"bold\":true,\"color\":\"light_purple\",\"text\":\"Legion V\"},{\"color\":\"blue\",\"text\":\", \"},{\"color\":\"blue\",\"text\":\"Counter-Strike V\"},{\"color\":\"blue\",\"text\":\", \"},{\"color\":\"blue\",\"text\":\"Growth VII\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"blue\",\"text\":\"Protection VII\"},{\"color\":\"blue\",\"text\":\", \"},{\"color\":\"blue\",\"text\":\"Rejuvenate V\"},{\"color\":\"blue\",\"text\":\", \"},{\"color\":\"blue\",\"text\":\"True Protection I\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Reduces the damage you take from\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"withers by \"},{\"color\":\"red\",\"text\":\"10%\"},{\"color\":\"gray\",\"text\":\".\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gold\",\"text\":\"Full Set Bonus: Witherborn\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Spawns a wither minion every\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"\"},{\"color\":\"yellow\",\"text\":\"30 \"},{\"color\":\"gray\",\"text\":\"seconds up to a maximum\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"\"},{\"color\":\"green\",\"text\":\"1 \"},{\"color\":\"gray\",\"text\":\"wither. Your withers will\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"travel to and explode on nearby\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"enemies.\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"blue\",\"text\":\"Ancient Bonus\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Grants \"},{\"color\":\"green\",\"text\":\"+1 \"},{\"color\":\"blue\",\"text\":\"☠ Crit Damage\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"blue\",\"text\":\"\"},{\"color\":\"gray\",\"text\":\"per \"},{\"color\":\"red\",\"text\":\"Catacombs \"},{\"color\":\"gray\",\"text\":\"level.\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"bold\":true,\"obfuscated\":true,\"color\":\"light_purple\",\"text\":\"a\"},{\"text\":\"\"},{\"bold\":false,\"italic\":false,\"underlined\":false,\"obfuscated\":false,\"strikethrough\":false,\"extra\":[{\"text\":\" \"}],\"text\":\"\"},{\"bold\":true,\"color\":\"light_purple\",\"text\":\"\"},{\"bold\":true,\"color\":\"light_purple\",\"text\":\"MYTHIC DUNGEON CHESTPLATE \"},{\"bold\":true,\"obfuscated\":true,\"color\":\"light_purple\",\"text\":\"a\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"strikethrough\":true,\"color\":\"dark_gray\",\"text\":\"-----------------\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Seller: \"},{\"color\":\"aqua\",\"text\":\"[MVP\"},{\"color\":\"dark_green\",\"text\":\"+\"},{\"color\":\"aqua\",\"text\":\"] oJannis\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Buy it now: \"},{\"color\":\"gold\",\"text\":\"1,500,000,000 coins\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"gray\",\"text\":\"Ends in: \"},{\"color\":\"yellow\",\"text\":\"4d\"}],\"text\":\"\"}",
+                    "{\"italic\":false,\"text\":\"\"}",
+                    "{\"italic\":false,\"extra\":[{\"color\":\"yellow\",\"text\":\"Click to inspect!\"}],\"text\":\"\"}"
+                ],
+                "Name": "{\"italic\":false,\"extra\":[{\"color\":\"white\",\"text\":\"\"},{\"color\":\"white\",\"text\":\"\"},{\"color\":\"light_purple\",\"text\":\"Ancient Necron\\u0027s Chestplate \"},{\"color\":\"gold\",\"text\":\"✪\"},{\"color\":\"gold\",\"text\":\"✪\"},{\"color\":\"gold\",\"text\":\"✪\"},{\"color\":\"gold\",\"text\":\"✪\"},{\"color\":\"gold\",\"text\":\"✪\"},{\"color\":\"red\",\"text\":\"➎\"}],\"text\":\"\"}"
+            }
+        }
     }
 }

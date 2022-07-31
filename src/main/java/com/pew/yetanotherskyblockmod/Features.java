@@ -58,6 +58,7 @@ public class Features {
     public static class General {
         public static final Feature BetterMusic = new BetterMusic();
         public static final Feature ChatCopy    = new ChatCopy();
+        public static final Feature DamageFormat= new DamageFormat();
         public static final Feature WAILACopy   = new WAILACopy();
         public static final Feature ReforgeStop = new ReforgeStop();
     }

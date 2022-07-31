@@ -55,13 +55,12 @@ public final class ItemGrabber implements IdentifiableResourceReloadListener {
 					items.keySet().forEach((String key) -> builder.suggest(key));
 					return builder.buildFuture();
 				}).executes(context -> {
-					YASBM.LOGGER.info("command hit");
 					FabricClientCommandSource source = context.getSource();
 					String itemid = context.getArgument("id", String.class);
 					if (!items.containsKey(itemid)) throw no_item.create(itemid);
 					ItemStack item = ItemStack.fromNbt(items.get(itemid));
 					if (!source.getPlayer().giveItemStack(item)) throw couldnt_give.create();
-					source.sendFeedback(new TranslatableText("commands.give.success.single", item.getCount()+1, item.toHoverableText(), source.getPlayer().getName()));
+					source.sendFeedback(new TranslatableText("commands.give.success.single", item.getCount(), item.toHoverableText(), source.getPlayer().getName()));
 					return 1;
 				})
 			)
@@ -100,5 +99,10 @@ public final class ItemGrabber implements IdentifiableResourceReloadListener {
 	@Override
 	public Identifier getFabricId() {
 		return new Identifier(YASBM.MODID, "items");
+	}
+
+	public void addItem(NbtCompound nbt) {
+		if (!nbt.contains(ItemStack.DISPLAY_KEY) || !nbt.getCompound(ItemStack.DISPLAY_KEY).contains(ItemStack.NAME_KEY)) return;
+		items.put(nbt.getCompound(ItemStack.DISPLAY_KEY).getString(ItemStack.NAME_KEY), nbt);
 	}
 }

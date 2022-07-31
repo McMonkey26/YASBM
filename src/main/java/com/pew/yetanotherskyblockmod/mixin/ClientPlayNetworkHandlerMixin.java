@@ -28,6 +28,6 @@ public class ClientPlayNetworkHandlerMixin {
 
     @Inject(method = "onTeam", at = @At(value = "INVOKE", target = "org/slf4j/Logger.warn (Ljava/lang/String;[Ljava/lang/Object;)V"), cancellable = true)
     private void silenceUnknownTeam(net.minecraft.network.packet.s2c.play.TeamS2CPacket p, CallbackInfo ci) {
-        if (ModConfig.get().general.cleanupLogs) ci.cancel();
+        if (ModConfig.get().general.cleanupLogsEnabled) ci.cancel();
     }
 }

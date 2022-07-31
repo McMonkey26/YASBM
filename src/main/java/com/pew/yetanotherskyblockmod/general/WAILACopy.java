@@ -13,6 +13,7 @@ import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
@@ -51,12 +52,17 @@ public class WAILACopy implements com.pew.yetanotherskyblockmod.Features.Feature
                     BlockEntity be = YASBM.client.world.getBlockEntity(p);
                     nbt = be.createNbt();
                 }
+                JsonArray loc = new JsonArray(3);
+                loc.add(p.getX());
+                loc.add(p.getY());
+                loc.add(p.getZ());
                 jo = Utils.toJSON(nbt);
-                jo.add("location", new JsonArray(3));
-                JsonArray plocjson = jo.getAsJsonArray("location");
-                plocjson.add(p.getX());
-                plocjson.add(p.getY());
-                plocjson.add(p.getZ());
+                jo.add("location", loc);
+            break;
+            case MISS:
+                ItemStack helditem = YASBM.client.player.getMainHandStack();
+                if (!helditem.hasNbt()) return;
+                jo = Utils.toJSON(helditem.getNbt());
             break;
             default:
             return;

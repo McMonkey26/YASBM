@@ -37,9 +37,10 @@ public class ModConfig implements ConfigData {
         public boolean wailaEnabled = true;
 
         public boolean chatCopyEnabled = false;
-
         @ConfigEntry.Gui.Tooltip
-        public boolean cleanupLogs = false;
+        public boolean cleanupLogsEnabled = false;
+
+        public boolean damageFormatEnabled = false;
     }
 
     @ConfigEntry.Category("helpers")
@@ -191,7 +192,7 @@ public class ModConfig implements ConfigData {
             public boolean enabled = false;
 
             public Color textColor = Color.ofRGBA(50, 100, 100, 200);
-            public Rectangle bounds = null;
+            public Rectangle bounds = new Rectangle(200, 0, 100, 20);
         }
         // custom bars, farming overlay, xp tracker
     }
