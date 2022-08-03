@@ -1,6 +1,7 @@
 package com.pew.yetanotherskyblockmod.helpers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -11,19 +12,24 @@ import com.pew.yetanotherskyblockmod.util.Utils;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.screen.slot.Slot;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 
-public class Mining implements com.pew.yetanotherskyblockmod.Features.Feature {
-    @Override
+public class Mining implements com.pew.yetanotherskyblockmod.Features.ItemFeature  {
+    public static final Mining instance = new Mining();
+    private Mining() {};
+
     public void init() {}
-
-    private boolean isEnabled() {
-        return ModConfig.get().helpers.mining.enabled && Utils.isOnSkyblock();
-    }
-
-    public void onRenderGuiItemOverlay(ItemStack stack, int x, int y, ItemRenderer itemRenderer) {
+    public void tick() {}
+    public void onConfigUpdate() {}
+    public List<Text> onTooltipExtra(List<Text> list, NbtCompound extra, net.minecraft.client.item.TooltipContext context) {return list;}
+    public void onDrawSlot(MatrixStack matrices, Slot slot) {}
+    public void onDrawItem(MatrixStack matrices, ItemStack stack) {}
+    public void onDrawItemOverlay(ItemStack stack, int x, int y, ItemRenderer itemRenderer) {
         if (!isEnabled() || !ModConfig.get().helpers.mining.drillFuelBarsEnabled) return;
         NbtCompound extra = Utils.getItemExtra(stack);
         if (extra == null || !extra.contains("drill_fuel")) return;
@@ -45,6 +51,9 @@ public class Mining implements com.pew.yetanotherskyblockmod.Features.Feature {
         RenderSystem.enableDepthTest();
     }
 
+    private boolean isEnabled() {
+        return ModConfig.get().helpers.mining.enabled && Utils.isOnSkyblock();
+    }
     private static Map<String, Integer> fuelcaps = new HashMap<>() {{
         put("MITHRIL_FUEL_TANK",       10000);
         put("TITANIUM_FUEL_TANK",      25000);

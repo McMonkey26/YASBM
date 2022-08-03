@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.pew.yetanotherskyblockmod.Features;
 import com.pew.yetanotherskyblockmod.YASBM;
 
 import me.shedaniel.autoconfig.AutoConfig;
@@ -33,8 +34,6 @@ public class ModConfig implements ConfigData {
         public boolean betterMusicEnabled = true;
         @ConfigEntry.Gui.Tooltip
         public boolean reforgeStopEnabled = true;
-        @ConfigEntry.Gui.Tooltip
-        public boolean wailaEnabled = true;
 
         public boolean chatCopyEnabled = false;
         @ConfigEntry.Gui.Tooltip
@@ -242,7 +241,7 @@ public class ModConfig implements ConfigData {
     public static void init() {
         holder = AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
         holder.registerSaveListener((ConfigHolder<ModConfig> holder, ModConfig config) -> {
-            YASBM.getInstance().onConfigUpdate();
+            Features.onConfigUpdate();
             return ActionResult.PASS;
         });
     }

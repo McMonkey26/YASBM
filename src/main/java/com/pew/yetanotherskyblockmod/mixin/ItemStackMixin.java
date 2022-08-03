@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
+import com.pew.yetanotherskyblockmod.Features;
 import com.pew.yetanotherskyblockmod.YASBM;
 import com.pew.yetanotherskyblockmod.util.Utils;
 
@@ -116,7 +117,7 @@ public abstract class ItemStackMixin {
                     NbtElement e = nbt.get("ExtraAttributes");
                     if (e instanceof NbtCompound) {
                         NbtCompound extra = (NbtCompound) e;
-                        ArrayList<Text> edit = YASBM.getInstance().onTooltipExtra(list, extra, context);
+                        ArrayList<Text> edit = new ArrayList<Text>(Features.onTooltipExtra(list, extra, context));
                         if (edit.size() > 0) list = edit;
                     }
                 }

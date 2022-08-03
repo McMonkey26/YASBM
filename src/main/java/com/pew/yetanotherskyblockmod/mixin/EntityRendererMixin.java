@@ -4,7 +4,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
-import com.pew.yetanotherskyblockmod.Features;
 import com.pew.yetanotherskyblockmod.general.DamageFormat;
 
 import net.fabricmc.api.EnvType;
@@ -26,6 +25,6 @@ public abstract class EntityRendererMixin {
     )
     private Text onRenderLabel(Entity entity, Text label, MatrixStack m, VertexConsumerProvider v, int i) {
         if (!(entity instanceof ArmorStandEntity)) return label; // !! check if marker
-        return ((DamageFormat)Features.General.DamageFormat).onRenderArmorStandLabel(label);
+        return DamageFormat.instance.onRenderArmorStandLabel(label);
     }
 }

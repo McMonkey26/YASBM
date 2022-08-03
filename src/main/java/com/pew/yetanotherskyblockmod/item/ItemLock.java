@@ -20,16 +20,20 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-public class ItemLock implements com.pew.yetanotherskyblockmod.Features.Feature {
+public class ItemLock implements com.pew.yetanotherskyblockmod.Features.KeyFeature, com.pew.yetanotherskyblockmod.Features.ItemFeature {
+    public static final ItemLock instance = new ItemLock();
+    private ItemLock() {};
+
     private static KeyBinding key;
     private static final Identifier SLOT_LOCK = new Identifier(YASBM.MODID, "textures/lock.png");
 
-    @Override
     public void init() {
         key = KeyBindingHelper.registerKeyBinding(new KeyBinding(
             "key.itemLock",
@@ -37,32 +41,9 @@ public class ItemLock implements com.pew.yetanotherskyblockmod.Features.Feature 
             "key.categories."+YASBM.MODID
         ));
     }
-
-    public static boolean isEnabled() {
-        return ModConfig.get().item.itemLockEnabled && Utils.isOnSkyblock();
-    }
-    private boolean isLocked(ItemStack item) {
-        if (item.isEmpty() || !item.hasNbt()) return false;
-        @Nullable String uuid = Utils.getItemUUID(item);
-        return uuid != null && ModConfig.get().item.lockedUUIDs.contains(uuid);
-    }
-
-    public void onItemDrop(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-        if (!isEnabled() || !isLocked(stack)) return;
-        cir.setReturnValue(false);
-    }
-    public void onItemDrop(ItemStack stack, CallbackInfo ci) {
-        if (!isEnabled() || !isLocked(stack)) return;
-        ci.cancel();
-    }
-
-    public void onDrawSlot(MatrixStack matrices, Slot slot, DrawableHelper g) {
-        if (!isEnabled() || !isLocked(slot.getStack())) return;
-        RenderSystem.setShaderTexture(0,SLOT_LOCK);
-        matrices.translate(0, 0, 200);
-        DrawableHelper.drawTexture(matrices, slot.x, slot.y, 0, 0, 0, 16, 16, 16, 16);
-    }
-
+    public void tick() {}
+    public void onConfigUpdate() {}
+    public void onKeyPress(int keycode) {}
     public void onGuiKeyPress(int keyCode, int scanCode) {
         if (!isEnabled() || !key.matchesKey(keyCode, scanCode)) return;
 
@@ -81,5 +62,32 @@ public class ItemLock implements com.pew.yetanotherskyblockmod.Features.Feature 
         }
         
         AutoConfig.getConfigHolder(ModConfig.class).save();
+    }
+    public List<Text> onTooltipExtra(List<Text> list, net.minecraft.nbt.NbtCompound extra, net.minecraft.client.item.TooltipContext context) {return list;}
+    public void onDrawSlot(MatrixStack matrices, Slot slot) {
+        if (!isEnabled() || !isLocked(slot.getStack())) return;
+        RenderSystem.setShaderTexture(0,SLOT_LOCK);
+        matrices.translate(0, 0, 200);
+        DrawableHelper.drawTexture(matrices, slot.x, slot.y, 0, 0, 0, 16, 16, 16, 16);
+    }
+    public void onDrawItem(MatrixStack matrices, ItemStack stack) {}
+    public void onDrawItemOverlay(ItemStack stack, int x, int y, ItemRenderer itemRenderer) {}
+
+    public static boolean isEnabled() {
+        return ModConfig.get().item.itemLockEnabled && Utils.isOnSkyblock();
+    }
+    private boolean isLocked(ItemStack item) {
+        if (item.isEmpty() || !item.hasNbt()) return false;
+        @Nullable String uuid = Utils.getItemUUID(item);
+        return uuid != null && ModConfig.get().item.lockedUUIDs.contains(uuid);
+    }
+
+    public void onItemDrop(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+        if (!isEnabled() || !isLocked(stack)) return;
+        cir.setReturnValue(false);
+    }
+    public void onItemDrop(ItemStack stack, CallbackInfo ci) {
+        if (!isEnabled() || !isLocked(stack)) return;
+        ci.cancel();
     }
 }

@@ -12,11 +12,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 
 public class StackSize implements com.pew.yetanotherskyblockmod.Features.Feature {
+    public static final StackSize instance = new StackSize();
+    private StackSize() {};
+
     private static final Pattern lvlFromName = Pattern.compile("^§.\\[Lvl (\\d{1,3})] §.\\w+$");
     private static final String[] stackTags = new String[]{"generator_tier","potion_level"};
 
-    @Override
     public void init() {}
+    public void tick() {}
+    public void onConfigUpdate() {};
 
     public @Nullable String onGetItemCountLabel(ItemStack stack) {
         if (!Utils.isOnSkyblock() || !ModConfig.get().item.stackSizeEnabled) return null;

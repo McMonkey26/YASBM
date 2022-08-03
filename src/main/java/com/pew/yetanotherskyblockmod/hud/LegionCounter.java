@@ -16,15 +16,17 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 
-public class LegionCounter implements com.pew.yetanotherskyblockmod.Features.Feature {
+public class LegionCounter implements com.pew.yetanotherskyblockmod.Features.GuiFeature {
+    public static final LegionCounter instance = new LegionCounter();
+    private LegionCounter() {};
+
     private Color backgroundColor = Color.ofRGBA(50, 50, 50, 100);
     private int lastTick = 0;
     private long playerCount = -1;
 
-    @Override
     public void init() {}
-
-    public void onTick() {
+    public void onConfigUpdate() {}
+    public void tick() {
         if (!ModConfig.get().hud.legionCounter.enabled) return;
         ClientPlayerEntity me = YASBM.client.player;
         if (me == null) return;
@@ -52,7 +54,7 @@ public class LegionCounter implements com.pew.yetanotherskyblockmod.Features.Fea
         playerCount = -1;
     }
 
-    public void onDrawHud(MatrixStack matrices, DrawableHelper g) {
+    public void onDrawHud(MatrixStack matrices) {
         if (!ModConfig.get().hud.legionCounter.enabled || playerCount < 0) return;
         Rectangle bounds = ModConfig.get().hud.legionCounter.bounds;
         DrawableHelper.fill(matrices, bounds.getMinX(), bounds.getMinY(), bounds.getMaxX(), bounds.getMaxY(), backgroundColor.hashCode());

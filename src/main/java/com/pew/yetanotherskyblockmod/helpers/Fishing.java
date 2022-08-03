@@ -19,14 +19,20 @@ import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.util.math.Vec3f;
 
 public class Fishing implements com.pew.yetanotherskyblockmod.Features.Feature {
+    public static final Fishing instance = new Fishing();
+    private Fishing() {};
+
     private ChromaColor lineColor, particleColor;
 
-    @Override
     public void init() {
         onConfigUpdate();
     }
-
+    public void tick() {}
     public void onConfigUpdate() {
+        updateCache();
+    }
+
+    private void updateCache() {
         FishingConfig config = ModConfig.get().helpers.fishing;
         this.lineColor = new ChromaColor(config.myLineColor, config.chromaSpeed);
         this.particleColor = new ChromaColor(config.myParticleColor, config.chromaSpeed);

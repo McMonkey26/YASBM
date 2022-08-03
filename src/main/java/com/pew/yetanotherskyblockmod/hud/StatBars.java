@@ -1,6 +1,7 @@
 package com.pew.yetanotherskyblockmod.hud;
 
-import com.pew.yetanotherskyblockmod.YASBM;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
 import com.pew.yetanotherskyblockmod.util.Utils;
 
 // import com.mojang.blaze3d.systems.RenderSystem;
@@ -8,12 +9,14 @@ import com.pew.yetanotherskyblockmod.util.Utils;
 // import com.pew.yetanotherskyblockmod.config.ModConfig;
 // import com.pew.yetanotherskyblockmod.config.ModConfig.HUD.StatBarConfig;
 
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 // import net.minecraft.util.Identifier;
 
-public class StatBars implements com.pew.yetanotherskyblockmod.Features.Feature {
+public class StatBars implements com.pew.yetanotherskyblockmod.Features.GuiFeature {
+    public static final StatBars instance = new StatBars();
+    private StatBars() {};
+
     // private Identifier healthbar = new Identifier(YASBM.MODID, "textures/healthbar.png");
     // private Identifier manabar = new Identifier(YASBM.MODID, "textures/manabar.png");
     // private Identifier defenseicon = new Identifier(YASBM.MODID, "textures/defenseicon.png");
@@ -26,13 +29,15 @@ public class StatBars implements com.pew.yetanotherskyblockmod.Features.Feature 
 
     }
 
-    @Override
-    public Text onOverlayMessageReccieved(Text text) {
-        YASBM.LOGGER.info("[StatBars] "+Text.Serializer.toJson(text));
+    public Text onOverlayMessage(Text text) { // TODO: parse health, mana, tickers, defense, etc
+        // String[] parts = text.getString().split("\s{5}");
+        // String[] hps   = parts[0].replaceAll("[^\\d\\/]", "").split("/");
+        // this.health = Integer.parseInt(hps[0]);
+        // this.maxhealth = Integer.parseInt(hps[1]);
         return text;
     }
 
-    public void onDrawHud(MatrixStack matrices, DrawableHelper g) {
+    public void onDrawHud(MatrixStack matrices) {
         if (!Utils.isOnSkyblock()) return;
         // StatBarConfig config = ModConfig.get().hud.statBars;
         // if (config.healthbar != null) {
@@ -45,4 +50,11 @@ public class StatBars implements com.pew.yetanotherskyblockmod.Features.Feature 
         //         textureWidth, textureHeight);
         // }
     }
+
+    public static void onRenderExperienceBar(MatrixStack matrices, int x, CallbackInfo ci) {
+        
+    }
+
+    public void tick() {}
+    public void onConfigUpdate() {}
 }

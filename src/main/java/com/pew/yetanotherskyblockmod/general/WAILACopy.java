@@ -23,7 +23,6 @@ import net.minecraft.util.math.BlockPos;
 public class WAILACopy implements com.pew.yetanotherskyblockmod.Features.Feature {
     private static KeyBinding key;
 
-    @Override
     public void init() {
         key = KeyBindingHelper.registerKeyBinding(new KeyBinding(
             "key.copyBlock",
@@ -31,8 +30,7 @@ public class WAILACopy implements com.pew.yetanotherskyblockmod.Features.Feature
             "key.categories."+YASBM.MODID
         ));
     }
-
-    public void onTick() {
+    public void tick() {
         if (key.isUnbound() || !key.isPressed()) return;
         key.setPressed(false);
 
@@ -69,4 +67,5 @@ public class WAILACopy implements com.pew.yetanotherskyblockmod.Features.Feature
         }
         YASBM.client.keyboard.setClipboard(jo.toString());
     }
+    public void onConfigUpdate() {}
 }

@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.pew.yetanotherskyblockmod.YASBM;
+import com.pew.yetanotherskyblockmod.item.ItemLock;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -22,7 +22,7 @@ public class ScreenHandlerMixin {
     @Shadow
     private Slot getSlot(int index) {throw new AssertionError();};
 
-    @Inject(method = "onSlotClick", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "onSlotClick", at = @At("HEAD"), cancellable = true) // this doesnt work on servers.
     public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player, CallbackInfo ci) {
         switch (actionType) {
             case PICKUP:
@@ -31,14 +31,13 @@ public class ScreenHandlerMixin {
             case QUICK_CRAFT:
             case THROW:
                 if (slotIndex < 0) return;
-                YASBM.getInstance().onInventoryItemDrop(this.getSlot(slotIndex).getStack(), ci);
+                ItemLock.instance.onItemDrop(this.getSlot(slotIndex).getStack(), ci);
             break;
             case SWAP:
                 ItemStack s1 = this.getSlot(slotIndex).getStack();
                 ItemStack s2 = player.getInventory().getStack(button);
-                if (s1.isEmpty() && s2.isEmpty()) break;
-                if (!s1.isEmpty()) YASBM.getInstance().onInventoryItemDrop(s1, ci);
-                if (!s2.isEmpty()) YASBM.getInstance().onInventoryItemDrop(s2, ci);
+                if (!s1.isEmpty()) ItemLock.instance.onItemDrop(s1, ci);
+                if (!s2.isEmpty()) ItemLock.instance.onItemDrop(s2, ci);
             break;
             default:
             break;

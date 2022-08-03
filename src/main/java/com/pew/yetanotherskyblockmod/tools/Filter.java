@@ -1,14 +1,12 @@
 package com.pew.yetanotherskyblockmod.tools;
 
 import java.util.ListIterator;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.pew.yetanotherskyblockmod.Features;
 import com.pew.yetanotherskyblockmod.config.ModConfig;
 import com.pew.yetanotherskyblockmod.util.Utils;
 
@@ -19,16 +17,19 @@ import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
-public class Filter implements com.pew.yetanotherskyblockmod.Features.Feature {
-    @Override
+public class Filter implements com.pew.yetanotherskyblockmod.Features.ChatFeature {
     public void init() {}
-    
-    private Map<String, Integer> getFilter() {
-        return ModConfig.get().tools.filter;
-    }
+    public void tick() {}
+    public void onConfigUpdate() {}
 
-    public @Nullable Text onHypixelMessage(String chattype, String rank, String user, Text msg) {
-        for (Entry<String,Integer> entry : getFilter().entrySet()) {
+    public Text onIncomingChat(Text text) {
+        return text;
+    }
+    public String onOutgoingChat(String message) {
+        return message;
+    }
+    public @Nullable Text onHypixelMessage(String chattype, String rank, String user, String message, Text msg) {
+        for (Entry<String,Integer> entry : ModConfig.get().tools.filter.entrySet()) {
             String filter = entry.getKey().toLowerCase();
             Integer actions = entry.getValue();
 
@@ -37,7 +38,7 @@ public class Filter implements com.pew.yetanotherskyblockmod.Features.Feature {
                     msg = censor(msg,filter);
                     continue;
                 } else if ((actions & 1 << 1) == 1 << 1) {
-                    ((Ignore)Features.Tools.Ignore).add(user);
+                    Ignore.instance.add(user);
                     return null;
                 }
                 if (chattype.contains("Party")) {

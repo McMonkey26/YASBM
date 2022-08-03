@@ -1,7 +1,7 @@
 package com.pew.yetanotherskyblockmod.dungeons;
 
 public class Reparty implements com.pew.yetanotherskyblockmod.Features.Feature {
-    @Override
-    public void init() {
-    }
+    public void init() {}
+    public void tick() {}
+    public void onConfigUpdate() {}
 }

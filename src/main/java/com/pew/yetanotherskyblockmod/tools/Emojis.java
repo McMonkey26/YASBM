@@ -5,11 +5,17 @@ import java.util.regex.Pattern;
 
 import com.pew.yetanotherskyblockmod.config.ModConfig;
 
-public class Emojis implements com.pew.yetanotherskyblockmod.Features.Feature {
-    @Override
-    public void init() {}
+import net.minecraft.text.Text;
 
-    public String onMessageSent(String message) {
+public class Emojis implements com.pew.yetanotherskyblockmod.Features.ChatFeature {
+    public void init() {}
+    public void tick() {}
+    public void onConfigUpdate() {}
+
+    public Text onIncomingChat(Text text) {
+        return text;
+    }
+    public String onOutgoingChat(String message) {
         for (Entry<String,String> e : ModConfig.get().tools.emojis.entrySet()) {
             String emoji = e.getValue();
             for (String key : e.getKey().split(Pattern.quote("|"))) {
@@ -19,5 +25,8 @@ public class Emojis implements com.pew.yetanotherskyblockmod.Features.Feature {
             }
         }
         return message;
+    }
+    public Text onHypixelMessage(String chattype, String rank, String username, String message, Text fullmsg) {
+        return fullmsg;
     }
 }

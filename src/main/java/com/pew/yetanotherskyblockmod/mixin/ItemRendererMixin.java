@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.pew.yetanotherskyblockmod.Features;
-import com.pew.yetanotherskyblockmod.YASBM;
+import com.pew.yetanotherskyblockmod.item.StackSize;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -27,11 +27,11 @@ public class ItemRendererMixin {
     )
     private String renderGuiItemOverlay(@Nullable String countLabel, TextRenderer t, ItemStack stack, int x, int y, String s) {
         if (countLabel != null) return countLabel;
-        return Features.Item.StackSize.onGetItemCountLabel(stack);
+        return StackSize.instance.onGetItemCountLabel(stack);
     }
 
     @Inject(method = "renderGuiItemOverlay(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/item/ItemStack;IILjava/lang/String;)V", at = @At("HEAD"), cancellable = false)
     private void renderGuiItemOverlay(TextRenderer t, ItemStack stack, int x, int y, String countLabel, CallbackInfo ci) {
-        YASBM.getInstance().onRenderGuiItemOverlay(stack, x, y, (ItemRenderer) (Object) this);
+        Features.onDrawItemOverlay(stack, x, y, (ItemRenderer) (Object) this);
     }
 }

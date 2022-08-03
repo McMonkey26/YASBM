@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.pew.yetanotherskyblockmod.YASBM;
+import com.pew.yetanotherskyblockmod.Features;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -17,7 +17,7 @@ import net.minecraft.client.gui.screen.Screen;
 public class ScreenMixin {
 	@Inject(method = "keyPressed", at = @At("HEAD"), cancellable = false)
 	public void keyPressed(int keyCode, int scanCode, int modifiers, CallbackInfoReturnable<Boolean> ci) {
-		YASBM.getInstance().onGuiKeyPress(keyCode, scanCode, modifiers);
+		Features.onGuiKeyPress(keyCode, scanCode, modifiers);
 	}
 
 	@ModifyArg(
@@ -26,6 +26,6 @@ public class ScreenMixin {
         index = 0
     )
     private String sendMessage(String message) {
-        return YASBM.getInstance().onMessageSent(message);
+        return Features.onOutgoingChat(message);
     }
 }

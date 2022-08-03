@@ -18,17 +18,19 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 // import net.minecraft.util.math.Matrix4f;
 
-public class UpdateLog implements com.pew.yetanotherskyblockmod.Features.Feature {
+public class UpdateLog implements com.pew.yetanotherskyblockmod.Features.GuiFeature {
+    public static final UpdateLog instance = new UpdateLog();
+    private UpdateLog() {};
+
     private final Set<Text> queue= new HashSet<>();
     private final List<Item> interp= new ArrayList<>();
     private final List<Item> lqueue= new ArrayList<>();
     private final List<Item> lines = new ArrayList<>();
     private static final int LINESPACE = 8;
 
-    @Override
     public void init() {}
-
-    public void onTick() {
+    public void onConfigUpdate() {}
+    public void tick() {
         if (!ModConfig.get().hud.updateLog.enabled) return;
 
         lines.addAll(0, lqueue);
@@ -38,7 +40,7 @@ public class UpdateLog implements com.pew.yetanotherskyblockmod.Features.Feature
         queue.clear();
     }
 
-    public void onDrawHud(MatrixStack matrices, DrawableHelper g) {
+    public void onDrawHud(MatrixStack matrices) {
         if (!ModConfig.get().hud.updateLog.enabled) return;
 
         Rectangle dims = ModConfig.get().hud.updateLog.bounds;

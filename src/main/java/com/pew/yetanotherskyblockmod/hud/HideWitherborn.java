@@ -9,12 +9,14 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.boss.BossBar;
 
 public class HideWitherborn implements com.pew.yetanotherskyblockmod.Features.Feature {
-    @Override
-    public void init() {
-    }
+    public static final HideWitherborn instance = new HideWitherborn();
+    private HideWitherborn() {};
+
+    public void init() {}
+    public void tick() {}
+    public void onConfigUpdate() {}
     
-    @Override
-    public void onRenderBossBar(MatrixStack matrices, BossBar bossBar, CallbackInfo ci) {
+    public void onDrawBossbar(MatrixStack matrices, BossBar bossBar, CallbackInfo ci) {
         if (!ModConfig.get().hud.hideWitherbornEnabled || !Utils.isOnSkyblock()) return;
         if (bossBar.getName().asString().contains("Witherborn")) ci.cancel();
     }

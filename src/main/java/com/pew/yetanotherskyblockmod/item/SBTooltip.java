@@ -24,14 +24,18 @@ import com.pew.yetanotherskyblockmod.util.Utils;
 
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ItemStack;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
-public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.Feature {
+public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.ItemFeature {
     private static KeyBinding key;
     private static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("M/d/yy h:mm a", Locale.US);
     private static Map<String, String> ageCache = new HashMap<String, String>();
@@ -40,7 +44,6 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.Feature
        add("§eyour pet menu!");
     }};
 
-    @Override
     public void init() {
         key = KeyBindingHelper.registerKeyBinding(new KeyBinding(
             "key.showTooltip",
@@ -48,13 +51,9 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.Feature
             "key.categories."+YASBM.MODID
         ));
     }
-
-    public boolean isEnabled(ConfigState state) {
-        return state.equals(ConfigState.ON) ||
-            (state.equals(ConfigState.KEYBIND) && key.isPressed());
-    }
-
-    public List<Text> onTooltip(List<Text> list, NbtCompound extra, TooltipContext context) {
+    public void tick() {}
+    public void onConfigUpdate() {}
+    public List<Text> onTooltipExtra(List<Text> list, NbtCompound extra, TooltipContext context) {
         if (!Utils.isOnSkyblock() || !ModConfig.get().item.sbTooltip.enabled) return list;
 
         ListIterator<Text> it = list.listIterator();
@@ -103,6 +102,14 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.Feature
             }};
         }
         return list;
+    }
+    public void onDrawSlot(MatrixStack matrices, Slot slot) {}
+    public void onDrawItem(MatrixStack matrices, ItemStack stack) {}
+    public void onDrawItemOverlay(ItemStack stack, int x, int y, ItemRenderer itemRenderer) {}
+
+    public boolean isEnabled(ConfigState state) {
+        return state.equals(ConfigState.ON) ||
+            (state.equals(ConfigState.KEYBIND) && key.isPressed());
     }
 
     private static enum StackingEnchant {

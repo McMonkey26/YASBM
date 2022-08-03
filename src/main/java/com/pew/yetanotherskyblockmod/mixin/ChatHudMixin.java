@@ -6,7 +6,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.pew.yetanotherskyblockmod.YASBM;
+import com.pew.yetanotherskyblockmod.Features;
+import com.pew.yetanotherskyblockmod.hud.UpdateLog;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -22,11 +23,11 @@ public class ChatHudMixin {
         index = 0
     )
     private Text addMessage(Text text) {
-        return YASBM.getInstance().onMessageReccieved(text);
+        return Features.onIncomingChat(text);
     }
 
     @Inject(method = "clear", at = @At("RETURN"), cancellable = false)
     private void clear(boolean history, CallbackInfo ci) {
-        YASBM.getInstance().onChatClear(history);
+        UpdateLog.instance.clear();
     }
 }

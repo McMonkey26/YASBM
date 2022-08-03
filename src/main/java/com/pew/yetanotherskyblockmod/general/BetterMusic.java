@@ -1,7 +1,10 @@
 package com.pew.yetanotherskyblockmod.general;
 
-public class BetterMusic implements com.pew.yetanotherskyblockmod.Features.Feature {
-    @Override
-    public void init() {
-    }
+import net.minecraft.client.world.ClientWorld;
+
+public class BetterMusic implements com.pew.yetanotherskyblockmod.Features.WorldFeature {
+    public void init() {}
+    public void tick() {}
+    public void onConfigUpdate() {}
+    public void onWorldLoad(ClientWorld world) {}
 }

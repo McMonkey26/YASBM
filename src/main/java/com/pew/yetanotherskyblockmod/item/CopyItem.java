@@ -17,11 +17,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.registry.Registry;
 
-public class CopyItem implements com.pew.yetanotherskyblockmod.Features.Feature {
+public class CopyItem implements com.pew.yetanotherskyblockmod.Features.KeyFeature {
+    public static final CopyItem instance = new CopyItem();
+    private CopyItem() {};
 
     private static KeyBinding key;
 
-    @Override
+    public void onConfigUpdate() {}
+    public void onKeyPress(int keycode) {}
     public void init() {
         key = KeyBindingHelper.registerKeyBinding(new KeyBinding(
             "key.copyItem",
@@ -29,8 +32,7 @@ public class CopyItem implements com.pew.yetanotherskyblockmod.Features.Feature 
             "key.categories."+YASBM.MODID
         ));
     }
-
-    public void onTick() {
+    public void tick() {
         if (YASBM.client.player == null || key.isUnbound() || !key.isPressed()) return;
         key.setPressed(false);
         ItemStack helditem = YASBM.client.player.getMainHandStack();
