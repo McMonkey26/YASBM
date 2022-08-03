@@ -66,9 +66,11 @@ public class ItemLock implements com.pew.yetanotherskyblockmod.Features.KeyFeatu
     public List<Text> onTooltipExtra(List<Text> list, net.minecraft.nbt.NbtCompound extra, net.minecraft.client.item.TooltipContext context) {return list;}
     public void onDrawSlot(MatrixStack matrices, Slot slot) {
         if (!isEnabled() || !isLocked(slot.getStack())) return;
+        matrices.push();
         RenderSystem.setShaderTexture(0,SLOT_LOCK);
         matrices.translate(0, 0, 200);
         DrawableHelper.drawTexture(matrices, slot.x, slot.y, 0, 0, 0, 16, 16, 16, 16);
+        matrices.pop();
     }
     public void onDrawItem(MatrixStack matrices, ItemStack stack) {}
     public void onDrawItemOverlay(ItemStack stack, int x, int y, ItemRenderer itemRenderer) {}

@@ -11,7 +11,9 @@ import net.minecraft.text.Text;
 public class Customization implements com.pew.yetanotherskyblockmod.Features.ItemFeature {
     public void init() {}
     public void tick() {}
-    public void onConfigUpdate() {}
+    public void onConfigUpdate() {
+
+    }
     public void onDrawSlot(MatrixStack matrices, Slot slot) {}
     public void onDrawItem(MatrixStack matrices, ItemStack stack) {
         

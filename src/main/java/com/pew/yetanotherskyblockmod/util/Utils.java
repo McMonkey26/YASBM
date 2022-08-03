@@ -8,6 +8,7 @@ import java.time.Period;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -28,6 +29,9 @@ import net.minecraft.text.Text;
 import net.minecraft.world.World;
 
 public class Utils {
+    public static final Map<String, Integer> roman = Map.of(
+        "I", 1, "II", 2, "III", 3, "IV", 4, "V", 5, "VI", 6, "VII", 7, "VIII", 8, "IX", 9, "X", 10
+    );
     public static final DecimalFormat US = new DecimalFormat("#,###.#");
 
     private static enum Location {

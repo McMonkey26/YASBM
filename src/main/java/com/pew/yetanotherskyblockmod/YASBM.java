@@ -29,6 +29,7 @@ public class YASBM implements ClientModInitializer {
 		ModConfig.init();
 		Features.init();
 		ClientTickEvents.END_CLIENT_TICK.register((client) -> this.onTick());
+		ModConfig.get().item.enchantColors.put("Protection", java.util.Map.of(7, 'd')); // need this for testing or something
 	}
 
 	public void onTick() {

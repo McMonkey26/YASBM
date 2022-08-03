@@ -187,6 +187,7 @@ public class Features {
     public static List<Text> onTooltipExtra(List<Text> list, NbtCompound extra, TooltipContext context) {
         for (ItemFeature f : itemListeners) {
             list = f.onTooltipExtra(list, extra, context);
+            if (list == null) return null;
         }
         return list;
     }

@@ -116,8 +116,7 @@ public abstract class ItemStackMixin {
                 if (nbt.contains("ExtraAttributes")) {
                     NbtElement e = nbt.get("ExtraAttributes");
                     if (e instanceof NbtCompound) {
-                        NbtCompound extra = (NbtCompound) e;
-                        ArrayList<Text> edit = new ArrayList<Text>(Features.onTooltipExtra(list, extra, context));
+                        ArrayList<Text> edit = new ArrayList<Text>(Features.onTooltipExtra(list, (NbtCompound) e, context));
                         if (edit.size() > 0) list = edit;
                     }
                 }
