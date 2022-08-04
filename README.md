@@ -4,10 +4,10 @@ Yet Another SkyBlock Mod
 ### Features:
 - Hide Witherborn
 - WAILA Copy
-- Held Item Copy
+- Item Copy
 - Chat Copy
-- Item Locking
-- Stack Size (Untested: Enchanted Book, Potion, Minion Level)
+- Item Locking (Inventory Locking doesn't work on servers)
+- Stack Size
 <br/><br/>
 ### WIP Features
 - Skyblock Tooltips (TODO: Item Price, Dungeon Quality)
@@ -16,11 +16,12 @@ Yet Another SkyBlock Mod
 - Update Log HUD (TODO: Resizable)
 - Clean, Emojis, Keys (TODO: Customizable)
 - Filter, Ignore (TODO: Hypixel Chat Type Parsing & Testing)
+- Enchant Colors [Customization]
+- Legion Counter
 <hr>
 <h3>Planned Features:</h3>
 
 > In Game Profile Viewer
-> Custom Enchantment Colors
 > Improved SB Menus
 > Calendar Event Notifations & Timers (Jacob's Events, Spooky Festivals, etc)
 > Birch Park Rainmaker Timer
@@ -53,6 +54,5 @@ Yet Another SkyBlock Mod
 > Analyze Chests and Item Values
 > Type in Chat while in GUIs
 > Dolphin and Rock pet counters
-> Legion Player Counter
 > Pet Display
 > Booster Cookie Timer
