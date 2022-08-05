@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 
 import com.pew.yetanotherskyblockmod.config.ModConfig;
 import com.pew.yetanotherskyblockmod.util.ItemGrabber;
+import com.pew.yetanotherskyblockmod.util.Pricer;
 import com.pew.yetanotherskyblockmod.util.Utils;
 
 import net.fabricmc.api.ClientModInitializer;
@@ -35,5 +36,6 @@ public class YASBM implements ClientModInitializer {
 	public void onTick() {
 		Utils.onTick();
 		Features.tick();
+		Pricer.onTick();
 	}
 }

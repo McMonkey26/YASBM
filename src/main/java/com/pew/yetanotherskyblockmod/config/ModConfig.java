@@ -13,6 +13,7 @@ import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.EnumHandler.EnumDisplayOption;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import me.shedaniel.math.Color;
 import me.shedaniel.math.Rectangle;
@@ -211,14 +212,23 @@ public class ModConfig implements ConfigData {
             public static enum ConfigState {
                 OFF, KEYBIND, ON
             }
+            @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
             public ConfigState dungeonQuality    = ConfigState.ON;
+            @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
             public ConfigState missingEnchants   = ConfigState.KEYBIND;
+            @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
             public ConfigState rune              = ConfigState.ON;
+            @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
             public ConfigState stackingEnchants  = ConfigState.OFF;
+            @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
             public ConfigState petXpInfo         = ConfigState.ON;
+            @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
             public ConfigState marketPrices      = ConfigState.OFF;
+            @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
             public ConfigState npcPrices         = ConfigState.OFF;
+            @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
             public ConfigState itemAge           = ConfigState.KEYBIND;
+            @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
             public ConfigState sbItemId          = ConfigState.ON;
         }
 
@@ -238,6 +248,23 @@ public class ModConfig implements ConfigData {
         // todo
     }
 
+    @ConfigEntry.Category("api")
+    @ConfigEntry.Gui.TransitiveObject
+    public APIConfig api = new APIConfig();
+    public static class APIConfig {
+        @ConfigEntry.BoundedDiscrete(min=1 * 60, max=20 * 60)
+        public int apiUpdateInterval = 2 * 60; // Seconds
+
+        public static enum API {
+            Moulberry,
+            Skytils,
+            Skyblocker // not sure why we'd use this one.
+        }
+        @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.DROPDOWN)
+        @ConfigEntry.Gui.Tooltip
+        public API api = API.Moulberry;
+    }
+    
     public static void init() {
         holder = AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
         holder.registerSaveListener((ConfigHolder<ModConfig> holder, ModConfig config) -> {
