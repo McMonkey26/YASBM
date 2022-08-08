@@ -3,6 +3,7 @@ package com.pew.yetanotherskyblockmod;
 import org.slf4j.Logger;
 
 import com.pew.yetanotherskyblockmod.config.ModConfig;
+import com.pew.yetanotherskyblockmod.util.ItemDB;
 import com.pew.yetanotherskyblockmod.util.ItemGrabber;
 import com.pew.yetanotherskyblockmod.util.Pricer;
 import com.pew.yetanotherskyblockmod.util.Utils;
@@ -28,6 +29,8 @@ public class YASBM implements ClientModInitializer {
 		ItemGrabber.register();
 		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(ItemGrabber.instance);
 		ModConfig.init();
+		ItemDB.init();
+		Pricer.init();
 		Features.init();
 		ClientTickEvents.END_CLIENT_TICK.register((client) -> this.onTick());
 		ModConfig.get().item.enchantColors.put("Protection", java.util.Map.of(7, 'd')); // need this for testing or something

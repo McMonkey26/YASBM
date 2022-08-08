@@ -207,7 +207,7 @@ public class ModConfig implements ConfigData {
 
         @ConfigEntry.Gui.CollapsibleObject
         public SBTooltip sbTooltip = new SBTooltip();
-        public static class SBTooltip {
+        public static class SBTooltip { // TODO: Widget System
             public boolean enabled = true;
             public static enum ConfigState {
                 OFF, KEYBIND, ON
@@ -223,9 +223,13 @@ public class ModConfig implements ConfigData {
             @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
             public ConfigState petXpInfo         = ConfigState.ON;
             @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
-            public ConfigState marketPrices      = ConfigState.OFF;
+            public ConfigState priceLBIN    = ConfigState.OFF;
             @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
-            public ConfigState npcPrices         = ConfigState.OFF;
+            public ConfigState priceAVG1LBIN= ConfigState.OFF;
+            @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
+            public ConfigState priceAVG3LBIN= ConfigState.OFF;
+            @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
+            public ConfigState priceNPC     = ConfigState.OFF;
             @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
             public ConfigState itemAge           = ConfigState.KEYBIND;
             @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)

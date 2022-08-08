@@ -20,6 +20,8 @@ import com.google.gson.JsonParser;
 import com.pew.yetanotherskyblockmod.YASBM;
 import com.pew.yetanotherskyblockmod.config.ModConfig;
 import com.pew.yetanotherskyblockmod.config.ModConfig.Item.SBTooltip.ConfigState;
+import com.pew.yetanotherskyblockmod.util.ItemDB;
+import com.pew.yetanotherskyblockmod.util.Pricer;
 import com.pew.yetanotherskyblockmod.util.Utils;
 
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -56,6 +58,7 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.ItemFea
     public List<Text> onTooltipExtra(List<Text> list, NbtCompound extra, TooltipContext context) {
         if (!Utils.isOnSkyblock() || !ModConfig.get().item.sbTooltip.enabled) return list;
 
+        String id = extra.getString("id");
         ListIterator<Text> it = list.listIterator();
         while (it.hasNext()) {
             String i = it.next().getString();
@@ -67,12 +70,6 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.ItemFea
             if (petinfo.has("exp")) list.add(new LiteralText("Pet EXP: ").formatted(Formatting.GRAY).append(
                 new LiteralText(Utils.US.format(Math.round(petinfo.get("exp").getAsDouble() * 100) / 100)).formatted(Formatting.GRAY)));
         }
-        if (extra.contains("id") && isEnabled(ModConfig.get().item.sbTooltip.sbItemId)) {
-            list.add(
-                new LiteralText("Skyblock ID: ").formatted(Formatting.DARK_GRAY).append(
-                new LiteralText(extra.getString("id")).formatted(Formatting.DARK_GRAY, Formatting.UNDERLINE))
-            );
-        }
         if (isEnabled(ModConfig.get().item.sbTooltip.stackingEnchants)) {
             if (extra.contains("compact_blocks")) list.add(Text.of("Compacted Blocks: "+
                 getStackEnchantString(extra.getInt("compact_blocks"), StackingEnchant.COMPACT)));
@@ -80,6 +77,34 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.ItemFea
                 getStackEnchantString(extra.getInt("farmed_cultivating"), StackingEnchant.CULTIVATING)));
             else if (extra.contains("expertise_kills")) list.add(Text.of("Expertise Kills: "+
                 getStackEnchantString(extra.getInt("expertise_kills"), StackingEnchant.EXPERTISE)));
+        }
+        if (isEnabled(ModConfig.get().item.sbTooltip.priceLBIN)) {
+            Number lbin = Pricer.price(id, Pricer.AuctionOptions.LOWESTBIN);
+            if (lbin != null) list.add(
+                new LiteralText("Lowest BIN: ").formatted(Formatting.YELLOW, Formatting.BOLD).append(
+                new LiteralText(String.format("%,d", lbin.intValue())).formatted(Formatting.GOLD))
+            );
+        }
+        if (isEnabled(ModConfig.get().item.sbTooltip.priceAVG1LBIN)) {
+            Number lbin1 = Pricer.price(id, Pricer.AuctionOptions.AVGBIN1);
+            if (lbin1 != null) list.add(
+                new LiteralText("1-Day Avg.: ").formatted(Formatting.YELLOW, Formatting.BOLD).append(
+                new LiteralText(String.format("%,d", lbin1.intValue())).formatted(Formatting.GOLD))
+            );
+        }
+        if (isEnabled(ModConfig.get().item.sbTooltip.priceAVG3LBIN)) {
+            Number lbin3 = Pricer.price(id, Pricer.AuctionOptions.AVGBIN3);
+            if (lbin3 != null) list.add(
+                new LiteralText("3-Day Avg.: ").formatted(Formatting.YELLOW, Formatting.BOLD).append(
+                new LiteralText(String.format("%,d", lbin3.intValue())).formatted(Formatting.GOLD))
+            );
+        }
+        if (isEnabled(ModConfig.get().item.sbTooltip.priceNPC)) {
+            int npc = ItemDB.getSellPrice(id);
+            if (npc >= 0) list.add(
+                new LiteralText("NPC Sell: ").formatted(Formatting.YELLOW, Formatting.BOLD).append(
+                new LiteralText(String.format("%,d", npc)).formatted(Formatting.GOLD))
+            );
         }
         if (!ModConfig.get().item.sbTooltip.itemAge.equals(ConfigState.OFF) && extra.contains("timestamp")) {
             if (isEnabled(ModConfig.get().item.sbTooltip.itemAge)) {try {
@@ -100,6 +125,12 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.ItemFea
                 );
                 YASBM.LOGGER.warn("[SBTooltip] "+e.getMessage());
             }};
+        }
+        if (extra.contains("id") && isEnabled(ModConfig.get().item.sbTooltip.sbItemId)) {
+            list.add(
+                new LiteralText("Skyblock ID: ").formatted(Formatting.DARK_GRAY).append(
+                new LiteralText(id).formatted(Formatting.DARK_GRAY, Formatting.UNDERLINE))
+            );
         }
         return list;
     }

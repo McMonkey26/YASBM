@@ -1,11 +1,6 @@
 package com.pew.yetanotherskyblockmod.util;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -17,7 +12,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 import com.pew.yetanotherskyblockmod.YASBM;
 import com.pew.yetanotherskyblockmod.config.ModConfig;
 
@@ -26,6 +20,7 @@ import net.minecraft.util.Pair;
 public class Pricer {
     private static final Gson gson = new Gson();
 
+    public static void init() {fetchPrices();}
     private static long next = Integer.MAX_VALUE; // so it triggers immediately
     private static int lastTick = 0; // have both systems as to not request dates every tick
     public static void onTick() {
@@ -44,20 +39,26 @@ public class Pricer {
     }
 
     public static @Nullable Number price(String itemid, boolean buy) { // true: buy, false: sell
-        Number bz = Bazaar.getPrice(itemid, buy ? Bazaar.BazaarOptions.LOWESTSELL : Bazaar.BazaarOptions.HIGHESTBUY);
+        Number bz = Bazaar.getPrice(itemid, buy ? BazaarOptions.LOWESTSELL : BazaarOptions.HIGHESTBUY);
         if (bz.floatValue() >= 0) return bz;
         Number ah = Auction.getPrice(itemid);
         if (ah.longValue() >= 0) return ah;
-        // if (npc.containsKey(itemid)) return npc.get(itemid); TODO: Item fetch from (https://api.hypixel.net/resources/skyblock/items)
+        if (ItemDB.getSellPrice(itemid) >= 0) return ItemDB.getSellPrice(itemid); 
         YASBM.LOGGER.warn("Couldn't get price of item: ["+itemid+"]!");
         return -1;
     }
+    public static @Nullable Number price(String itemid, AuctionOptions options) {
+        return Auction.getPrice(itemid, options);
+    }
+    public static @Nullable Number price(String itemid, BazaarOptions options) {
+        return Bazaar.getPrice(itemid, options);
+    }
 
+    public static enum BazaarOptions {
+        HIGHESTBUY, LOWESTBUY,
+        HIGHESTSELL,LOWESTSELL
+    }
     private static class Bazaar {
-        public static enum BazaarOptions {
-            HIGHESTBUY, LOWESTBUY,
-            HIGHESTSELL,LOWESTSELL
-        }
         private static Map<BazaarOptions, Map<String, Number>> prices = new HashMap<>();
 
         public static Number getPrice(String itemid, BazaarOptions options) {
@@ -66,26 +67,9 @@ public class Pricer {
         }
 
         public static void fetchAll() {
-            JsonObject resp;
-            try {
-                URLConnection connection = new URL("https://api.hypixel.net/skyblock/bazaar").openConnection();
-                connection.setConnectTimeout(10000);
-                connection.setReadTimeout(10000);
-                resp = Pricer.gson.fromJson(
-                    new BufferedReader(
-                        new InputStreamReader(
-                            connection.getInputStream(),
-                            java.nio.charset.StandardCharsets.UTF_8
-                        )
-                    )
-                    .lines()
-                    .collect(java.util.stream.Collectors.joining("\n")),
-                    JsonObject.class
-                );
-            } catch (JsonSyntaxException | IOException e) {
-                e.printStackTrace();
-                return;
-            }
+            @Nullable String response = Utils.fetchFrom("https://api.hypixel.net/skyblock/bazaar");
+            if (response == null) return;    
+            JsonObject resp = Pricer.gson.fromJson(response,JsonObject.class);
 
             Map<BazaarOptions, Map<String, Number>> bz = Map.of(
                 BazaarOptions.LOWESTSELL, new HashMap<>(),
@@ -119,9 +103,9 @@ public class Pricer {
             return new Pair<>(low, high);
         }
     }
-    
+
+    public static enum AuctionOptions {LOWESTBIN,AVGBIN1,AVGBIN3}
     private static class Auction {
-        public static enum AuctionOptions {LOWESTBIN,AVGBIN1,AVGBIN3}
         private static Map<AuctionOptions, Map<String, Number>> prices = new HashMap<>();
     
         public static Number getPrice(String itemid) {
@@ -178,31 +162,17 @@ public class Pricer {
             AHEndpoint(String url, APIRespHandler handler) {
                 try {
                     this.url = new URL(url);
-                } catch (MalformedURLException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     System.exit(1);
                 }
                 this.handler = handler;
             }
 
-            private String fetch() throws IOException, JsonSyntaxException {
-                URLConnection connection = url.openConnection();
-                connection.setConnectTimeout(10000);
-                connection.setReadTimeout(10000);
-                return new BufferedReader(new InputStreamReader(
-                    connection.getInputStream(),
-                    java.nio.charset.StandardCharsets.UTF_8
-                )).lines()
-                .collect(java.util.stream.Collectors.joining("\n"));
-            }
             @Nullable Map<String, Number> get() {
-                try {
-                    String resp = fetch();
-                    return this.handler.process(resp);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
+                @Nullable String resp = Utils.fetchFrom(url);
+                if (resp == null) return null;
+                return this.handler.process(resp);
             }
         }
     }

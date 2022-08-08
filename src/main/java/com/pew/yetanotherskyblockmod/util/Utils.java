@@ -2,7 +2,9 @@ package com.pew.yetanotherskyblockmod.util;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.text.DecimalFormat;
 import java.time.Period;
 import java.time.ZoneId;
@@ -115,6 +117,30 @@ public class Utils {
             return ja.get(ja.size()-1).getAsJsonObject().get("name").getAsString();
         } catch (Exception e) {
             YASBM.LOGGER.warn("[Utils] "+e.getMessage());
+            return null;
+        }
+    }
+
+    public static @Nullable String fetchFrom(String urls) {
+        try {
+            return fetchFrom(new URL(urls));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public static @Nullable String fetchFrom(URL url) {
+        try {
+            URLConnection connection = url.openConnection();
+            connection.setConnectTimeout(10000);
+            connection.setReadTimeout(10000);
+            return new BufferedReader(new InputStreamReader(
+                connection.getInputStream(),
+                java.nio.charset.StandardCharsets.UTF_8
+            )).lines()
+            .collect(java.util.stream.Collectors.joining("\n"));
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
