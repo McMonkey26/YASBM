@@ -14,7 +14,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.pew.yetanotherskyblockmod.Features;
-import com.pew.yetanotherskyblockmod.YASBM;
 import com.pew.yetanotherskyblockmod.util.Utils;
 
 import net.fabricmc.api.EnvType;
@@ -83,20 +82,10 @@ public abstract class ItemStackMixin {
         ArrayList<Text> list = Lists.newArrayList();
         if (Utils.isOnSkyblock()) {
             MutableText mutableText = new LiteralText("").append(cast.getName()).formatted(cast.getRarity().formatting);
-            if (cast.hasCustomName()) {
-                mutableText.formatted(Formatting.ITALIC);
-            }
             list.add(mutableText);
             if (cast.hasNbt()) {
                 if (nbt.contains(ItemStack.DISPLAY_KEY, 10)) {
                     NbtCompound nbtCompound = nbt.getCompound(ItemStack.DISPLAY_KEY);
-                    if (nbtCompound.contains(ItemStack.COLOR_KEY, 99)) {
-                        if (context.isAdvanced()) {
-                            list.add(new TranslatableText("item.color", String.format("#%06X", nbtCompound.getInt(ItemStack.COLOR_KEY))).formatted(Formatting.GRAY));
-                        } else {
-                            list.add(new TranslatableText("item.dyed").formatted(Formatting.GRAY, Formatting.ITALIC));
-                        }
-                    }
                     if (nbtCompound.getType(ItemStack.LORE_KEY) == 9) {
                         NbtList nbtList = nbtCompound.getList(ItemStack.LORE_KEY, 8);
                         for (int j = 0; j < nbtList.size(); ++j) {
@@ -107,7 +96,6 @@ public abstract class ItemStackMixin {
                                 list.add(Texts.setStyleIfAbsent(mutableText2, LORE_STYLE));
                                 continue;
                             } catch (Exception exception) {
-                                YASBM.LOGGER.warn("[Mixin] "+exception.getMessage());
                                 nbtCompound.remove(ItemStack.LORE_KEY);
                             }
                         }
@@ -116,8 +104,17 @@ public abstract class ItemStackMixin {
                 if (nbt.contains("ExtraAttributes")) {
                     NbtElement e = nbt.get("ExtraAttributes");
                     if (e instanceof NbtCompound) {
-                        ArrayList<Text> edit = new ArrayList<Text>(Features.onTooltipExtra(list, (NbtCompound) e, context));
-                        if (edit.size() > 0) list = edit;
+                        list = new ArrayList<Text>(Features.onTooltipExtra(list, (NbtCompound) e, context));
+                    }
+                }
+                if (nbt.contains(ItemStack.DISPLAY_KEY, 10)) {
+                    NbtCompound nbtCompound = nbt.getCompound(ItemStack.DISPLAY_KEY);
+                    if (nbtCompound.contains(ItemStack.COLOR_KEY, 99)) {
+                        if (context.isAdvanced()) {
+                            list.add(new TranslatableText("item.color", String.format("#%06X", nbtCompound.getInt(ItemStack.COLOR_KEY))).formatted(Formatting.GRAY));
+                        } else {
+                            list.add(new TranslatableText("item.dyed").formatted(Formatting.GRAY, Formatting.ITALIC));
+                        }
                     }
                 }
             }

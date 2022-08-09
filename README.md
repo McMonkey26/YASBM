@@ -8,9 +8,9 @@ Yet Another SkyBlock Mod
 - Chat Copy
 - Item Locking (Inventory Locking doesn't work on servers)
 - Stack Size
+- Skyblock Tooltips
 <br/><br/>
 ### WIP Features
-- Skyblock Tooltips (TODO: Item Price, Dungeon Quality)
 - Fishing Utilities (TODO: Close fish alert, bait list)
 - Mining Utilities (TODO: other features)
 - Update Log HUD (TODO: Resizable)
@@ -21,6 +21,7 @@ Yet Another SkyBlock Mod
 <hr>
 <h3>Planned Features:</h3>
 
+> Recipe Book itemlist
 > In Game Profile Viewer
 > Improved SB Menus
 > Calendar Event Notifations & Timers (Jacob's Events, Spooky Festivals, etc)
@@ -50,9 +51,9 @@ Yet Another SkyBlock Mod
 > Bazaar/Auction House Flipper
 > Easily Accept/Decline Party Invites, Friend Requests, etc.
 > Skill XP/Hour and Items/Hour Tracker
-> Search through Logs
 > Analyze Chests and Item Values
 > Type in Chat while in GUIs
 > Dolphin and Rock pet counters
 > Pet Display
 > Booster Cookie Timer
+> Item Overmax Helper

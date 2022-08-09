@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 
 import javax.annotation.Nullable;
 
@@ -13,16 +15,23 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.pew.yetanotherskyblockmod.YASBM;
 
 import me.shedaniel.math.Color;
+import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
+import net.minecraft.resource.ResourceManager;
+import net.minecraft.resource.ResourceReloader;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.profiler.Profiler;
 
-public class ItemDB {
+public class ItemDB implements IdentifiableResourceReloadListener {
     private static final Gson gson = new Gson(); 
     private static final Map<String, SBItem> items = new HashMap<>();
 
     public static void init() {
         @Nullable String resp = Utils.fetchFrom("https://api.hypixel.net/resources/skyblock/items");
         if (resp == null) return;
+        ItemDB.items.clear();
         JsonObject json = gson.fromJson(resp, JsonObject.class);
         if (!json.get("success").getAsBoolean()) return;
         JsonArray items = json.getAsJsonArray("items");
@@ -34,15 +43,20 @@ public class ItemDB {
     }
 
     public static boolean isAlwaysSoulbound(String itemid) {
-        return items.get(itemid).soulbound() != null;
+        return items.containsKey(itemid) ? items.get(itemid).soulbound() != null : false;
     }
 
     public static int getSellPrice(String itemid) {
-        Integer sellprice = items.get(itemid).npc_sell_price();
+        Integer sellprice = items.containsKey(itemid) ? items.get(itemid).npc_sell_price() : null;
         return sellprice == null ? -1 : sellprice;
     }
 
-    public record SBItem(
+    public static int getGearScore(String itemid) {
+        Integer gearscore = items.containsKey(itemid) ? items.get(itemid).gear_score() : null;
+        return gearscore == null ? -1 : gearscore;
+    }
+
+    private record SBItem(
         String id, String name, String material, // mandatory
         Rarity tier,
         Integer durability,
@@ -179,9 +193,28 @@ public class ItemDB {
         AMETHYST, JADE, JASPER, SAPPHIRE, AMBER, TOPAZ, RUBY, OPAL
     }
 
-    public record GemstoneSlot(GemstoneSlotType slot_type, List<JsonObject> costs) {
-
-    }
+    public record GemstoneSlot(GemstoneSlotType slot_type, List<JsonObject> costs) {}
 
     public static enum SoulboundType {COOP, SOLO}
+
+    public static final ItemDB instance = new ItemDB();
+    private ItemDB() {};
+    @Override
+	public CompletableFuture<Void> reload(
+		ResourceReloader.Synchronizer synchronizer,
+		ResourceManager manager,
+		Profiler prepareProfiler,
+		Profiler applyProfiler,
+		Executor prepareExecutor,
+		Executor applyExecutor
+	){
+        CompletableFuture<Void> prepData = CompletableFuture.supplyAsync(() -> {return null;}, prepareExecutor);
+        CompletableFuture<Void> applyStart = prepData.thenCompose(synchronizer::whenPrepared);
+        return applyStart.thenRunAsync(ItemDB::init, applyExecutor);
+	}
+
+	@Override
+	public Identifier getFabricId() {
+		return new Identifier(YASBM.MODID, "itemdb");
+	}
 }

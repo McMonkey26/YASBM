@@ -6,7 +6,6 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
@@ -34,6 +33,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
@@ -41,10 +41,12 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.ItemFea
     private static KeyBinding key;
     private static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("M/d/yy h:mm a", Locale.US);
     private static Map<String, String> ageCache = new HashMap<String, String>();
-    private static final Set<String> cullLines = new HashSet<>() {{
-       add("§7§eRight-click to add this pet to");
-       add("§eyour pet menu!");
-    }};
+    private static final Set<String> cullLines = Set.of(
+       "Right-click to add this pet to",
+       "your pet menu!",
+       "Click to inspect!",
+       "This item can be reforged!"
+    );
 
     public void init() {
         key = KeyBindingHelper.registerKeyBinding(new KeyBinding(
@@ -57,58 +59,90 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.ItemFea
     public void onConfigUpdate() {}
     public List<Text> onTooltipExtra(List<Text> list, NbtCompound extra, TooltipContext context) {
         if (!Utils.isOnSkyblock() || !ModConfig.get().item.sbTooltip.enabled) return list;
-
         String id = extra.getString("id");
+
         ListIterator<Text> it = list.listIterator();
+        boolean rune = isEnabled(ModConfig.get().item.sbTooltip.rune); // caching, for performance
         while (it.hasNext()) {
             String i = it.next().getString();
-            if (cullLines.contains(i)) {it.remove(); continue;}
-            if (isEnabled(ModConfig.get().item.sbTooltip.rune) && i.matches("^(?:§.)?◆ \\w+ Rune I{1,3}$")) {it.remove(); continue;}
+            if (cullLines.contains(i.trim())) {it.remove(); continue;}
+            if (rune && i.matches("^(?:§.)?◆ \\w+ Rune I{1,3}$")) {it.remove(); break;}
+        }
+        if (isEnabled(ModConfig.get().item.sbTooltip.dungeonQuality) && list.size() > 0) block1: {
+            Text line = list.get(1);
+            if (line == null || !line.getString().startsWith("Gear Score: ")) break block1;
+            list.remove(1);
+            if (!extra.contains("baseStatBoostPercentage")) break block1;
+            int percent = extra.getInt("baseStatBoostPercentage") * 2; // natively out of 50
+            int floor = extra.contains("item_tier") ? extra.getInt("item_tier") : -1;
+            list.set(1, new LiteralText("")
+            .append(new LiteralText("Dungeon Quality: ").formatted(Formatting.GRAY))
+            .append(new LiteralText(percent+"%").setStyle(Style.EMPTY.withColor(Utils.getRangeColor(0, 100, percent)).withBold(percent==100)))
+            .append(new LiteralText(" ("+(floor > 7 ? "m"+(floor-7) : floor >= 0 ? "f"+floor : "-")+")").setStyle(Style.EMPTY.withBold(false).withColor(Formatting.DARK_GRAY))));
         }
         if (isEnabled(ModConfig.get().item.sbTooltip.petXpInfo) && extra.contains("petInfo")) {
             JsonObject petinfo = JsonParser.parseString(extra.getString("petInfo")).getAsJsonObject();
-            if (petinfo.has("exp")) list.add(new LiteralText("Pet EXP: ").formatted(Formatting.GRAY).append(
-                new LiteralText(Utils.US.format(Math.round(petinfo.get("exp").getAsDouble() * 100) / 100)).formatted(Formatting.GRAY)));
+            if (petinfo.has("exp")) list.add(new LiteralText("")
+                .append(new LiteralText("Pet EXP: ").formatted(Formatting.GRAY))
+                .append(new LiteralText(Utils.US.format(Math.round(petinfo.get("exp").getAsDouble() * 100) / 100)).formatted(Formatting.GRAY))
+            );
         }
         if (isEnabled(ModConfig.get().item.sbTooltip.stackingEnchants)) {
-            if (extra.contains("compact_blocks")) list.add(Text.of("Compacted Blocks: "+
-                getStackEnchantString(extra.getInt("compact_blocks"), StackingEnchant.COMPACT)));
-            else if (extra.contains("farmed_cultivating")) list.add(Text.of("Cultivated Crops: "+
-                getStackEnchantString(extra.getInt("farmed_cultivating"), StackingEnchant.CULTIVATING)));
-            else if (extra.contains("expertise_kills")) list.add(Text.of("Expertise Kills: "+
-                getStackEnchantString(extra.getInt("expertise_kills"), StackingEnchant.EXPERTISE)));
+            if (extra.contains("compact_blocks")) list.add(new LiteralText("")
+                .append(new LiteralText("Compacted Blocks: "))
+                .append(new LiteralText(getStackEnchantString(extra.getInt("compact_blocks"), StackingEnchant.COMPACT))));
+            else if (extra.contains("farmed_cultivating")) list.add(new LiteralText("")
+                .append(new LiteralText("Cultivated Crops: "))
+                .append(new LiteralText(getStackEnchantString(extra.getInt("farmed_cultivating"), StackingEnchant.CULTIVATING))));
+            else if (extra.contains("expertise_kills")) list.add(new LiteralText("")
+                .append(new LiteralText("Expertise Kills: "))
+                .append(new LiteralText(getStackEnchantString(extra.getInt("expertise_kills"), StackingEnchant.EXPERTISE))));
         }
         if (isEnabled(ModConfig.get().item.sbTooltip.priceLBIN)) {
             Number lbin = Pricer.price(id, Pricer.AuctionOptions.LOWESTBIN);
-            if (lbin != null) list.add(
-                new LiteralText("Lowest BIN: ").formatted(Formatting.YELLOW, Formatting.BOLD).append(
-                new LiteralText(String.format("%,d", lbin.intValue())).formatted(Formatting.GOLD))
+            if (lbin != null && lbin.intValue() > 0) list.add(new LiteralText("")
+                .append(new LiteralText("Lowest BIN: ").formatted(Formatting.YELLOW, Formatting.BOLD))
+                .append(new LiteralText(String.format("%,d", lbin.intValue())).formatted(Formatting.GOLD))
             );
         }
         if (isEnabled(ModConfig.get().item.sbTooltip.priceAVG1LBIN)) {
             Number lbin1 = Pricer.price(id, Pricer.AuctionOptions.AVGBIN1);
-            if (lbin1 != null) list.add(
-                new LiteralText("1-Day Avg.: ").formatted(Formatting.YELLOW, Formatting.BOLD).append(
-                new LiteralText(String.format("%,d", lbin1.intValue())).formatted(Formatting.GOLD))
+            if (lbin1 != null && lbin1.intValue() > 0) list.add(new LiteralText("")
+                .append(new LiteralText("1-Day Avg.: ").formatted(Formatting.YELLOW, Formatting.BOLD))
+                .append(new LiteralText(String.format("%,d", lbin1.intValue())).formatted(Formatting.GOLD))
             );
         }
         if (isEnabled(ModConfig.get().item.sbTooltip.priceAVG3LBIN)) {
             Number lbin3 = Pricer.price(id, Pricer.AuctionOptions.AVGBIN3);
-            if (lbin3 != null) list.add(
-                new LiteralText("3-Day Avg.: ").formatted(Formatting.YELLOW, Formatting.BOLD).append(
-                new LiteralText(String.format("%,d", lbin3.intValue())).formatted(Formatting.GOLD))
+            if (lbin3 != null && lbin3.intValue() > 0) list.add(new LiteralText("")
+                .append(new LiteralText("3-Day Avg.: ").formatted(Formatting.YELLOW, Formatting.BOLD))
+                .append(new LiteralText(String.format("%,d", lbin3.intValue())).formatted(Formatting.GOLD))
+            );
+        }
+        if (isEnabled(ModConfig.get().item.sbTooltip.priceBUYBZ)) {
+            Number buybz = Pricer.price(id, Pricer.BazaarOptions.LOWESTSELL);
+            if (buybz != null && buybz.floatValue() > 0) list.add(new LiteralText("")
+                .append(new LiteralText("Bazaar Buy: ").formatted(Formatting.YELLOW, Formatting.BOLD))
+                .append(new LiteralText(String.format("%,.2f", buybz.floatValue())).formatted(Formatting.GOLD))
+            );
+        }
+        if (isEnabled(ModConfig.get().item.sbTooltip.priceSELLBZ)) {
+            Number sellbz = Pricer.price(id, Pricer.BazaarOptions.HIGHESTBUY);
+            if (sellbz != null && sellbz.floatValue() > 0) list.add(new LiteralText("")
+                .append(new LiteralText("Bazaar Sell: ").formatted(Formatting.YELLOW, Formatting.BOLD))
+                .append(new LiteralText(String.format("%,.2f", sellbz.floatValue())).formatted(Formatting.GOLD))
             );
         }
         if (isEnabled(ModConfig.get().item.sbTooltip.priceNPC)) {
             int npc = ItemDB.getSellPrice(id);
-            if (npc >= 0) list.add(
-                new LiteralText("NPC Sell: ").formatted(Formatting.YELLOW, Formatting.BOLD).append(
-                new LiteralText(String.format("%,d", npc)).formatted(Formatting.GOLD))
+            if (npc >= 0) list.add(new LiteralText("")
+                .append(new LiteralText("NPC Sell: ").formatted(Formatting.YELLOW, Formatting.BOLD))
+                .append(new LiteralText(String.format("%,d", npc)).formatted(Formatting.GOLD))
             );
         }
         if (!ModConfig.get().item.sbTooltip.itemAge.equals(ConfigState.OFF) && extra.contains("timestamp")) {
             if (isEnabled(ModConfig.get().item.sbTooltip.itemAge)) {try {
-                MutableText out = new LiteralText("Item Age: ~").formatted(Formatting.DARK_GRAY);
+                MutableText out = new LiteralText("").append(new LiteralText("Item Age: ~").formatted(Formatting.DARK_GRAY));
                 if (extra.contains("uuid") && ageCache.containsKey(extra.getString("uuid"))) {
                     out.append(new LiteralText(ageCache.get(extra.getString("uuid"))).formatted(Formatting.DARK_GRAY, Formatting.ITALIC));
                 } else {
@@ -119,17 +153,17 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.ItemFea
                 }
                 list.add(out);
             } catch (DateTimeParseException e) {
-                list.add(
-                    new LiteralText("Created: ").formatted(Formatting.DARK_GRAY).append(
-                    new LiteralText(extra.getString("timestamp")).formatted(Formatting.DARK_GRAY))
+                list.add(new LiteralText("")
+                    .append(new LiteralText("Created: ").formatted(Formatting.DARK_GRAY))
+                    .append(new LiteralText(extra.getString("timestamp")).formatted(Formatting.DARK_GRAY))
                 );
                 YASBM.LOGGER.warn("[SBTooltip] "+e.getMessage());
             }};
         }
         if (extra.contains("id") && isEnabled(ModConfig.get().item.sbTooltip.sbItemId)) {
-            list.add(
-                new LiteralText("Skyblock ID: ").formatted(Formatting.DARK_GRAY).append(
-                new LiteralText(id).formatted(Formatting.DARK_GRAY, Formatting.UNDERLINE))
+            list.add(new LiteralText("")
+                .append(new LiteralText("Skyblock ID: ").formatted(Formatting.DARK_GRAY))
+                .append(new LiteralText(id).formatted(Formatting.DARK_GRAY, Formatting.UNDERLINE))
             );
         }
         return list;

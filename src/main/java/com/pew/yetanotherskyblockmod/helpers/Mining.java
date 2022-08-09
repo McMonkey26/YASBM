@@ -17,7 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
-import net.minecraft.util.math.MathHelper;
 
 public class Mining implements com.pew.yetanotherskyblockmod.Features.ItemFeature  {
     public static final Mining instance = new Mining();
@@ -43,7 +42,7 @@ public class Mining implements com.pew.yetanotherskyblockmod.Features.ItemFeatur
         RenderSystem.disableTexture();
         RenderSystem.disableBlend();
         BufferBuilder buffer = Tessellator.getInstance().getBuffer();
-        int rgb = MathHelper.hsvToRgb(Math.max(0.0F, 1.0F - (max - current) / max) / 3.0F, 1.0F, 1.0F);
+        int rgb = Utils.getRangeColor(0, max, current);
         g.invokeRenderGuiQuad(buffer, x + 2, y + 13, 13, 2, 0,0,0,255);
         g.invokeRenderGuiQuad(buffer, x + 2, y + 13, Math.round(current / max * 13.0F), 1, rgb >> 16 & 255, rgb >> 8 & 255, rgb & 255, 255);
         RenderSystem.enableBlend();

@@ -28,6 +28,7 @@ import net.minecraft.nbt.AbstractNbtNumber;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.ScoreboardObjective;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class Utils {
@@ -215,6 +216,12 @@ public class Utils {
             ci.next();
         }
         return String.format("%.1f%c", num / 1000.0, ci.current());
+    }
+    public static int getRangeColor(float min, float max, float current) { 
+        return MathHelper.hsvToRgb(
+            Math.max(0.0F, (1f - (max - current)/(max - min)) / 3.0F),
+            1.0F, 1.0F
+        );
     }
 
     public static void actionBar(Text text) {

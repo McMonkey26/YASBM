@@ -3,7 +3,6 @@ package com.pew.yetanotherskyblockmod.item;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,8 +16,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -50,20 +47,20 @@ public class EnchantColors implements com.pew.yetanotherskyblockmod.Features.Ite
                 String enchname = m.group(1).trim();
                 Integer enchlvl = Utils.roman.get(m.group(2));
                 if (ModConfig.get().item.enchantColors.containsKey(enchname)) {
-                    Map<Integer, Character> levels = ModConfig.get().item.enchantColors.get(enchname);
+                    Character[] levels = ModConfig.get().item.enchantColors.get(enchname);
                     Style style = sub.getStyle();
-                    Formatting f = Formatting.byCode(levels.getOrDefault(enchlvl, ' '));
+                    Formatting f = Formatting.byCode(levels.length >= enchlvl ? levels[enchlvl-1] : ' ');
                     if (f != null) {
                         style = style.withFormatting(f);
                     } else {
-                        style = Style.EMPTY.withColor(0x888888); 
+                        style = Style.EMPTY.withColor(0x888888);
                     }
                     li2.set(sub.shallowCopy().setStyle(style));
                 }
             }
-            MutableText nline = new LiteralText(line.asString()); // AS STRING!! NOT GET STRING!!
-            siblings.forEach(s->nline.append(s));
-            li.set(nline);
+            // MutableText nline = new LiteralText(line.asString()); // AS STRING!! NOT GET STRING!!
+            // siblings.forEach(s->nline.append(s));
+            // li.set(nline);
         }
         return lore;
     }

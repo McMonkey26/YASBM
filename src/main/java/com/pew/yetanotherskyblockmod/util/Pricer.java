@@ -28,7 +28,7 @@ public class Pricer {
         lastTick = 0;
         long now = System.currentTimeMillis();
         if (now < next) return;
-        next = now + ModConfig.get().api.apiUpdateInterval * 1000;
+        next = now + ModConfig.get().api.updateInterval * 1000;
         fetchPrices();
     }
     private static void fetchPrices() {

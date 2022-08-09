@@ -19,12 +19,12 @@ import net.minecraft.scoreboard.ScoreboardObjective;
 @Environment(EnvType.CLIENT)
 @Mixin(PlayerListHud.class)
 public class PlayerListHudMixin {
-    @Inject(method = "render", at = @At("HEAD"))
+    @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     public void render(MatrixStack matrices, int scaledWindowWidth, Scoreboard scoreboard, @Nullable ScoreboardObjective objective, CallbackInfo ci) {
         BetterPlayerlist.instance.onDrawPlayerlist(matrices, scaledWindowWidth, scoreboard, objective, ci);
     }
 
-    @Inject(method = "renderLatencyIcon", at = @At("HEAD"))
+    @Inject(method = "renderLatencyIcon", at = @At("HEAD"), cancellable = true)
     public void onRenderLatencyIcon(MatrixStack matrices, int width, int x, int y, net.minecraft.client.network.PlayerListEntry entry, CallbackInfo ci) {
         BetterPlayerlist.instance.onDrawLatencyIcon(ci);
     }

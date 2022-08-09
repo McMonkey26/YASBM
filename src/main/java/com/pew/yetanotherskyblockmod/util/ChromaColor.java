@@ -21,7 +21,7 @@ public class ChromaColor extends Color {
         float[] hsv = Color.RGBtoHSB(this.getRed(), this.getGreen(), this.getBlue(), null);
         hsv[0] += (System.currentTimeMillis() - start) / 1000f / this.c;
         hsv[0] %= 1;
-        if (hsv[0] < 0) hsv[0] += 1;
+        if (hsv[0] < 0) hsv[0] = 0;
 
 		return (this.getAlpha() & 0xFF) << 24 | (Color.HSBtoRGB(hsv[0], hsv[1], hsv[2]) & 0x00FFFFFF);
     }

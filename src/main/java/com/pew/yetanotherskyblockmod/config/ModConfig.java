@@ -207,15 +207,13 @@ public class ModConfig implements ConfigData {
 
         @ConfigEntry.Gui.CollapsibleObject
         public SBTooltip sbTooltip = new SBTooltip();
-        public static class SBTooltip { // TODO: Widget System
+        public static class SBTooltip {
             public boolean enabled = true;
             public static enum ConfigState {
                 OFF, KEYBIND, ON
             }
             @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
             public ConfigState dungeonQuality    = ConfigState.ON;
-            @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
-            public ConfigState missingEnchants   = ConfigState.KEYBIND;
             @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
             public ConfigState rune              = ConfigState.ON;
             @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
@@ -229,6 +227,10 @@ public class ModConfig implements ConfigData {
             @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
             public ConfigState priceAVG3LBIN= ConfigState.OFF;
             @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
+            public ConfigState priceBUYBZ   = ConfigState.OFF;
+            @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
+            public ConfigState priceSELLBZ  = ConfigState.OFF;
+            @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
             public ConfigState priceNPC     = ConfigState.OFF;
             @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
             public ConfigState itemAge           = ConfigState.KEYBIND;
@@ -241,7 +243,7 @@ public class ModConfig implements ConfigData {
         @ConfigEntry.Gui.Excluded
         public List<String> lockedUUIDs = new ArrayList<>();
         @ConfigEntry.Gui.Excluded
-        public Map<String, Map<Integer, Character>> enchantColors = new HashMap<>();
+        public Map<String, Character[]> enchantColors = new HashMap<>();
         // Enchant Name, Enchant Level, Color
     }
 
@@ -257,7 +259,7 @@ public class ModConfig implements ConfigData {
     public APIConfig api = new APIConfig();
     public static class APIConfig {
         @ConfigEntry.BoundedDiscrete(min=1 * 60, max=20 * 60)
-        public int apiUpdateInterval = 2 * 60; // Seconds
+        public int updateInterval = 2 * 60; // Seconds
 
         public static enum API {
             Moulberry,
@@ -265,7 +267,7 @@ public class ModConfig implements ConfigData {
             Skyblocker // not sure why we'd use this one.
         }
         @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.DROPDOWN)
-        @ConfigEntry.Gui.Tooltip
+        @ConfigEntry.Gui.Tooltip(count=2)
         public API api = API.Moulberry;
     }
     
