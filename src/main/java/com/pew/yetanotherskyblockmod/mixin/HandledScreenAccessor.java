@@ -1,6 +1,5 @@
 package com.pew.yetanotherskyblockmod.mixin;
 
-
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.screen.slot.Slot;
 

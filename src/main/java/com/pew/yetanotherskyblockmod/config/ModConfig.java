@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.pew.yetanotherskyblockmod.Features;
 import com.pew.yetanotherskyblockmod.YASBM;
+import com.pew.yetanotherskyblockmod.util.Utils;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
@@ -24,6 +26,8 @@ import net.minecraft.util.ActionResult;
 public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.Excluded
     private static ConfigHolder<ModConfig> holder;
+    @ConfigEntry.Gui.Excluded
+    public Map<Utils.InternalLocation, Set<String>> foundSouls = new HashMap<>();
 
     public boolean isOnSkyblock = false; // testing
 

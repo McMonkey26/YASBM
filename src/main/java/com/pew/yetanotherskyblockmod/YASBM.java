@@ -3,6 +3,7 @@ package com.pew.yetanotherskyblockmod;
 import org.slf4j.Logger;
 
 import com.pew.yetanotherskyblockmod.config.ModConfig;
+import com.pew.yetanotherskyblockmod.util.Constants;
 import com.pew.yetanotherskyblockmod.util.ItemDB;
 import com.pew.yetanotherskyblockmod.util.ItemGrabber;
 import com.pew.yetanotherskyblockmod.util.Pricer;
@@ -34,6 +35,7 @@ public class YASBM implements ClientModInitializer {
 
 		ResourceManagerHelper reloadManager = ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES);
 		reloadManager.registerReloadListener(ItemGrabber.instance);
+		reloadManager.registerReloadListener(Constants.instance);
 		reloadManager.registerReloadListener(ItemDB.instance);
 		
 		ClientTickEvents.END_CLIENT_TICK.register((client) -> this.onTick());

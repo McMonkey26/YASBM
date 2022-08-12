@@ -6,6 +6,7 @@
   "mixins": [
   ],
   "client": [
+    "BeaconBlockEntityRendererAccessor",
     "BossBarHudMixin",
     "ChatHudMixin",
     "ClientPlayerEntityMixin",
@@ -20,10 +21,10 @@
     "ItemRendererAccessor",
     "ItemRendererMixin",
     "ItemStackMixin",
-    "MinecraftClientMixin",
     "PlayerListHudMixin",
     "ScreenHandlerMixin",
-    "ScreenMixin"
+    "ScreenMixin",
+    "WorldRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

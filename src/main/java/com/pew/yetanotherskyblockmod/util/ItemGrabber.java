@@ -4,8 +4,6 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 
 import org.spongepowered.include.com.google.gson.Gson;
 import org.spongepowered.include.com.google.gson.JsonElement;
@@ -21,20 +19,18 @@ import com.pew.yetanotherskyblockmod.YASBM;
 
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
-import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
+import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.StringNbtReader;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
-import net.minecraft.resource.ResourceReloader;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.profiler.Profiler;
 
-public final class ItemGrabber implements IdentifiableResourceReloadListener {
+public final class ItemGrabber implements SimpleSynchronousResourceReloadListener {
 	public static final ItemGrabber instance = new ItemGrabber();
 	private static final Identifier jsonidentifier = new Identifier(YASBM.MODID, "items.json");
 	private static Map<String, NbtCompound> items = new HashMap<>();
@@ -60,45 +56,30 @@ public final class ItemGrabber implements IdentifiableResourceReloadListener {
 					if (!items.containsKey(itemid)) throw no_item.create(itemid);
 					ItemStack item = ItemStack.fromNbt(items.get(itemid));
 					if (!source.getPlayer().giveItemStack(item)) throw couldnt_give.create();
-					source.sendFeedback(new TranslatableText("commands.give.success.single", item.getCount(), item.toHoverableText(), source.getPlayer().getName()));
-					return 1;
+					source.sendFeedback(new TranslatableText("commands.give.success.single", item.getCount()+1, item.toHoverableText(), source.getPlayer().getName()));
+					return 1; // not sure why i have to add 1 to count ^
 				})
 			)
 		);
 	}
 
 	@Override
-	public CompletableFuture<Void> reload(
-		ResourceReloader.Synchronizer synchronizer,
-		ResourceManager manager,
-		Profiler prepareProfiler,
-		Profiler applyProfiler,
-		Executor prepareExecutor,
-		Executor applyExecutor
-	){
-        CompletableFuture<Void> prepData = CompletableFuture.supplyAsync(() -> {
-			try (Resource resource = manager.getResource(jsonidentifier)) {
-				JsonObject json = new Gson().fromJson(new InputStreamReader(resource.getInputStream()), JsonObject.class);
-				for (Entry<String,JsonElement> s : json.entrySet()) {
-					JsonElement itemnbtjson = s.getValue();
-					if (!itemnbtjson.isJsonObject()) throw new JsonParseException("Item NBT JSON was malformed.");
-					items.put(s.getKey(), StringNbtReader.parse(itemnbtjson.getAsJsonObject().toString()));
-				}
-				return null;
-			} catch (Exception e) {
-				YASBM.LOGGER.error("ItemGrabber Item Loading Failed.", e);
-				return null;
+	public void reload(ResourceManager manager) {
+		try (Resource resource = manager.getResource(jsonidentifier)) {
+			JsonObject json = new Gson().fromJson(new InputStreamReader(resource.getInputStream()), JsonObject.class);
+			for (Entry<String,JsonElement> s : json.entrySet()) {
+				JsonElement itemnbtjson = s.getValue();
+				if (!itemnbtjson.isJsonObject()) throw new JsonParseException("Item NBT JSON was malformed.");
+				items.put(s.getKey(), StringNbtReader.parse(itemnbtjson.getAsJsonObject().toString()));
 			}
-		}, prepareExecutor);
-
-        CompletableFuture<Void> applyStart = prepData.thenCompose(synchronizer::whenPrepared);
- 
-        return applyStart.thenRunAsync(() -> {}, applyExecutor);
+		} catch (Exception e) {
+			YASBM.LOGGER.error("ItemGrabber Item Loading Failed.", e);
+		}
 	}
 
 	@Override
 	public Identifier getFabricId() {
-		return new Identifier(YASBM.MODID, "items");
+		return new Identifier(YASBM.MODID, "itemgrabber");
 	}
 
 	public void addItem(NbtCompound nbt) {

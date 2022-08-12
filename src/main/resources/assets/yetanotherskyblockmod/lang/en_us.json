@@ -5,6 +5,12 @@
     "key.copyItem": "Item Copy",
     "key.showTooltip": "Show Detailed Tooltip",
 
+    "command.fairysouls.toggle.help": "Fairy Soul Waypoint Help: \n toggle - Toggles fairy soul waypoints\n clear - marks all souls as found \n unclear - unmarks all souls",
+    "command.fairysouls.toggle.off": "§cDisabled Fairy Soul Waypoints.",
+    "command.fairysouls.toggle.on": "§aEnabled Fairy Soul Waypoints.",
+    "command.fairysouls.clear": "§eMarked this region's fairy souls as found.",
+    "command.fairysouls.unclear": "§eUnmarked this region's fairy souls.",
+
     "text.autoconfig.yetanotherskyblockmod.title": "Yet Another Skyblock Mod Settings",
     
     "text.autoconfig.yetanotherskyblockmod.category.default": "-",

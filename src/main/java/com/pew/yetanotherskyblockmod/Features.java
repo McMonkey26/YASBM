@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Set;
 
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
@@ -41,6 +43,7 @@ public class Features {
     }
     public static interface WorldFeature extends Feature {
         public void onWorldLoad(ClientWorld world);
+        public void onDrawWorld(ClientWorld world, WorldRenderer renderer, MatrixStack matrices, VertexConsumerProvider immediate, float tickDelta);
     }
     public static interface ItemFeature extends Feature {
         public void onDrawSlot(MatrixStack matrices, Slot slot);
@@ -62,6 +65,7 @@ public class Features {
             new BetterMusic(),
             new ChatCopy(),
             DamageFormat.instance,
+            FairySouls.instance,
             new ReforgeStop(),
             new WAILACopy()
         ));
@@ -141,6 +145,11 @@ public class Features {
         worldListeners.forEach((WorldFeature f) -> {
             f.onWorldLoad(world);
         });
+    }
+    public static void onDrawWorld(ClientWorld world, WorldRenderer renderer, MatrixStack matrices, VertexConsumerProvider immediate, float tickDelta) {
+        for (WorldFeature f : worldListeners) {
+            f.onDrawWorld(world, renderer, matrices, immediate, tickDelta);
+        }
     }
     public static void onDrawHud(MatrixStack matrices) {
         guiListeners.forEach((GuiFeature f) -> {

@@ -14,6 +14,9 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -36,30 +39,58 @@ public class Utils {
         "I", 1, "II", 2, "III", 3, "IV", 4, "V", 5, "VI", 6, "VII", 7, "VIII", 8, "IX", 9, "X", 10
     );
     public static final DecimalFormat US = new DecimalFormat("#,###.#");
-
-    private static enum Location {
+    
+    public static enum Location {
         None, Singleplayer, Multiplayer, Hypixel, Skyblock
     }
-    private static Location location = Location.None; // None, Singleplayer, Multiplayer, Hypixel, Skyblock [None, Unknown, etc.]
+    public static enum InternalLocation {
+        dynamic, hub, combat_1, combat_2, combat_3, foraging_1, farming_1, mining_1, mining_2, mining_3, winter, dungeon_hub, crimson_isle, unknown
+    }
+    private static Location location = Location.None;
+    private static InternalLocation internalLocation = InternalLocation.unknown;
     private static @Nullable String zone = "";
 
     private static int lastTick = 0;
     public static void onTick() {
-        if (lastTick >= 60 && YASBM.client.player != null) {
+        if (autoLocTimer-- == 0) {
+            Utils.command("locraw");
+        }
+        if (lastTick++ >= 60 && YASBM.client.player != null) {
             location = Utils._getLocation(YASBM.client.player.getWorld());
 			lastTick = 0;
 		}
-		lastTick++;
     }
+    private static int autoLocTimer = 0;
     public static void onWorldLoad(World world) {
         location = Utils._getLocation(world);
         lastTick = 0;
+        if (isOnHypixel()) {autoLocTimer = 60;}// 3 seconds until query
+    }
+    public static void onIncomingChat(Text msg, CallbackInfo ci) {
+        if (!msg.asString().startsWith("{") || !msg.asString().endsWith("}")) return;
+        try {
+            JsonObject obj = new Gson().fromJson(msg.asString(), JsonObject.class);
+            if (!obj.has("gametype")) return;
+            if (autoLocTimer >= -60 && ci.isCancellable()) ci.cancel();
+            String game = obj.get("gametype").getAsString();
+            if (game != "SKYBLOCK") {Utils.location = Location.Hypixel; return;}
+            Utils.location = Location.Skyblock;
+            if (obj.has("mode")) {
+                Utils.internalLocation = InternalLocation.valueOf(obj.get("mode").getAsString().toLowerCase());
+            }
+            if (obj.has("map")) {
+                Utils.zone = obj.get("map").getAsString();
+            }
+        } catch (Exception e) {
+            YASBM.LOGGER.warn(e.getMessage());
+        }
     }
 
     private static Location _getLocation(World world) {
         if (YASBM.client.player == null) return Location.None;
         if (YASBM.client.isInSingleplayer()) return Location.Singleplayer;
-        if (!YASBM.client.player.getServerBrand().toLowerCase().contains("hypixel")) return Location.Multiplayer;
+        @Nullable String serverBrand = YASBM.client.player.getServerBrand();
+        if (serverBrand == null || !serverBrand.toLowerCase().contains("hypixel")) return Location.Multiplayer;
         Scoreboard scoreboard = world.getScoreboard();
         ScoreboardObjective title = scoreboard.getObjectiveForSlot(1);
         String titlestr = title == null ? "" : title.getDisplayName().getString().replaceAll("(?:[&§][a-f\\dk-or])|\\W", "");        
@@ -78,11 +109,11 @@ public class Utils {
     public static boolean isOnSkyblock() {
         return location.equals(Location.Skyblock) || ModConfig.get().isOnSkyblock;  // So I can test
     }
-    public static String getLocation() {
-        return location.toString();
+    public static InternalLocation getInternalLocation() {
+        return internalLocation.equals(InternalLocation.unknown) ? null : internalLocation;
     }
     public static @Nullable String getZone() {
-        return Utils.zone;
+        return zone;
     }
 
     public static String stripFormatting(String input) {
@@ -91,14 +122,8 @@ public class Utils {
 
     public static @Nullable String getUUID(String username) {
         try {
-            Iterator<String> iterator = new BufferedReader(new InputStreamReader(
-                new URL("https://api.mojang.com/users/profiles/minecraft/"+username).openStream()
-            )).lines().iterator();
-            String output = "";
-            while (iterator.hasNext()) {
-                output += iterator.next()+"\n";
-            }
-            JsonObject jo = JsonParser.parseString(output).getAsJsonObject();
+            String resp = fetchFrom("https://api.mojang.com/users/profiles/minecraft/"+username);
+            JsonObject jo = JsonParser.parseString(resp).getAsJsonObject();
             return jo.get("id").getAsString();
         } catch (Exception e) {
             YASBM.LOGGER.warn("[Utils] "+e.getMessage());
@@ -107,14 +132,8 @@ public class Utils {
     }
     public static @Nullable String getUsername(String uuid) {
         try {
-            Iterator<String> iterator = new BufferedReader(new InputStreamReader(
-                new URL("https://api.mojang.com/user/profiles/"+uuid+"/names").openStream()
-            )).lines().iterator();
-            String output = "";
-            while (iterator.hasNext()) {
-                output += iterator.next()+"\n";
-            }
-            JsonArray ja = JsonParser.parseString(output).getAsJsonArray();
+            String resp = fetchFrom("https://api.mojang.com/user/profiles/"+uuid+"/names");
+            JsonArray ja = JsonParser.parseString(resp).getAsJsonArray();
             return ja.get(ja.size()-1).getAsJsonObject().get("name").getAsString();
         } catch (Exception e) {
             YASBM.LOGGER.warn("[Utils] "+e.getMessage());
@@ -155,35 +174,35 @@ public class Utils {
         return (extra != null && extra.contains("uuid")) ? item.getSubNbt("ExtraAttributes").getString("uuid") : null;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public static JsonObject toJSON(NbtCompound nbt) {
         JsonObject jo = new JsonObject();
         for (String key : nbt.getKeys()) {
             NbtElement v = nbt.get(key);
-            if (v instanceof NbtCompound) {
-                jo.add(key, toJSON((NbtCompound)v));
-            } else if (v instanceof AbstractNbtList) {
-                jo.add(key, toJSON((AbstractNbtList<NbtElement>)v));
-            } else if (v instanceof AbstractNbtNumber) {
-                jo.addProperty(key, ((AbstractNbtNumber)v).numberValue());
+            if (v instanceof NbtCompound vc) {
+                jo.add(key, toJSON(vc));
+            } else if (v instanceof AbstractNbtList vl) {
+                jo.add(key, toJSON(vl));
+            } else if (v instanceof AbstractNbtNumber vn) {
+                jo.addProperty(key, vn.numberValue());
             } else {
                 jo.addProperty(key, v.asString());
             }
         }
         return jo;
     }
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public static JsonArray toJSON(AbstractNbtList<NbtElement> nbt) {
         JsonArray ja = new JsonArray();
         Iterator<NbtElement> i = nbt.iterator();
         while (i.hasNext()) {
             NbtElement v = i.next();
-            if (v instanceof NbtCompound) {
-                ja.add(toJSON((NbtCompound)v));
-            } else if (v instanceof AbstractNbtList) {
-                ja.add(toJSON((AbstractNbtList<NbtElement>)v));
-            } else if (v instanceof AbstractNbtNumber) {
-                ja.add(((AbstractNbtNumber)v).numberValue());
+            if (v instanceof NbtCompound vc) {
+                ja.add(toJSON(vc));
+            } else if (v instanceof AbstractNbtList vl) {
+                ja.add(toJSON(vl));
+            } else if (v instanceof AbstractNbtNumber vn) {
+                ja.add(vn.numberValue());
             } else {
                 ja.add(v.asString());
             }
@@ -228,6 +247,6 @@ public class Utils {
         YASBM.client.player.sendMessage(text, true);
     }
     public static void command(String command) {
-        YASBM.client.player.sendChatMessage("/"+command);
+        if (YASBM.client.player != null) YASBM.client.player.sendChatMessage("/"+command);
     }
 }
