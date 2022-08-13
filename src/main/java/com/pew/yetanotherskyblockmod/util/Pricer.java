@@ -14,6 +14,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.pew.yetanotherskyblockmod.YASBM;
 import com.pew.yetanotherskyblockmod.config.ModConfig;
+import com.pew.yetanotherskyblockmod.util.Utils.WebUtils;
 
 import net.minecraft.util.Pair;
 
@@ -67,7 +68,7 @@ public class Pricer {
         }
 
         public static void fetchAll() {
-            @Nullable String response = Utils.fetchFrom("https://api.hypixel.net/skyblock/bazaar");
+            @Nullable String response = WebUtils.fetchFrom("https://api.hypixel.net/skyblock/bazaar");
             if (response == null) return;    
             JsonObject resp = Pricer.gson.fromJson(response,JsonObject.class);
 
@@ -170,7 +171,7 @@ public class Pricer {
             }
 
             @Nullable Map<String, Number> get() {
-                @Nullable String resp = Utils.fetchFrom(url);
+                @Nullable String resp = WebUtils.fetchFrom(url);
                 if (resp == null) return null;
                 return this.handler.process(resp);
             }

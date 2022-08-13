@@ -6,7 +6,7 @@ import java.util.Set;
 import javax.annotation.Nullable;
 
 import com.pew.yetanotherskyblockmod.config.ModConfig;
-import com.pew.yetanotherskyblockmod.util.Utils;
+import com.pew.yetanotherskyblockmod.util.Utils.WebUtils;
 
 import net.minecraft.text.Text;
 
@@ -23,7 +23,7 @@ public class Ignore implements com.pew.yetanotherskyblockmod.Features.ChatFeatur
     private void updateCache() {
         ignored.clear();
         for (String uuid : ModConfig.get().tools.ignored) {
-            @Nullable String username = Utils.getUsername(uuid);
+            @Nullable String username = WebUtils.getUsername(uuid);
             if (username != null) ignored.add(username);
         }
     }
@@ -40,7 +40,7 @@ public class Ignore implements com.pew.yetanotherskyblockmod.Features.ChatFeatur
     }
 
     public void add(String username) {
-        @Nullable String uuid = Utils.getUUID(username);
+        @Nullable String uuid = WebUtils.getUUID(username);
         if (uuid != null) {
             ModConfig.get().tools.ignored.add(uuid);
             ignored.add(username);

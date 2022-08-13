@@ -5,7 +5,7 @@ import org.lwjgl.glfw.GLFW;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.pew.yetanotherskyblockmod.YASBM;
-import com.pew.yetanotherskyblockmod.util.Utils;
+import com.pew.yetanotherskyblockmod.util.Utils.NbtUtils;
 
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.block.Block;
@@ -41,7 +41,7 @@ public class WAILACopy implements com.pew.yetanotherskyblockmod.Features.Feature
             case ENTITY:
                 Entity e = ((EntityHitResult)t).getEntity();
                 e.writeNbt(nbt);
-                jo = Utils.toJSON(nbt);
+                jo = NbtUtils.toJSON(nbt);
             break;
             case BLOCK:
                 BlockPos p = ((BlockHitResult)t).getBlockPos();
@@ -54,13 +54,13 @@ public class WAILACopy implements com.pew.yetanotherskyblockmod.Features.Feature
                 loc.add(p.getX());
                 loc.add(p.getY());
                 loc.add(p.getZ());
-                jo = Utils.toJSON(nbt);
+                jo = NbtUtils.toJSON(nbt);
                 jo.add("location", loc);
             break;
             case MISS:
                 ItemStack helditem = YASBM.client.player.getMainHandStack();
                 if (!helditem.hasNbt()) return;
-                jo = Utils.toJSON(helditem.getNbt());
+                jo = NbtUtils.toJSON(helditem.getNbt());
             break;
             default:
             return;

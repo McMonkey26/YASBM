@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.pew.yetanotherskyblockmod.config.ModConfig;
-import com.pew.yetanotherskyblockmod.util.Utils;
+import com.pew.yetanotherskyblockmod.util.Location;
 
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.render.item.ItemRenderer;
@@ -30,7 +30,7 @@ public class EnchantColors implements com.pew.yetanotherskyblockmod.Features.Ite
     public void onDrawSlot(MatrixStack matrices, Slot slot) {}
     public void onDrawItem(MatrixStack matrices, ItemStack stack) {}
     public void onDrawItemOverlay(ItemStack stack, int x, int y, ItemRenderer itemRenderer) {}
-    public List<Text> onTooltipExtra(List<Text> lore, NbtCompound extra, TooltipContext context) { // cache this
+    public List<Text> onTooltipExtra(List<Text> lore, ItemStack stack, NbtCompound extra, TooltipContext context) { // cache this
         if (ModConfig.get().item.enchantColors.isEmpty()) return lore;
         ListIterator<Text> li = lore.listIterator();
         while (li.hasNext()) {
@@ -45,7 +45,7 @@ public class EnchantColors implements com.pew.yetanotherskyblockmod.Features.Ite
                 Matcher m = ench.matcher(text);
                 if (!m.matches()) continue;
                 String enchname = m.group(1).trim();
-                Integer enchlvl = Utils.roman.get(m.group(2));
+                Integer enchlvl = Location.roman.get(m.group(2));
                 if (ModConfig.get().item.enchantColors.containsKey(enchname)) {
                     Character[] levels = ModConfig.get().item.enchantColors.get(enchname);
                     Style style = sub.getStyle();

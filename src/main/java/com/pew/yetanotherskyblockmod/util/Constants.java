@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.pew.yetanotherskyblockmod.YASBM;
+import com.pew.yetanotherskyblockmod.util.Utils.WebUtils;
 
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.minecraft.resource.ResourceManager;
@@ -25,9 +26,9 @@ public class Constants implements IdentifiableResourceReloadListener {
     private static final Gson gson = new Gson();
 
     private static final String fairysoulsurl = "https://raw.githubusercontent.com/NotEnoughUpdates/NotEnoughUpdates-REPO/master/constants/fairy_souls.json";
-    private static Map<Utils.InternalLocation, Set<BlockPos>> fairysouls;
+    private static Map<Location.SkyblockLocation, Set<BlockPos>> fairysouls;
 
-    public static Map<Utils.InternalLocation, Set<BlockPos>> getFairySouls() {
+    public static Map<Location.SkyblockLocation, Set<BlockPos>> getFairySouls() {
         return fairysouls;
     }
 
@@ -41,15 +42,15 @@ public class Constants implements IdentifiableResourceReloadListener {
 		Executor applyExecutor
 	){
         CompletableFuture<Void> prepData = CompletableFuture.supplyAsync(() -> {
-            String resp = Utils.fetchFrom(fairysoulsurl);
+            String resp = WebUtils.fetchFrom(fairysoulsurl);
             if (resp == null) return null;
             JsonObject jo = gson.fromJson(resp, JsonObject.class);
-            Map<Utils.InternalLocation, Set<BlockPos>> fs = new HashMap<>();
+            Map<Location.SkyblockLocation, Set<BlockPos>> fs = new HashMap<>();
             for (Map.Entry<String, JsonElement> i : jo.entrySet()) {
                 JsonElement el = i.getValue();
                 if (!el.isJsonArray()) continue;
                 String key = i.getKey();
-                Utils.InternalLocation iloc = Utils.InternalLocation.valueOf(key);
+                Location.SkyblockLocation iloc = Location.SkyblockLocation.valueOf(key);
                 fs.put(iloc, new HashSet<>());
                 for (JsonElement loc : el.getAsJsonArray()) {
                     try {

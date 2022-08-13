@@ -8,7 +8,7 @@ import java.util.Set;
 
 import com.pew.yetanotherskyblockmod.Features;
 import com.pew.yetanotherskyblockmod.YASBM;
-import com.pew.yetanotherskyblockmod.util.Utils;
+import com.pew.yetanotherskyblockmod.util.Location;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
@@ -27,7 +27,7 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.Excluded
     private static ConfigHolder<ModConfig> holder;
     @ConfigEntry.Gui.Excluded
-    public Map<Utils.InternalLocation, Set<String>> foundSouls = new HashMap<>();
+    public Map<Location.SkyblockLocation, Set<String>> foundSouls = new HashMap<>();
 
     public boolean isOnSkyblock = false; // testing
 

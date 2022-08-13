@@ -21,5 +21,5 @@ public class Customization implements com.pew.yetanotherskyblockmod.Features.Ite
     public void onDrawItemOverlay(ItemStack stack, int x, int y, ItemRenderer itemRenderer) {
         
     }
-    public List<Text> onTooltipExtra(List<Text> list, net.minecraft.nbt.NbtCompound extra, net.minecraft.client.item.TooltipContext context) {return list;}
+    public List<Text> onTooltipExtra(List<Text> list, ItemStack stack, net.minecraft.nbt.NbtCompound extra, net.minecraft.client.item.TooltipContext context) {return list;}
 }

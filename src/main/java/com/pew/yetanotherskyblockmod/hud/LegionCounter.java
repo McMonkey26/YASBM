@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 import com.pew.yetanotherskyblockmod.YASBM;
 import com.pew.yetanotherskyblockmod.config.ModConfig;
-import com.pew.yetanotherskyblockmod.util.Utils;
+import com.pew.yetanotherskyblockmod.util.Utils.NbtUtils;
 
 import me.shedaniel.math.Color;
 import me.shedaniel.math.Rectangle;
@@ -36,7 +36,7 @@ public class LegionCounter implements com.pew.yetanotherskyblockmod.Features.Gui
 
             block: {
                 for (ItemStack armor : me.getArmorItems()) {
-                    @Nullable NbtCompound extra = Utils.getItemExtra(armor);
+                    @Nullable NbtCompound extra = NbtUtils.getItemExtra(armor);
                     if (extra == null || !extra.contains("enchantments")) continue;
                     if (extra.getCompound("enchantments").contains("ultimate_legion")) break block;
                 }

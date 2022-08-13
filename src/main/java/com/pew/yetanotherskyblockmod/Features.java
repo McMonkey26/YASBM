@@ -50,7 +50,7 @@ public class Features {
         public void onDrawSlot(MatrixStack matrices, Slot slot);
         public void onDrawItem(MatrixStack matrices, ItemStack stack);
         public void onDrawItemOverlay(ItemStack stack, int x, int y, ItemRenderer itemRenderer);
-        public List<Text> onTooltipExtra(List<Text> list, NbtCompound extra, TooltipContext context);
+        public List<Text> onTooltipExtra(List<Text> list, ItemStack stack, NbtCompound extra, TooltipContext context);
     }
     public static interface KeyFeature extends Feature {
         public void onGuiKeyPress(int keycode, int scancode);
@@ -199,9 +199,9 @@ public class Features {
             f.onDrawSlot(matrices, slot);
         }
     }
-    public static List<Text> onTooltipExtra(List<Text> list, NbtCompound extra, TooltipContext context) {
+    public static List<Text> onTooltipExtra(List<Text> list, ItemStack stack, NbtCompound extra, TooltipContext context) {
         for (ItemFeature f : itemListeners) {
-            list = f.onTooltipExtra(list, extra, context);
+            list = f.onTooltipExtra(list, stack, extra, context);
             if (list == null) return null;
         }
         return list;

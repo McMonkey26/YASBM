@@ -7,7 +7,7 @@ import com.pew.yetanotherskyblockmod.util.Constants;
 import com.pew.yetanotherskyblockmod.util.ItemDB;
 import com.pew.yetanotherskyblockmod.util.ItemGrabber;
 import com.pew.yetanotherskyblockmod.util.Pricer;
-import com.pew.yetanotherskyblockmod.util.Utils;
+import com.pew.yetanotherskyblockmod.util.Location;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -42,7 +42,7 @@ public class YASBM implements ClientModInitializer {
 	}
 
 	public void onTick() {
-		Utils.onTick();
+		Location.onTick();
 		Features.tick();
 		Pricer.onTick();
 	}

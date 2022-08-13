@@ -12,7 +12,8 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.pew.yetanotherskyblockmod.YASBM;
 import com.pew.yetanotherskyblockmod.config.ModConfig;
 import com.pew.yetanotherskyblockmod.mixin.HandledScreenAccessor;
-import com.pew.yetanotherskyblockmod.util.Utils;
+import com.pew.yetanotherskyblockmod.util.Location;
+import com.pew.yetanotherskyblockmod.util.Utils.NbtUtils;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -51,7 +52,7 @@ public class ItemLock implements com.pew.yetanotherskyblockmod.Features.KeyFeatu
         if (screen == null || !(screen instanceof HandledScreen)) return;
         @Nullable Slot slot = ((HandledScreenAccessor) screen).getFocusedSlot();
         if (slot == null || !slot.hasStack()) return;
-        @Nullable String uuid = Utils.getItemUUID(slot.getStack());
+        @Nullable String uuid = NbtUtils.getItemUUID(slot.getStack());
         if (uuid == null) return;
 
         List<String> lockedSlots = ModConfig.get().item.lockedUUIDs;
@@ -63,7 +64,7 @@ public class ItemLock implements com.pew.yetanotherskyblockmod.Features.KeyFeatu
         
         AutoConfig.getConfigHolder(ModConfig.class).save();
     }
-    public List<Text> onTooltipExtra(List<Text> list, net.minecraft.nbt.NbtCompound extra, net.minecraft.client.item.TooltipContext context) {return list;}
+    public List<Text> onTooltipExtra(List<Text> list, ItemStack stack, net.minecraft.nbt.NbtCompound extra, net.minecraft.client.item.TooltipContext context) {return list;}
     public void onDrawSlot(MatrixStack matrices, Slot slot) {
         if (!isEnabled() || !isLocked(slot.getStack())) return;
         matrices.push();
@@ -76,11 +77,11 @@ public class ItemLock implements com.pew.yetanotherskyblockmod.Features.KeyFeatu
     public void onDrawItemOverlay(ItemStack stack, int x, int y, ItemRenderer itemRenderer) {}
 
     public static boolean isEnabled() {
-        return ModConfig.get().item.itemLockEnabled && Utils.isOnSkyblock();
+        return ModConfig.get().item.itemLockEnabled && Location.isOnSkyblock();
     }
     private boolean isLocked(ItemStack item) {
         if (item.isEmpty() || !item.hasNbt()) return false;
-        @Nullable String uuid = Utils.getItemUUID(item);
+        @Nullable String uuid = NbtUtils.getItemUUID(item);
         return uuid != null && ModConfig.get().item.lockedUUIDs.contains(uuid);
     }
 

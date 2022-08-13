@@ -20,6 +20,7 @@ import com.pew.yetanotherskyblockmod.YASBM;
 import com.pew.yetanotherskyblockmod.config.ModConfig;
 import com.pew.yetanotherskyblockmod.config.ModConfig.Item.SBTooltip.ConfigState;
 import com.pew.yetanotherskyblockmod.util.ItemDB;
+import com.pew.yetanotherskyblockmod.util.Location;
 import com.pew.yetanotherskyblockmod.util.Pricer;
 import com.pew.yetanotherskyblockmod.util.Utils;
 
@@ -57,8 +58,8 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.ItemFea
     }
     public void tick() {}
     public void onConfigUpdate() {}
-    public List<Text> onTooltipExtra(List<Text> list, NbtCompound extra, TooltipContext context) {
-        if (!Utils.isOnSkyblock() || !ModConfig.get().item.sbTooltip.enabled) return list;
+    public List<Text> onTooltipExtra(List<Text> list, ItemStack stack, NbtCompound extra, TooltipContext context) {
+        if (!Location.isOnSkyblock() || !ModConfig.get().item.sbTooltip.enabled) return list;
         String id = extra.getString("id");
 
         ListIterator<Text> it = list.listIterator();
@@ -84,7 +85,7 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.ItemFea
             JsonObject petinfo = JsonParser.parseString(extra.getString("petInfo")).getAsJsonObject();
             if (petinfo.has("exp")) list.add(new LiteralText("")
                 .append(new LiteralText("Pet EXP: ").formatted(Formatting.GRAY))
-                .append(new LiteralText(Utils.US.format(Math.round(petinfo.get("exp").getAsDouble() * 100) / 100)).formatted(Formatting.GRAY))
+                .append(new LiteralText(Location.US.format(Math.round(petinfo.get("exp").getAsDouble() * 100) / 100)).formatted(Formatting.GRAY))
             );
         }
         if (isEnabled(ModConfig.get().item.sbTooltip.stackingEnchants)) {
@@ -121,24 +122,33 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.ItemFea
         }
         if (isEnabled(ModConfig.get().item.sbTooltip.priceBUYBZ)) {
             Number buybz = Pricer.price(id, Pricer.BazaarOptions.LOWESTSELL);
-            if (buybz != null && buybz.floatValue() > 0) list.add(new LiteralText("")
-                .append(new LiteralText("Bazaar Buy: ").formatted(Formatting.YELLOW, Formatting.BOLD))
-                .append(new LiteralText(String.format("%,.2f", buybz.floatValue())).formatted(Formatting.GOLD))
-            );
+            if (buybz != null && buybz.floatValue() > 0) {
+                MutableText line = new LiteralText("")
+                    .append(new LiteralText("Bazaar Buy: ").formatted(Formatting.YELLOW, Formatting.BOLD))
+                    .append(new LiteralText(String.format("%,.2f", buybz.floatValue())).formatted(Formatting.GOLD));
+                if (stack.getCount() > 1) line.append(new LiteralText(String.format(" (%,d total)", (int)Math.round(buybz.doubleValue()*stack.getCount()))).setStyle(Style.EMPTY.withBold(false).withColor(Formatting.GRAY)));
+                list.add(line);
+            }
         }
         if (isEnabled(ModConfig.get().item.sbTooltip.priceSELLBZ)) {
             Number sellbz = Pricer.price(id, Pricer.BazaarOptions.HIGHESTBUY);
-            if (sellbz != null && sellbz.floatValue() > 0) list.add(new LiteralText("")
-                .append(new LiteralText("Bazaar Sell: ").formatted(Formatting.YELLOW, Formatting.BOLD))
-                .append(new LiteralText(String.format("%,.2f", sellbz.floatValue())).formatted(Formatting.GOLD))
-            );
+            if (sellbz != null && sellbz.floatValue() > 0) {
+                MutableText line = new LiteralText("")
+                    .append(new LiteralText("Bazaar Sell: ").formatted(Formatting.YELLOW, Formatting.BOLD))
+                    .append(new LiteralText(String.format("%,.2f", sellbz.floatValue())).formatted(Formatting.GOLD));
+                if (stack.getCount() > 1) line.append(new LiteralText(String.format(" (%,d total)", (int)Math.round(sellbz.doubleValue()*stack.getCount()))).setStyle(Style.EMPTY.withBold(false).withColor(Formatting.GRAY)));
+                list.add(line);
+            }
         }
         if (isEnabled(ModConfig.get().item.sbTooltip.priceNPC)) {
             int npc = ItemDB.getSellPrice(id);
-            if (npc >= 0) list.add(new LiteralText("")
-                .append(new LiteralText("NPC Sell: ").formatted(Formatting.YELLOW, Formatting.BOLD))
-                .append(new LiteralText(String.format("%,d", npc)).formatted(Formatting.GOLD))
-            );
+            if (npc >= 0) {
+                MutableText line = new LiteralText("")
+                    .append(new LiteralText("NPC Sell: ").formatted(Formatting.YELLOW, Formatting.BOLD))
+                    .append(new LiteralText(String.format("%,d", npc)).formatted(Formatting.GOLD));
+                if (stack.getCount() > 1) line.append(new LiteralText(String.format(" (%,d total)", npc*stack.getCount())).setStyle(Style.EMPTY.withBold(false).withColor(Formatting.GRAY)));
+                list.add(line);
+            }
         }
         if (!ModConfig.get().item.sbTooltip.itemAge.equals(ConfigState.OFF) && extra.contains("timestamp")) {
             if (isEnabled(ModConfig.get().item.sbTooltip.itemAge)) {try {

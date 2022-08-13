@@ -7,6 +7,7 @@ import java.util.Map;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.pew.yetanotherskyblockmod.config.ModConfig;
 import com.pew.yetanotherskyblockmod.mixin.ItemRendererAccessor;
+import com.pew.yetanotherskyblockmod.util.Location;
 import com.pew.yetanotherskyblockmod.util.Utils;
 
 import net.minecraft.client.render.BufferBuilder;
@@ -25,12 +26,12 @@ public class Mining implements com.pew.yetanotherskyblockmod.Features.ItemFeatur
     public void init() {}
     public void tick() {}
     public void onConfigUpdate() {}
-    public List<Text> onTooltipExtra(List<Text> list, NbtCompound extra, net.minecraft.client.item.TooltipContext context) {return list;}
+    public List<Text> onTooltipExtra(List<Text> list, ItemStack stack, NbtCompound extra, net.minecraft.client.item.TooltipContext context) {return list;}
     public void onDrawSlot(MatrixStack matrices, Slot slot) {}
     public void onDrawItem(MatrixStack matrices, ItemStack stack) {}
     public void onDrawItemOverlay(ItemStack stack, int x, int y, ItemRenderer itemRenderer) {
         if (!isEnabled() || !ModConfig.get().helpers.mining.drillFuelBarsEnabled) return;
-        NbtCompound extra = Utils.getItemExtra(stack);
+        NbtCompound extra = Utils.NbtUtils.getItemExtra(stack);
         if (extra == null || !extra.contains("drill_fuel")) return;
         ItemRendererAccessor g = ((ItemRendererAccessor) itemRenderer);
 
@@ -51,7 +52,7 @@ public class Mining implements com.pew.yetanotherskyblockmod.Features.ItemFeatur
     }
 
     private boolean isEnabled() {
-        return ModConfig.get().helpers.mining.enabled && Utils.isOnSkyblock();
+        return ModConfig.get().helpers.mining.enabled && Location.isOnSkyblock();
     }
     private static Map<String, Integer> fuelcaps = new HashMap<>() {{
         put("MITHRIL_FUEL_TANK",       10000);

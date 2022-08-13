@@ -3,7 +3,7 @@ package com.pew.yetanotherskyblockmod.hud;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.pew.yetanotherskyblockmod.config.ModConfig;
-import com.pew.yetanotherskyblockmod.util.Utils;
+import com.pew.yetanotherskyblockmod.util.Location;
 
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.scoreboard.Scoreboard;
@@ -22,6 +22,6 @@ public class BetterPlayerlist implements com.pew.yetanotherskyblockmod.Features.
     }
 
     public void onDrawLatencyIcon(CallbackInfo ci) {
-        if (ModConfig.get().hud.betterTablistEnabled && Utils.isOnSkyblock()) ci.cancel();
+        if (ModConfig.get().hud.betterTablistEnabled && Location.isOnSkyblock()) ci.cancel();
     }
 }

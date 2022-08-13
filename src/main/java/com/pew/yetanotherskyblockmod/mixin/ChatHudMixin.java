@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.pew.yetanotherskyblockmod.Features;
 import com.pew.yetanotherskyblockmod.hud.UpdateLog;
-import com.pew.yetanotherskyblockmod.util.Utils;
+import com.pew.yetanotherskyblockmod.util.Location;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -20,7 +20,7 @@ import net.minecraft.text.Text;
 public class ChatHudMixin {
     @Inject(method = "addMessage(Lnet/minecraft/text/Text;)V", at = @At("HEAD"), cancellable = true)
     private void onAddMessage(Text msg, CallbackInfo ci) {
-        Utils.onIncomingChat(msg, ci);
+        Location.onIncomingChat(msg, ci);
     }
 
     @ModifyArg(

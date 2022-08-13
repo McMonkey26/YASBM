@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.pew.yetanotherskyblockmod.Features;
-import com.pew.yetanotherskyblockmod.util.Utils;
+import com.pew.yetanotherskyblockmod.util.Location;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -80,7 +80,7 @@ public abstract class ItemStackMixin {
     public List<Text> getTooltip(@Nullable PlayerEntity player, TooltipContext context) {
         ItemStack cast = (ItemStack) (Object) this;
         ArrayList<Text> list = Lists.newArrayList();
-        if (Utils.isOnSkyblock()) {
+        if (Location.isOnSkyblock()) {
             MutableText mutableText = new LiteralText("").append(cast.getName()).formatted(cast.getRarity().formatting);
             list.add(mutableText);
             if (cast.hasNbt()) {
@@ -104,7 +104,7 @@ public abstract class ItemStackMixin {
                 if (nbt.contains("ExtraAttributes")) {
                     NbtElement e = nbt.get("ExtraAttributes");
                     if (e instanceof NbtCompound) {
-                        list = new ArrayList<Text>(Features.onTooltipExtra(list, (NbtCompound) e, context));
+                        list = new ArrayList<Text>(Features.onTooltipExtra(list, (ItemStack)(Object)this, (NbtCompound) e, context));
                     }
                 }
                 if (nbt.contains(ItemStack.DISPLAY_KEY, 10)) {

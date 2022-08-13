@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.pew.yetanotherskyblockmod.Features;
 import com.pew.yetanotherskyblockmod.config.ModConfig;
-import com.pew.yetanotherskyblockmod.util.Utils;
+import com.pew.yetanotherskyblockmod.util.Location;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -33,7 +33,7 @@ public class ClientPlayNetworkHandlerMixin {
     
     @Inject(method = "onGameJoin", at = @At("TAIL"), cancellable = false)
     private void onGameJoin(net.minecraft.network.packet.s2c.play.GameJoinS2CPacket packet, CallbackInfo ci) {
-        Utils.onWorldLoad(world);
+        Location.onWorldLoad(world);
         Features.onWorldLoad(world);
     }
 }

@@ -6,7 +6,8 @@ import java.util.regex.Pattern;
 import javax.annotation.Nullable;
 
 import com.pew.yetanotherskyblockmod.config.ModConfig;
-import com.pew.yetanotherskyblockmod.util.Utils;
+import com.pew.yetanotherskyblockmod.util.Location;
+import com.pew.yetanotherskyblockmod.util.Utils.NbtUtils;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -23,8 +24,8 @@ public class StackSize implements com.pew.yetanotherskyblockmod.Features.Feature
     public void onConfigUpdate() {};
 
     public @Nullable String onGetItemCountLabel(ItemStack stack) {
-        if (!Utils.isOnSkyblock() || !ModConfig.get().item.stackSizeEnabled) return null;
-        @Nullable NbtCompound extra = Utils.getItemExtra(stack);
+        if (!Location.isOnSkyblock() || !ModConfig.get().item.stackSizeEnabled) return null;
+        @Nullable NbtCompound extra = NbtUtils.getItemExtra(stack);
         if (extra == null) return null;
         for (String tag : stackTags) {
             if (!extra.contains(tag)) continue;

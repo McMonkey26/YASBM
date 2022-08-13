@@ -8,7 +8,7 @@ import com.pew.yetanotherskyblockmod.YASBM;
 import com.pew.yetanotherskyblockmod.config.ModConfig;
 import com.pew.yetanotherskyblockmod.config.ModConfig.Helpers.FishingConfig;
 import com.pew.yetanotherskyblockmod.util.ChromaColor;
-import com.pew.yetanotherskyblockmod.util.Utils;
+import com.pew.yetanotherskyblockmod.util.Location;
 
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -38,7 +38,7 @@ public class Fishing implements com.pew.yetanotherskyblockmod.Features.Feature {
     }
 
     public void onTickFishingLogic(FishingBobberEntity entity, CallbackInfo ci, double d, double e, double j, float l, float k) {
-        if (!Utils.isOnSkyblock()) return;
+        if (!Location.isOnSkyblock()) return;
 
         if (YASBM.client.player.equals(entity.getPlayerOwner())) {
             ClientWorld world = YASBM.client.world;
@@ -51,14 +51,14 @@ public class Fishing implements com.pew.yetanotherskyblockmod.Features.Feature {
     }
 
     public void onRenderLine(VertexConsumer buffer, MatrixStack.Entry matrices, CallbackInfo ci, float f, float g, float h, float i, float j, float k, float l) {
-        if (!Utils.isOnSkyblock()) return;
+        if (!Location.isOnSkyblock()) return;
         
         buffer.vertex(matrices.getPositionMatrix(), f, g, h).color(lineColor.getIntColor()).normal(matrices.getNormalMatrix(), i /= l, j /= l, k /= l).next();
         ci.cancel();
     }
 
     public void onRenderBobber(FishingBobberEntity entity, MatrixStack matrixStack, CallbackInfo ci) {
-        if (!Utils.isOnSkyblock()) return;
+        if (!Location.isOnSkyblock()) return;
         
         if (entity.getPlayerOwner() != null && entity.getPlayerOwner().isMainPlayer()) {
             if (!ModConfig.get().helpers.fishing.warnWhenClose) return;

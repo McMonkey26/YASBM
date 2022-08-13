@@ -16,6 +16,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.pew.yetanotherskyblockmod.YASBM;
+import com.pew.yetanotherskyblockmod.util.Utils.WebUtils;
 
 import me.shedaniel.math.Color;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
@@ -29,7 +30,7 @@ public class ItemDB implements IdentifiableResourceReloadListener {
     private static final Map<String, SBItem> items = new HashMap<>();
 
     public static void init() {
-        @Nullable String resp = Utils.fetchFrom("https://api.hypixel.net/resources/skyblock/items");
+        @Nullable String resp = WebUtils.fetchFrom("https://api.hypixel.net/resources/skyblock/items");
         if (resp == null) return;
         ItemDB.items.clear();
         JsonObject json = gson.fromJson(resp, JsonObject.class);

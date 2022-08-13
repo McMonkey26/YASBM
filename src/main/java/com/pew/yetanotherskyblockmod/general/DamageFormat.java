@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.pew.yetanotherskyblockmod.config.ModConfig;
+import com.pew.yetanotherskyblockmod.util.Location;
 import com.pew.yetanotherskyblockmod.util.Utils;
 
 import net.minecraft.text.LiteralText;
@@ -24,7 +25,7 @@ public class DamageFormat implements com.pew.yetanotherskyblockmod.Features.Feat
     public void onConfigUpdate() {}
 
     public Text onRenderArmorStandLabel(Text label) {
-        if (!ModConfig.get().general.damageFormatEnabled || !Utils.isOnSkyblock()) return label;
+        if (!ModConfig.get().general.damageFormatEnabled || !Location.isOnSkyblock()) return label;
         Matcher m = parseDamageDealt.matcher(Utils.stripFormatting(label.getString()));
         if (!m.matches()) return label;
         long dmg = Long.parseLong(m.group(2));

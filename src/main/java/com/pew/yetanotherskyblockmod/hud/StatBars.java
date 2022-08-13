@@ -2,7 +2,7 @@ package com.pew.yetanotherskyblockmod.hud;
 
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.pew.yetanotherskyblockmod.util.Utils;
+import com.pew.yetanotherskyblockmod.util.Location;
 
 // import com.mojang.blaze3d.systems.RenderSystem;
 // import com.pew.yetanotherskyblockmod.YASBM;
@@ -38,7 +38,7 @@ public class StatBars implements com.pew.yetanotherskyblockmod.Features.GuiFeatu
     }
 
     public void onDrawHud(MatrixStack matrices) {
-        if (!Utils.isOnSkyblock()) return;
+        if (!Location.isOnSkyblock()) return;
         // StatBarConfig config = ModConfig.get().hud.statBars;
         // if (config.healthbar != null) {
         //     RenderSystem.setShaderTexture(0, healthbar);

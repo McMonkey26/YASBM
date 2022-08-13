@@ -6,7 +6,7 @@ import org.lwjgl.glfw.GLFW;
 
 import com.pew.yetanotherskyblockmod.YASBM;
 import com.pew.yetanotherskyblockmod.mixin.HandledScreenAccessor;
-import com.pew.yetanotherskyblockmod.util.Utils;
+import com.pew.yetanotherskyblockmod.util.Utils.NbtUtils;
 
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.gui.screen.Screen;
@@ -35,7 +35,7 @@ public class CopyItem implements com.pew.yetanotherskyblockmod.Features.KeyFeatu
         if (YASBM.client.player == null || key.isUnbound() || !key.isPressed()) return;
         key.setPressed(false);
         ItemStack helditem = YASBM.client.player.getMainHandStack();
-        YASBM.client.keyboard.setClipboard(Utils.toJSON(helditem.writeNbt(new NbtCompound())).toString());
+        YASBM.client.keyboard.setClipboard(NbtUtils.toJSON(helditem.writeNbt(new NbtCompound())).toString());
     }
 
     public void onGuiKeyPress(int keyCode, int scanCode) {
@@ -46,6 +46,6 @@ public class CopyItem implements com.pew.yetanotherskyblockmod.Features.KeyFeatu
         @Nullable Slot slot = ((HandledScreenAccessor) screen).getFocusedSlot();
         if (slot == null || !slot.hasStack()) return;
         ItemStack helditem = slot.getStack();        
-        YASBM.client.keyboard.setClipboard(Utils.toJSON(helditem.writeNbt(new NbtCompound())).toString());
+        YASBM.client.keyboard.setClipboard(NbtUtils.toJSON(helditem.writeNbt(new NbtCompound())).toString());
     }
 }
