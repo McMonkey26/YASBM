@@ -9,5 +9,6 @@ public class Farming implements com.pew.yetanotherskyblockmod.Features.WorldFeat
     public void onConfigUpdate() {}
     public void onDrawHud(MatrixStack matrices) {}
     public void onWorldLoad(ClientWorld world) {}
+    public void onLocationFetched() {}
     public void onDrawWorld(ClientWorld world, net.minecraft.client.render.WorldRenderer renderer, MatrixStack matrices, net.minecraft.client.render.VertexConsumerProvider vertices, float tickDelta) {}
 }

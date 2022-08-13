@@ -44,6 +44,7 @@ public class Features {
     public static interface WorldFeature extends Feature {
         public void onWorldLoad(ClientWorld world);
         public void onDrawWorld(ClientWorld world, WorldRenderer renderer, MatrixStack matrices, VertexConsumerProvider immediate, float tickDelta);
+        public void onLocationFetched();
     }
     public static interface ItemFeature extends Feature {
         public void onDrawSlot(MatrixStack matrices, Slot slot);
@@ -146,6 +147,11 @@ public class Features {
             f.onWorldLoad(world);
         });
     }
+    public static void onLocationFetched() {
+        for (WorldFeature f : worldListeners) {
+            f.onLocationFetched();
+        }
+    }
     public static void onDrawWorld(ClientWorld world, WorldRenderer renderer, MatrixStack matrices, VertexConsumerProvider immediate, float tickDelta) {
         for (WorldFeature f : worldListeners) {
             f.onDrawWorld(world, renderer, matrices, immediate, tickDelta);
@@ -157,11 +163,11 @@ public class Features {
         });
     }
     public static Text   onIncomingChat(Text message) {
-        String s = message.getString();
-		for (Text sibling : message.getSiblings()) {
-			s += " | " + sibling.getString();
-		};
-		YASBM.LOGGER.info("[MAIN] "+Text.Serializer.toJson(message)+" - Got Chat Components: "+s);
+        // String s = message.getString();
+		// for (Text sibling : message.getSiblings()) {
+		// 	s += " | " + sibling.getString();
+		// };
+		// YASBM.LOGGER.info("[MAIN] "+Text.Serializer.toJson(message)+" - Got Chat Components: "+s);
 
         for (ChatFeature f : chatListeners) {
             message = f.onIncomingChat(message);

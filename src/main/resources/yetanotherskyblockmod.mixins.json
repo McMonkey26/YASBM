@@ -22,6 +22,7 @@
     "ItemRendererMixin",
     "ItemStackMixin",
     "PlayerListHudMixin",
+    "ScoreboardMixin",
     "ScreenHandlerMixin",
     "ScreenMixin",
     "WorldRendererMixin"

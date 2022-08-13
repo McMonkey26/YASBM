@@ -8,5 +8,6 @@ public class BetterMusic implements com.pew.yetanotherskyblockmod.Features.World
     public void tick() {}
     public void onConfigUpdate() {}
     public void onWorldLoad(ClientWorld world) {}
+    public void onLocationFetched() {}
     public void onDrawWorld(ClientWorld world, net.minecraft.client.render.WorldRenderer renderer, MatrixStack matrices, net.minecraft.client.render.VertexConsumerProvider vertices, float tickDelta) {}
 }

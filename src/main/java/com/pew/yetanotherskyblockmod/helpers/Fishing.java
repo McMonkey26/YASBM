@@ -12,7 +12,6 @@ import com.pew.yetanotherskyblockmod.util.Utils;
 
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.MatrixStack.Entry;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.projectile.FishingBobberEntity;
 import net.minecraft.particle.DustParticleEffect;
@@ -51,7 +50,7 @@ public class Fishing implements com.pew.yetanotherskyblockmod.Features.Feature {
         }
     }
 
-    public void onRenderLine(VertexConsumer buffer, Entry matrices, CallbackInfo ci, float f, float g, float h, float i, float j, float k, float l) {
+    public void onRenderLine(VertexConsumer buffer, MatrixStack.Entry matrices, CallbackInfo ci, float f, float g, float h, float i, float j, float k, float l) {
         if (!Utils.isOnSkyblock()) return;
         
         buffer.vertex(matrices.getPositionMatrix(), f, g, h).color(lineColor.getIntColor()).normal(matrices.getNormalMatrix(), i /= l, j /= l, k /= l).next();

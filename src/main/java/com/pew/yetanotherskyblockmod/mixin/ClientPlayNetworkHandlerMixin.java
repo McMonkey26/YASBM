@@ -19,8 +19,13 @@ import net.minecraft.client.world.ClientWorld;
 @Mixin(ClientPlayNetworkHandler.class)
 public class ClientPlayNetworkHandlerMixin {
     @Inject(method = "onTeam", at = @At(value = "INVOKE", target = "org/slf4j/Logger.warn (Ljava/lang/String;[Ljava/lang/Object;)V", remap = false), cancellable = true)
-    private void silenceUnknownTeam(net.minecraft.network.packet.s2c.play.TeamS2CPacket p, CallbackInfo ci) {
-        if (ModConfig.get().general.cleanupLogsEnabled) ci.cancel();
+    private void onTeamWarn(net.minecraft.network.packet.s2c.play.TeamS2CPacket p, CallbackInfo ci) {
+        if (ModConfig.get().general.cleanupLogsEnabled) ci.cancel(); // Unknown Team
+    }
+
+    @Inject(method = "onEntityPassengersSet", at = @At(value = "INVOKE", target = "org/slf4j/Logger.warn (Ljava/lang/String;)V", remap = false), cancellable = true)
+    private void onEntityPassengersSet(net.minecraft.network.packet.s2c.play.EntityPassengersSetS2CPacket p, CallbackInfo ci) {
+        if (ModConfig.get().general.cleanupLogsEnabled) ci.cancel(); // Unknown Passengers
     }
 
     @Shadow

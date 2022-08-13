@@ -5,7 +5,7 @@
     "key.copyItem": "Item Copy",
     "key.showTooltip": "Show Detailed Tooltip",
 
-    "command.fairysouls.toggle.help": "Fairy Soul Waypoint Help: \n toggle - Toggles fairy soul waypoints\n clear - marks all souls as found \n unclear - unmarks all souls",
+    "command.fairysouls.help": "Fairy Soul Waypoint Help: \n toggle - Toggles fairy soul waypoints\n on/off - enables/disables fairy soul waypoints\n clear - marks all souls as found \n unclear - unmarks all souls",
     "command.fairysouls.toggle.off": "§cDisabled Fairy Soul Waypoints.",
     "command.fairysouls.toggle.on": "§aEnabled Fairy Soul Waypoints.",
     "command.fairysouls.clear": "§eMarked this region's fairy souls as found.",

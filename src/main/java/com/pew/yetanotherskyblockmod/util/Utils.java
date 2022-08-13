@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.pew.yetanotherskyblockmod.Features;
 import com.pew.yetanotherskyblockmod.YASBM;
 import com.pew.yetanotherskyblockmod.config.ModConfig;
 
@@ -60,11 +61,12 @@ public class Utils {
 			lastTick = 0;
 		}
     }
-    private static int autoLocTimer = 0;
+    private static int autoLocTimer = -1;
     public static void onWorldLoad(World world) {
-        location = Utils._getLocation(world);
         lastTick = 0;
-        if (isOnHypixel()) {autoLocTimer = 60;}// 3 seconds until query
+        Utils.location = Utils._getLocation(world);
+        Utils.internalLocation = InternalLocation.unknown;
+        if (isOnHypixel()) {autoLocTimer = 40;} // 2 seconds until query
     }
     public static void onIncomingChat(Text msg, CallbackInfo ci) {
         if (!msg.asString().startsWith("{") || !msg.asString().endsWith("}")) return;
@@ -72,15 +74,17 @@ public class Utils {
             JsonObject obj = new Gson().fromJson(msg.asString(), JsonObject.class);
             if (!obj.has("gametype")) return;
             if (autoLocTimer >= -60 && ci.isCancellable()) ci.cancel();
-            String game = obj.get("gametype").getAsString();
-            if (game != "SKYBLOCK") {Utils.location = Location.Hypixel; return;}
+            autoLocTimer = -1;
+            if (!obj.get("gametype").getAsString().equals("SKYBLOCK")) return;
             Utils.location = Location.Skyblock;
+            InternalLocation oldloc = Utils.internalLocation;
             if (obj.has("mode")) {
                 Utils.internalLocation = InternalLocation.valueOf(obj.get("mode").getAsString().toLowerCase());
             }
             if (obj.has("map")) {
                 Utils.zone = obj.get("map").getAsString();
             }
+            if (!oldloc.equals(Utils.internalLocation)) Features.onLocationFetched();
         } catch (Exception e) {
             YASBM.LOGGER.warn(e.getMessage());
         }

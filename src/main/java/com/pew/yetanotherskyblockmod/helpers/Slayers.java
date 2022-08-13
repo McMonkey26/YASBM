@@ -11,5 +11,6 @@ public class Slayers implements com.pew.yetanotherskyblockmod.Features.WorldFeat
     public void onConfigUpdate() {}
     public void onDrawHud(MatrixStack matrices) {}
     public void onWorldLoad(ClientWorld world) {}
+    public void onLocationFetched() {}
     public void onDrawWorld(ClientWorld world, WorldRenderer renderer, MatrixStack matrices, VertexConsumerProvider vertices, float tickDelta) {}
 }
