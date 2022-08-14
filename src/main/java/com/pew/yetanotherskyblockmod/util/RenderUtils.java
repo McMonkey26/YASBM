@@ -1,43 +1,70 @@
-// package com.pew.yetanotherskyblockmod.util;
+package com.pew.yetanotherskyblockmod.util;
 
-// public class RenderUtils {
-//     public void boxSides(double x1, double y1, double z1, double x2, double y2, double z2, Color color, int excludeDir) {
-//         int blb = triangles.vec3(x1, y1, z1).color(color).next();
-//         int blf = triangles.vec3(x1, y1, z2).color(color).next();
-//         int brb = triangles.vec3(x2, y1, z1).color(color).next();
-//         int brf = triangles.vec3(x2, y1, z2).color(color).next();
-//         int tlb = triangles.vec3(x1, y2, z1).color(color).next();
-//         int tlf = triangles.vec3(x1, y2, z2).color(color).next();
-//         int trb = triangles.vec3(x2, y2, z1).color(color).next();
-//         int trf = triangles.vec3(x2, y2, z2).color(color).next();
+import com.mojang.blaze3d.systems.RenderSystem;
 
-//         if (excludeDir == 0) {
-//             // Bottom to top
-//             triangles.quad(blb, blf, tlf, tlb);
-//             triangles.quad(brb, trb, trf, brf);
-//             triangles.quad(blb, tlb, trb, brb);
-//             triangles.quad(blf, brf, trf, tlf);
+import me.shedaniel.math.Color;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.render.VertexFormat.DrawMode;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 
-//             // Bottom
-//             triangles.quad(blb, brb, brf, blf);
+public class RenderUtils {
+    public static void renderBoundingBox(Vec3i pos, Color color) {
+        renderBoundingBox(Vec3d.of(pos), Vec3d.of(pos).add(1, 1, 1), color.hashCode());
+    }
 
-//             // Top
-//             triangles.quad(tlb, tlf, trf, trb);
-//         }
-//         else {
-//             // Bottom to top
-//             if (Dir.isNot(excludeDir, Dir.WEST)) triangles.quad(blb, blf, tlf, tlb);
-//             if (Dir.isNot(excludeDir, Dir.EAST)) triangles.quad(brb, trb, trf, brf);
-//             if (Dir.isNot(excludeDir, Dir.NORTH)) triangles.quad(blb, tlb, trb, brb);
-//             if (Dir.isNot(excludeDir, Dir.SOUTH)) triangles.quad(blf, brf, trf, tlf);
+    public static void renderBoundingBox(Vec3i pos, int color) {
+        renderBoundingBox(Vec3d.of(pos), Vec3d.of(pos).add(1, 1, 1), color);
+    }
 
-//             // Bottom
-//             if (Dir.isNot(excludeDir, Dir.DOWN)) triangles.quad(blb, brb, brf, blf);
+    private static void renderBoundingBox(Vec3d max, Vec3d min, int color) {
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder builder = tessellator.getBuffer();
 
-//             // Top
-//             if (Dir.isNot(excludeDir, Dir.UP)) triangles.quad(tlb, tlf, trf, trb);
-//         }
+        RenderSystem.disableDepthTest();
+        // RenderSystem.enableBlend();
+        // RenderSystem.blendFuncSeparate(770, 771, 1, 0);
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        builder.clear();
+        builder.begin(DrawMode.TRIANGLES, VertexFormats.POSITION_COLOR);
 
-//         triangles.growIfNeeded();
-//     }
-// }
+		builder.vertex(min.getX(), min.getY(), min.getZ()).color(color).next();
+		builder.vertex(max.getX(), min.getY(), min.getZ()).color(color).next();
+		builder.vertex(max.getX(), min.getY(), max.getZ()).color(color).next();
+		builder.vertex(min.getX(), min.getY(), max.getZ()).color(color).next();
+
+		builder.vertex(min.getX(), max.getY(), max.getZ()).color(color).next();
+		builder.vertex(max.getX(), max.getY(), max.getZ()).color(color).next();
+		builder.vertex(max.getX(), max.getY(), min.getZ()).color(color).next();
+		builder.vertex(min.getX(), max.getY(), min.getZ()).color(color).next();
+
+
+		builder.vertex(min.getX(), min.getY(), max.getZ()).color(color).next();
+		builder.vertex(min.getX(), max.getY(), max.getZ()).color(color).next();
+		builder.vertex(min.getX(), max.getY(), min.getZ()).color(color).next();
+		builder.vertex(min.getX(), min.getY(), min.getZ()).color(color).next();
+
+		builder.vertex(max.getX(), min.getY(), min.getZ()).color(color).next();
+		builder.vertex(max.getX(), max.getY(), min.getZ()).color(color).next();
+		builder.vertex(max.getX(), max.getY(), max.getZ()).color(color).next();
+		builder.vertex(max.getX(), min.getY(), max.getZ()).color(color).next();
+
+
+		builder.vertex(min.getX(), max.getY(), min.getZ()).color(color).next();
+		builder.vertex(max.getX(), max.getY(), min.getZ()).color(color).next();
+		builder.vertex(max.getX(), min.getY(), min.getZ()).color(color).next();
+		builder.vertex(min.getX(), min.getY(), min.getZ()).color(color).next();
+
+		builder.vertex(min.getX(), min.getY(), max.getZ()).color(color).next();
+		builder.vertex(max.getX(), min.getY(), max.getZ()).color(color).next();
+		builder.vertex(max.getX(), max.getY(), max.getZ()).color(color).next();
+		builder.vertex(min.getX(), max.getY(), max.getZ()).color(color).next();
+        
+        tessellator.draw();
+        // RenderSystem.disableBlend();
+        RenderSystem.enableDepthTest();
+    }
+}

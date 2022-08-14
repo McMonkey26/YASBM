@@ -13,6 +13,8 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+// import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.resource.ResourceType;
@@ -38,10 +40,11 @@ public class YASBM implements ClientModInitializer {
 		reloadManager.registerReloadListener(Constants.instance);
 		reloadManager.registerReloadListener(ItemDB.instance);
 		
-		ClientTickEvents.END_CLIENT_TICK.register((client) -> this.onTick());
+		ClientTickEvents.END_CLIENT_TICK.register(YASBM::onTick);
+		WorldRenderEvents.AFTER_TRANSLUCENT.register(Features::onDrawWorld);
 	}
 
-	public void onTick() {
+	public static void onTick(MinecraftClient client) {
 		Location.onTick();
 		Features.tick();
 		Pricer.onTick();

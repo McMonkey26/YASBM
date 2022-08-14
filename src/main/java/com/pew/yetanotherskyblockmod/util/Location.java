@@ -37,6 +37,7 @@ public class Location {
     private static @Nullable String zone = "";
 
     private static int lastTick = 0;
+    private static int autoLocTimer = -1;
 
     public static void onTick() {
         if (autoLocTimer-- == 0) {
@@ -47,8 +48,6 @@ public class Location {
             lastTick = 0;
         }
     }
-
-    private static int autoLocTimer = -1;
 
     public static void onWorldLoad(World world) {
         lastTick = 0;

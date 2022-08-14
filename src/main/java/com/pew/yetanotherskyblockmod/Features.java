@@ -5,9 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
@@ -22,6 +21,7 @@ import com.pew.yetanotherskyblockmod.helpers.*;
 import com.pew.yetanotherskyblockmod.hud.*;
 import com.pew.yetanotherskyblockmod.item.*;
 import com.pew.yetanotherskyblockmod.tools.*;
+import com.pew.yetanotherskyblockmod.util.RenderUtils;
 
 public class Features {
     private static enum FeatureGroup {
@@ -43,7 +43,7 @@ public class Features {
     }
     public static interface WorldFeature extends Feature {
         public void onWorldLoad(ClientWorld world);
-        public void onDrawWorld(ClientWorld world, WorldRenderer renderer, MatrixStack matrices, VertexConsumerProvider immediate, float tickDelta);
+        public void onDrawWorld(WorldRenderContext ctx);
         public void onLocationFetched();
     }
     public static interface ItemFeature extends Feature {
@@ -152,9 +152,11 @@ public class Features {
             f.onLocationFetched();
         }
     }
-    public static void onDrawWorld(ClientWorld world, WorldRenderer renderer, MatrixStack matrices, VertexConsumerProvider immediate, float tickDelta) {
+    public static void onDrawWorld(WorldRenderContext ctx) {
+        ctx.profiler().swap(YASBM.MODID);
+        RenderUtils.renderBoundingBox(net.minecraft.util.math.BlockPos.ORIGIN, 0xffff00ff);
         for (WorldFeature f : worldListeners) {
-            f.onDrawWorld(world, renderer, matrices, immediate, tickDelta);
+            f.onDrawWorld(ctx);
         }
     }
     public static void onDrawHud(MatrixStack matrices) {

@@ -12,18 +12,19 @@ import com.pew.yetanotherskyblockmod.config.ModConfig;
 import com.pew.yetanotherskyblockmod.mixin.BeaconBlockEntityRendererAccessor;
 import com.pew.yetanotherskyblockmod.util.Constants;
 import com.pew.yetanotherskyblockmod.util.Location;
+import com.pew.yetanotherskyblockmod.util.RenderUtils;
 
 import me.shedaniel.math.Color;
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 
 public class FairySouls implements com.pew.yetanotherskyblockmod.Features.WorldFeature, com.pew.yetanotherskyblockmod.Features.ChatFeature {
@@ -61,21 +62,22 @@ public class FairySouls implements com.pew.yetanotherskyblockmod.Features.WorldF
         if (enabled) loadSouls();
         // YASBM.LOGGER.info("{} - {} || {} [{} current]",Utils.getInternalLocation() == null ? "null" : Utils.getInternalLocation(), Utils.getZone(), enabled ? "On" : "Off", current == null ? -1 : current.size());
     }
-    public void onDrawWorld(ClientWorld world, WorldRenderer renderer, MatrixStack matrices, VertexConsumerProvider vertices, float tickDelta) {
+    public void onDrawWorld(WorldRenderContext ctx) {
         if (!enabled || current == null || current.isEmpty() || YASBM.client.player == null) return;
-        long l = world.getTime();
+        long l = ctx.world().getTime();
         Vec3d playerloc = YASBM.client.player.getPos();
-        Camera cam = YASBM.client.gameRenderer.getCamera();
+        Camera cam = ctx.gameRenderer().getCamera();
         if (cam == null) return;
         Vec3d camPos = cam.getPos();
+        MatrixStack matrices = ctx.matrixStack();
         for (BlockPos pos : current) {
-            if (!pos.isWithinDistance(playerloc, renderer.getViewDistance())) continue;
-            if (pos.isWithinDistance(playerloc, 10)) {
-                // TODO: draw box
-            } else {
+            if (!pos.isWithinDistance(playerloc, ctx.worldRenderer().getViewDistance())) continue;
+            if (pos.isWithinDistance(playerloc, 10) && ctx.frustum().isVisible(new Box(pos))) {
+                RenderUtils.renderBoundingBox(pos, waypointColor);
+            } else if (!ctx.frustum().isVisible(new Box(pos.getX(), -160, pos.getZ(), pos.getX(), 1024, pos.getZ()))) {
                 matrices.push();
                 matrices.translate((double)pos.getX() - camPos.getX(), -camPos.getY(), (double)pos.getZ() - camPos.getZ());
-                BeaconBlockEntityRendererAccessor.invokeRenderBeam(matrices, vertices, tickDelta, l, 0, 1024, new float[]{waypointColor.getRed()/255f, waypointColor.getGreen()/255f, waypointColor.getBlue()/255f});
+                BeaconBlockEntityRendererAccessor.invokeRenderBeam(matrices, ctx.consumers(), ctx.tickDelta(), l, 0, 1024, new float[]{waypointColor.getRed()/255f, waypointColor.getGreen()/255f, waypointColor.getBlue()/255f});
                 matrices.pop();
             }
         }

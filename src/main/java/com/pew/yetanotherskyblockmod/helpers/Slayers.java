@@ -1,7 +1,5 @@
 package com.pew.yetanotherskyblockmod.helpers;
 
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
 
@@ -12,5 +10,5 @@ public class Slayers implements com.pew.yetanotherskyblockmod.Features.WorldFeat
     public void onDrawHud(MatrixStack matrices) {}
     public void onWorldLoad(ClientWorld world) {}
     public void onLocationFetched() {}
-    public void onDrawWorld(ClientWorld world, WorldRenderer renderer, MatrixStack matrices, VertexConsumerProvider vertices, float tickDelta) {}
+    public void onDrawWorld(net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext ctx) {}
 }

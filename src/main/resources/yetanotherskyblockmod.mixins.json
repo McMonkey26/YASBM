@@ -24,8 +24,7 @@
     "PlayerListHudMixin",
     "ScoreboardMixin",
     "ScreenHandlerMixin",
-    "ScreenMixin",
-    "WorldRendererMixin"
+    "ScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
