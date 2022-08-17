@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.pew.yetanotherskyblockmod.events.ScreenCloseEvent;
 import com.pew.yetanotherskyblockmod.item.ItemLock;
 
 import net.fabricmc.api.EnvType;
@@ -42,5 +43,10 @@ public class ScreenHandlerMixin {
             default:
             break;
         }
+    }
+
+    @Inject(method = "close", at = @At("TAIL"), cancellable = false)
+    public void onScreenClose(PlayerEntity pl, CallbackInfo ci) {
+        ScreenCloseEvent.EVENT.invoker().on();
     }
 }

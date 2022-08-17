@@ -225,6 +225,8 @@ public class ModConfig implements ConfigData {
             @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
             public ConfigState petXpInfo         = ConfigState.ON;
             @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
+            public ConfigState priceCombo   = ConfigState.OFF;
+            @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
             public ConfigState priceLBIN    = ConfigState.OFF;
             @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
             public ConfigState priceAVG1LBIN= ConfigState.OFF;

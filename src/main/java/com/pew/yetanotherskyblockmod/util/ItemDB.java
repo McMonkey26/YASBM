@@ -2,10 +2,13 @@ package com.pew.yetanotherskyblockmod.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.Map.Entry;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
@@ -20,13 +23,16 @@ import com.pew.yetanotherskyblockmod.util.Utils.WebUtils;
 
 import me.shedaniel.math.Color;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceReloader;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
 
 public class ItemDB implements IdentifiableResourceReloadListener {
-    private static final Gson gson = new Gson(); 
+    private static final Gson gson = new Gson();
     private static final Map<String, SBItem> items = new HashMap<>();
 
     public static void init() {
@@ -52,9 +58,29 @@ public class ItemDB implements IdentifiableResourceReloadListener {
         return sellprice == null ? -1 : sellprice;
     }
 
-    public static int getGearScore(String itemid) {
-        Integer gearscore = items.containsKey(itemid) ? items.get(itemid).gear_score() : null;
-        return gearscore == null ? -1 : gearscore;
+    public static Map<String, Integer> getConstituents(NbtCompound extra) {
+        Map<String, Integer> constituents = new HashMap<>();
+        constituents.put(extra.getString("id"), extra.contains("Count") && extra.getInt("Count") > 0 ? extra.getInt("Count") : 1);
+        if (extra.contains("art_of_war_count") && extra.getInt("art_of_war_count") > 0) constituents.put("THE_ART_OF_WAR", 1);
+        if (extra.contains("ability_scroll")) {
+            NbtList scrolls = extra.getList("ability_scroll", NbtCompound.STRING_TYPE);
+            scrolls.forEach((NbtElement e) -> constituents.put(e.asString(), 1));
+        }
+        if (extra.contains("hot_potato_count")) {
+            int hpbs = extra.getInt("hot_potato_count");
+            constituents.put("HOT_POTATO_BOOK", Math.min(hpbs, 10));
+            if (hpbs > 10) constituents.put("FUMING_POTATO_BOOK", hpbs-10);
+        }
+        if (extra.contains("rarity_upgrades") && extra.getInt("rarity_upgrades") > 0) constituents.put("RECOMBOBULATOR_3000", 1);
+        if (extra.contains("enchantments")) {
+            NbtCompound enchs = extra.getCompound("enchantments");
+            for (String enchname : enchs.getKeys()) {
+                int enchlvl = enchs.getInt(enchname);
+                constituents.put(enchname.toUpperCase()+";"+enchlvl, 1);
+            }
+        }
+        // TODO: finish this
+        return constituents;
     }
 
     private record SBItem(
@@ -83,12 +109,12 @@ public class ItemDB implements IdentifiableResourceReloadListener {
         String description,
         Integer item_durability,
         JsonObject prestige,
-        Map<Stat, int[]> tiered_stats,
+        Map<Stat, Integer[]> tiered_stats,
         Boolean salvageable_from_recipe,
-        Integer ability_damage_scaling,
+        Float ability_damage_scaling,
         SwordType sword_type,
-        JsonObject enchantments,
-        List<UpgradeCost> salvages,
+        Map<String, Integer> enchantments,
+        Set<UpgradeCost> salvages,
         IslandType private_island
     ) {
         public SBItem {
@@ -115,12 +141,30 @@ public class ItemDB implements IdentifiableResourceReloadListener {
                 data.has("glowing") ? data.get("glowing").getAsBoolean() : null,
                 data.has("upgrade_costs") ? new ArrayList<List<UpgradeCost>>(data.get("upgrade_costs").getAsJsonArray().size()) :null, // upgrade costs
                 data.has("color") ? parseColor(data.get("color").getAsString()) : null, // color
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null
-            ); // TODO: finish filling in items ^
+                data.has("gemstone_slots") ? new ArrayList<>() : null,
+                data.has("museum") ? data.get("museum").getAsBoolean() : null,
+                data.has("dungeon_item") ? data.get("dungeon_item").getAsBoolean() : null,
+                data.has("unstackable") ? data.get("unstackable").getAsBoolean() : null,
+                data.has("soulbound") ? SoulboundType.valueOf(data.get("soulbound").getAsString()) : null,
+                data.has("can_have_attributes") ? data.get("can_have_attributes").getAsBoolean() : null,
+                data.has("gear_score") ? data.get("gear_score").getAsInt() : null,
+                data.has("dungeon_item_conversion_cost") ? new UpgradeCost(data.get("dungeon_item_conversion_cost").getAsJsonObject()) : null,
+                data.has("catacombs_requirements") ? data.get("catacombs_requirements").getAsJsonObject() : null,
+                data.has("description") ? data.get("description").getAsString() : null,
+                data.has("item_durability") && data.get("item_durability").getAsInt() >= 0 ? data.get("item_durability").getAsInt() : null,
+                data.has("prestige") ? data.get("prestige").getAsJsonObject() : null,
+                data.has("tiered_stats") ? new HashMap<>() : null,
+                data.has("salvageable_from_recipe") ? data.get("salvageable_from_recipe").getAsBoolean() : null,
+                data.has("ability_damage_scaling") ? data.get("ability_damage_scaling").getAsFloat() : null,
+                data.has("sword_type") ? SwordType.valueOf(data.get("sword_type").getAsString()) : null,
+                data.has("enchantments") ? new HashMap<>() : null,
+                data.has("salvages") ? new HashSet<>() : null,
+                data.has("private_island") ? IslandType.valueOf(data.get("private_island").getAsString()) : null
+            );
             if (data.has("stats")) {
-                data.get("stats").getAsJsonObject().entrySet().forEach(s -> {
-                    this.stats.put(Stat.valueOf(s.getKey()), s.getValue().getAsInt());
-                });
+                for (Entry<String, JsonElement> stat : data.get("stats").getAsJsonObject().entrySet()) {
+                    this.stats.put(Stat.valueOf(stat.getKey()), stat.getValue().getAsInt());
+                };
             }
             if (data.has("upgrade_costs")) {
                 JsonArray tiers = data.get("upgrade_costs").getAsJsonArray();
@@ -130,6 +174,32 @@ public class ItemDB implements IdentifiableResourceReloadListener {
                     for (JsonElement cost : costs) {
                         this.upgrade_costs.get(tier).add(new UpgradeCost(cost.getAsJsonObject()));
                     };
+                }
+            }
+            if (data.has("gemstone_slots")) {
+                JsonArray slots = data.get("gemstone_slots").getAsJsonArray();
+                for (JsonElement slotdata : slots) {
+                    this.gemstone_slots.add(new GemstoneSlot(slotdata.getAsJsonObject()));
+                };
+            }
+            if (data.has("tiered_stats")) {
+                JsonObject tieredstats = data.get("tiered_stats").getAsJsonObject();
+                for (Entry<String, JsonElement> tierstat : tieredstats.entrySet()) {
+                    Iterator<JsonElement> a = tierstat.getValue().getAsJsonArray().iterator();
+                    List<Integer> b = new ArrayList<>();
+                    a.forEachRemaining(c -> b.add(c.getAsInt()));
+                    this.tiered_stats.put(Stat.valueOf(tierstat.getKey()), b.toArray(new Integer[0]));
+                }
+            }
+            if (data.has("enchantments")) {
+                for (Entry<String, JsonElement> ench : data.get("enchantments").getAsJsonObject().entrySet()) {
+                    this.enchantments.put(ench.getKey(), ench.getValue().getAsInt());
+                }
+            }
+            if (data.has("salvages")) {
+                JsonArray salvages = data.get("salvages").getAsJsonArray();
+                for (JsonElement salvage : salvages) {
+                    this.salvages.add(new UpgradeCost(salvage.getAsJsonObject()));
                 }
             }
         }
@@ -194,7 +264,19 @@ public class ItemDB implements IdentifiableResourceReloadListener {
         AMETHYST, JADE, JASPER, SAPPHIRE, AMBER, TOPAZ, RUBY, OPAL
     }
 
-    public record GemstoneSlot(GemstoneSlotType slot_type, List<JsonObject> costs) {}
+    public record GemstoneSlot(GemstoneSlotType slot_type, List<JsonObject> costs) {
+        public GemstoneSlot(JsonObject jo) {
+            this(
+                GemstoneSlotType.valueOf(jo.get("slot_type").getAsString()),
+                jo.has("costs") ? new ArrayList<>() : null
+            );
+            if (!jo.has("costs")) return;
+            Iterator<JsonElement> it = jo.get("costs").getAsJsonArray().iterator();
+            while (it.hasNext()) {
+                this.costs.add(it.next().getAsJsonObject());
+            }
+        }
+    }
 
     public static enum SoulboundType {COOP, SOLO}
 

@@ -32,7 +32,7 @@ public class Utils {
     public static String stripFormatting(String input) {
         return input.replaceAll("[&§][a-f\\dk-or]", "");
     }
-    
+
     public static void actionBar(Text text) {
         YASBM.client.player.sendMessage(text, true);
     }
@@ -141,7 +141,6 @@ public class Utils {
             }
             return ja;
         }
-
     }
 
     public static final float DAYS_IN_YEAR = 365.2425f;

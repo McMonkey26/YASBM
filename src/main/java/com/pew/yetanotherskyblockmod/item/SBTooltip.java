@@ -12,6 +12,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Nullable;
+
 import org.lwjgl.glfw.GLFW;
 
 import com.google.gson.JsonObject;
@@ -19,10 +21,12 @@ import com.google.gson.JsonParser;
 import com.pew.yetanotherskyblockmod.YASBM;
 import com.pew.yetanotherskyblockmod.config.ModConfig;
 import com.pew.yetanotherskyblockmod.config.ModConfig.Item.SBTooltip.ConfigState;
+import com.pew.yetanotherskyblockmod.events.ScreenCloseEvent;
 import com.pew.yetanotherskyblockmod.util.ItemDB;
 import com.pew.yetanotherskyblockmod.util.Location;
 import com.pew.yetanotherskyblockmod.util.Pricer;
 import com.pew.yetanotherskyblockmod.util.Utils;
+import com.pew.yetanotherskyblockmod.util.Utils.NbtUtils;
 
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.option.KeyBinding;
@@ -41,7 +45,8 @@ import net.minecraft.util.Formatting;
 public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.ItemFeature {
     private static KeyBinding key;
     private static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("M/d/yy h:mm a", Locale.US);
-    private static Map<String, String> ageCache = new HashMap<String, String>();
+    private static Map<String, String> ageCache = new HashMap<>();
+    private static Map<String, Integer> comboCache = new HashMap<>();
     private static final Set<String> cullLines = Set.of(
        "Right-click to add this pet to",
        "your pet menu!",
@@ -55,12 +60,16 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.ItemFea
             GLFW.GLFW_KEY_UNKNOWN,
             "key.categories."+YASBM.MODID
         ));
+        ScreenCloseEvent.EVENT.register(() -> {
+            comboCache = new HashMap<>();
+        });
     }
     public void tick() {}
     public void onConfigUpdate() {}
     public List<Text> onTooltipExtra(List<Text> list, ItemStack stack, NbtCompound extra, TooltipContext context) {
         if (!Location.isOnSkyblock() || !ModConfig.get().item.sbTooltip.enabled) return list;
         String id = extra.getString("id");
+        @Nullable String uuid = NbtUtils.getItemUUID(stack);
 
         ListIterator<Text> it = list.listIterator();
         boolean rune = isEnabled(ModConfig.get().item.sbTooltip.rune); // caching, for performance
@@ -98,6 +107,14 @@ public class SBTooltip implements com.pew.yetanotherskyblockmod.Features.ItemFea
             else if (extra.contains("expertise_kills")) list.add(new LiteralText("")
                 .append(new LiteralText("Expertise Kills: "))
                 .append(new LiteralText(getStackEnchantString(extra.getInt("expertise_kills"), StackingEnchant.EXPERTISE))));
+        }
+        if (isEnabled(ModConfig.get().item.sbTooltip.priceCombo)) {
+            int combo = uuid != null && comboCache.containsKey(uuid) ? comboCache.get(uuid) : Pricer.fullPrice(extra);
+            if (uuid != null) comboCache.put(uuid, combo);
+            if (combo > 0) list.add(new LiteralText("")
+                .append(new LiteralText("Combined Price: ").formatted(Formatting.YELLOW, Formatting.BOLD))
+                .append(new LiteralText(String.format("%,d", combo)).formatted(Formatting.GOLD))
+            );
         }
         if (isEnabled(ModConfig.get().item.sbTooltip.priceLBIN)) {
             Number lbin = Pricer.price(id, Pricer.AuctionOptions.LOWESTBIN);

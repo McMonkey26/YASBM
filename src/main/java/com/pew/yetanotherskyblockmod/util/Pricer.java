@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.annotation.Nullable;
 
@@ -16,10 +15,13 @@ import com.pew.yetanotherskyblockmod.YASBM;
 import com.pew.yetanotherskyblockmod.config.ModConfig;
 import com.pew.yetanotherskyblockmod.util.Utils.WebUtils;
 
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Pair;
 
 public class Pricer {
     private static final Gson gson = new Gson();
+
+    private static final Map<String, Long> darkAHPriceItems = Map.of("MIDAS_STAFF", 100000000L, "MIDAS_SWORD", 50000000L);
 
     public static void init() {fetchPrices();}
     private static long next = Integer.MAX_VALUE; // so it triggers immediately
@@ -39,10 +41,17 @@ public class Pricer {
         }, "fetchPrices").start();
     }
 
+    public static int fullPrice(NbtCompound extra) {
+        return ItemDB.getConstituents(extra).entrySet().stream().mapToInt(entry -> {
+            @Nullable Number price = price(entry.getKey(), true);
+            return price == null ? 0 : price.intValue()*entry.getValue();
+        }).sum();
+    }
     public static @Nullable Number price(String itemid, boolean buy) { // true: buy, false: sell
-        Number bz = Bazaar.getPrice(itemid, buy ? BazaarOptions.LOWESTSELL : BazaarOptions.HIGHESTBUY);
+        if (itemid.equals("COINS")) return 1;
+        Number bz = price(itemid, buy ? BazaarOptions.LOWESTSELL : BazaarOptions.HIGHESTBUY);
         if (bz.floatValue() >= 0) return bz;
-        Number ah = Auction.getPrice(itemid);
+        Number ah = price(itemid, AuctionOptions.LOWESTBIN);
         if (ah.longValue() >= 0) return ah;
         if (ItemDB.getSellPrice(itemid) >= 0) return ItemDB.getSellPrice(itemid); 
         YASBM.LOGGER.warn("Couldn't get price of item: ["+itemid+"]!");
@@ -78,7 +87,7 @@ public class Pricer {
                 BazaarOptions.LOWESTBUY, new HashMap<>(),
                 BazaarOptions.HIGHESTBUY, new HashMap<>()
             );
-            for (Entry<String, JsonElement> entry : resp.get("products").getAsJsonObject().entrySet()) {
+            for (Map.Entry<String, JsonElement> entry : resp.get("products").getAsJsonObject().entrySet()) {
                 JsonObject product = entry.getValue().getAsJsonObject();
                 String id = product.get("product_id").getAsString();
     
@@ -108,13 +117,11 @@ public class Pricer {
     public static enum AuctionOptions {LOWESTBIN,AVGBIN1,AVGBIN3}
     private static class Auction {
         private static Map<AuctionOptions, Map<String, Number>> prices = new HashMap<>();
-    
-        public static Number getPrice(String itemid) {
-            return getPrice(itemid, AuctionOptions.LOWESTBIN);
-        }
+
         public static Number getPrice(String itemid, AuctionOptions options) {
             if (!prices.containsKey(options)) return -1;
-            return prices.get(options).getOrDefault(itemid, -1);
+            Number price = prices.get(options).getOrDefault(itemid, -1);
+            return darkAHPriceItems.keySet().contains(itemid) ? Math.max(darkAHPriceItems.get(itemid), price.longValue()) : price;
         }
 
         public static void fetchAll() {
@@ -146,7 +153,7 @@ public class Pricer {
             AVGBIN3  ("https://moulberry.codes/auction_averages/3day.json", (String resp) -> {
                 Map<String, Number> out = new HashMap<>();
                 JsonObject items = Pricer.gson.fromJson(resp, JsonObject.class);
-                for (Entry<String, JsonElement> entry : items.entrySet()) {
+                for (Map.Entry<String, JsonElement> entry : items.entrySet()) {
                     out.put(entry.getKey(), entry.getValue().getAsJsonObject().get("price").getAsNumber());
                 }
                 return out;
